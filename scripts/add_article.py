@@ -90,14 +90,18 @@ def add_article(new_article):
         "page_title": new_article["page_title"],
     }
 
-    # 1. Insertion en tête (le plus récent en premier dans la grille)
-    articles.insert(0, entry)
+    # 1. Insertion puis tri par date décroissante (le plus récent en premier,
+    #    quelle que soit la date de l'article — corrige aussi l'ordre historique
+    #    des 24 premiers articles, qui n'était pas strictement chronologique).
+    articles.append(entry)
+    articles = lib.sort_by_date_desc(articles)
+    idx = next(i for i, a in enumerate(articles) if a["slug"] == entry["slug"])
 
     # 2. Grille de actualites.html
     lib.rewrite_actualites_grid(articles)
 
-    # 3. Page dédiée du nouvel article (idx = 0 puisqu'on vient de l'insérer en tête)
-    page_html = lib.render_article_page(entry, new_article["body_html"], articles, 0)
+    # 3. Page dédiée du nouvel article
+    page_html = lib.render_article_page(entry, new_article["body_html"], articles, idx)
     out_path = os.path.join(lib.ARTICLES_DIR, f"{entry['slug']}.html")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(page_html)

@@ -148,7 +148,7 @@
   </div>
 </section>
 
-<section class="article-prose story-block">
+<section class="article-prose story-block" data-date-iso="2026-07-26">
   <div class="container-narrow">
     <div class="arch-frame reveal" style="margin-bottom:40px;aspect-ratio:16/9;border-radius:24px;">
       <img src="/images/actualites/tendances-montures.jpg" alt="Portrait mode avec lunettes de soleil fines, tendances 2026">
@@ -177,33 +177,34 @@
       <h2>D'autres articles qui pourraient vous intéresser</h2>
     </div>
     <div class="article-grid">
-      <a href="/actualites/nouvelles-technologies-verres-correcteurs.html" class="article-card reveal" data-category="tech-verres">
-        <div class="article-img"><img src="/images/actualites/tech-verres.jpg" alt="Verres correcteurs colorés en gros plan" loading="lazy"></div>
+      <a href="/actualites/signes-troubles-visuels-auditifs-enfant.html" class="article-card reveal" data-category="enfant">
+        <div class="article-img"><img src="/images/sante/myopie-enfant-signes.jpg" alt="Enfant lors d'un contrôle visuel" loading="lazy"></div>
         <div class="article-card-body">
-          <span class="article-tag" style="--accent:var(--terracotta-dark);--accent-bg:rgba(163,79,44,0.14);">Technologies verres</span>
-          <h3>Verres correcteurs : les innovations qui changent le quotidien</h3>
-          <p>Freination de la myopie, photochromiques nouvelle génération, verres bureau : le point sur les vraies innovations.</p>
+          <span class="article-tag" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">Vision &amp; audition de l'enfant</span>
+          <h3>Premiers signes d'un trouble visuel ou auditif chez l'enfant : le guide des parents</h3>
+          <p>Plisse les yeux, ne se retourne pas quand on l'appelle : les signes à repérer tôt chez l'enfant.</p>
           <div class="article-meta"><span>26 juillet 2026</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
         </div>
       </a>
-      <a href="/actualites/nouvelles-technologies-lentilles-contact.html" class="article-card reveal" data-category="tech-lentilles">
-        <div class="article-img"><img src="/images/actualites/tech-lentilles.jpg" alt="Femme posant une lentille de contact sur son doigt" loading="lazy"></div>
+      <a href="/actualites/pourquoi-sudaya-mikhael-ont-ouvert-maison-mikis.html" class="article-card reveal" data-category="vie-boutique">
+        <div class="article-img"><img src="/images/accueil/boutique-comptoir.jpg" alt="Comptoir et arche Maison Mikis dans la boutique" loading="lazy"></div>
         <div class="article-card-body">
-          <span class="article-tag" style="--accent:var(--wood-dark);--accent-bg:rgba(140,98,57,0.16);">Technologies lentilles</span>
-          <h3>Lentilles de contact : les nouveautés à connaître</h3>
-          <p>Silicone-hydrogel nouvelle génération, lentilles anti-myopie enfant, prototypes connectés : ce qui a changé.</p>
+          <span class="article-tag" style="--accent:var(--terracotta);--accent-bg:rgba(193,101,59,0.12);">Vie de la boutique</span>
+          <h3>Pourquoi Sudaya et Mikhael ont ouvert Maison Mikis</h3>
+          <p>Une rencontre professionnelle à Montreuil, puis un projet commun au cœur du Triangle de Choisy.</p>
           <div class="article-meta"><span>26 juillet 2026</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
         </div>
       </a>
-      <a href="/actualites/100-pour-cent-sante-2026.html" class="article-card reveal" data-category="remboursements">
-        <div class="article-img"><img src="/images/audition/accompagnement.jpg" alt="Accompagnement personnalisé pour une aide auditive" loading="lazy"></div>
+      <a href="/actualites/perte-auditive-signes-precoces.html" class="article-card reveal" data-category="sante-auditive">
+        <div class="article-img"><img src="/images/audition/signes-audition.jpg" alt="Personne portant un appareil auditif intra-auriculaire" loading="lazy"></div>
         <div class="article-card-body">
-          <span class="article-tag" style="--accent:var(--wood);--accent-bg:rgba(185,138,94,0.16);">Remboursements &amp; démarches</span>
-          <h3>100% Santé lunettes et audioprothèses en 2026 : ce qui est vraiment pris en charge</h3>
-          <p>Reste à charge 0, plafonds, classes A/B et I/II : ce que couvre vraiment le 100% Santé en 2026.</p>
+          <span class="article-tag" style="--accent:var(--terracotta);--accent-bg:rgba(193,101,59,0.12);">Santé auditive</span>
+          <h3>Perte auditive silencieuse : les signes à ne pas ignorer</h3>
+          <p>En moyenne 7 à 10 ans s'écoulent avant la première consultation en France. Voici les signaux à repérer bien plus tôt.</p>
           <div class="article-meta"><span>26 juillet 2026</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
         </div>
       </a>
+
     </div>
   </div>
 </section>
@@ -376,6 +377,28 @@
     });
   }
 
+
+  // Bandeau "informations qui peuvent avoir évolué" — calculé côté client à
+  // chaque visite (pas figé au moment de la génération), pour rester exact
+  // même des mois après la publication sans avoir à régénérer la page.
+  (function() {
+    const proseSection = document.querySelector('.article-prose[data-date-iso]');
+    if (!proseSection) return;
+    const published = new Date(proseSection.getAttribute('data-date-iso'));
+    if (isNaN(published)) return;
+    const months = (Date.now() - published.getTime()) / (1000 * 60 * 60 * 24 * 30.44);
+    if (months < 6) return;
+    const label = months >= 12 ? "plus d'un an" : "plus de 6 mois";
+    const notice = document.createElement('div');
+    notice.className = 'article-freshness-notice';
+    notice.innerHTML = '<span class="icon" aria-hidden="true">\u24D8</span><span>Cet article a été publié il y a ' + label + " — certaines informations (réglementation, prix, produits) peuvent avoir évolué depuis. N'hésitez pas à vérifier les détails importants auprès de notre équipe en boutique.</span>";
+    const frame = proseSection.querySelector('.arch-frame');
+    if (frame && frame.nextSibling) {
+      frame.parentNode.insertBefore(notice, frame.nextSibling);
+    } else {
+      proseSection.querySelector('.container-narrow').prepend(notice);
+    }
+  })();
 </script>
 
 </body>

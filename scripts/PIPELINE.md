@@ -123,9 +123,30 @@ dans le corps du message plutôt qu'un simple lien vers le run), ça reste possi
 en ajoutant une étape d'envoi SMTP au workflow — non fait par défaut pour limiter le
 nombre de secrets à gérer.
 
-**Premier test recommandé :** déclencher manuellement le workflow une fois
-("Run workflow" dans l'onglet Actions) après avoir ajouté le secret, pour vérifier
-que la passe baseline s'exécute sans erreur avant d'attendre le premier lundi.
+## Tri par date + bandeau de fraîcheur (ajouté le 29/07/2026)
+- La grille `actualites.html` et l'ordre de `articles.json` sont désormais triés
+  par `date_iso` décroissant (le plus récent en premier) — plus jamais mélangés
+  entre lot de lancement et backfill comme c'était le cas avant le 29/07/2026.
+  `add_article.py` insère et re-trie automatiquement à chaque ajout.
+- Chaque page article affiche un bandeau d'avertissement calculé **côté
+  navigateur** (donc toujours exact, sans besoin de régénérer les pages avec le
+  temps) si l'article a plus de 6 mois (seuil réglable via
+  `FRESHNESS_THRESHOLD_MONTHS` dans `lib_articles.py`) : "certaines informations
+  peuvent avoir évolué depuis". Objectif : éviter qu'un visiteur tombe sur un
+  article ancien via une recherche externe et le croie encore d'actualité alors
+  qu'une réforme ou un changement de prix a pu intervenir depuis.
+- `scripts/migrate_freshness_and_sort.py` est le script de migration ponctuelle
+  qui a appliqué ces deux changements aux 24 articles existants. Il est idempotent
+  (peut être relancé sans dupliquer le bandeau) mais n'a normalement plus besoin
+  d'être relancé — `add_article.py` gère déjà tout pour les nouveaux articles.
+
+## Seuil d'exigence éditoriale (renforcé le 29/07/2026)
+Le prompt de `weekly_run.py` exige désormais explicitement qu'une nouveauté
+corresponde à une vraie catégorie d'importance (lancement produit, résultat
+financier significatif, changement réglementaire, étude notable, événement de
+fond) — une simple différence par rapport à la dernière vérification ne suffit
+plus. Objectif : éviter des articles creux basés sur des mises à jour mineures.
+
 
 ## ⚠️ Incident du 27/07/2026 (pour mémoire)
 La première exécution planifiée s'est lancée dans une session cloud neuve et vide :

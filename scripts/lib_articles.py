@@ -38,6 +38,12 @@ def date_display_from_iso(date_iso):
     return f"{int(d)} {MONTHS_FR[int(m) - 1]} {y}"
 
 
+def sort_by_date_desc(articles):
+    """Tri par date décroissante (le plus récent en premier), avec le slug comme
+    critère de départage stable pour deux articles publiés le même jour."""
+    return sorted(articles, key=lambda a: (a["date_iso"], a["slug"]), reverse=True)
+
+
 def load_articles():
     with open(ARTICLES_JSON, encoding="utf-8") as f:
         return json.load(f)
@@ -261,13 +267,48 @@ MODAL_HTML = '''<div class="article-modal-overlay" id="articleModalOverlay" aria
 _SCRIPT_CACHE = None
 
 
+FRESHNESS_THRESHOLD_MONTHS = 6
+
+FRESHNESS_JS = f'''
+  // Bandeau "informations qui peuvent avoir évolué" — calculé côté client à
+  // chaque visite (pas figé au moment de la génération), pour rester exact
+  // même des mois après la publication sans avoir à régénérer la page.
+  (function() {{
+    const proseSection = document.querySelector('.article-prose[data-date-iso]');
+    if (!proseSection) return;
+    const published = new Date(proseSection.getAttribute('data-date-iso'));
+    if (isNaN(published)) return;
+    const months = (Date.now() - published.getTime()) / (1000 * 60 * 60 * 24 * 30.44);
+    if (months < {FRESHNESS_THRESHOLD_MONTHS}) return;
+    const label = months >= 12 ? "plus d'un an" : "plus de {FRESHNESS_THRESHOLD_MONTHS} mois";
+    const notice = document.createElement('div');
+    notice.className = 'article-freshness-notice';
+    notice.innerHTML = '<span class="icon" aria-hidden="true">\\u24D8</span><span>Cet article a été publié il y a ' + label + " — certaines informations (réglementation, prix, produits) peuvent avoir évolué depuis. N'hésitez pas à vérifier les détails importants auprès de notre équipe en boutique.</span>";
+    const frame = proseSection.querySelector('.arch-frame');
+    if (frame && frame.nextSibling) {{
+      frame.parentNode.insertBefore(notice, frame.nextSibling);
+    }} else {{
+      proseSection.querySelector('.container-narrow').prepend(notice);
+    }}
+  }})();
+'''
+
+
 def common_script_block():
     global _SCRIPT_CACHE
     if _SCRIPT_CACHE is None:
         sample = os.path.join(ARTICLES_DIR, "fatigue-oculaire-ecrans.html")
         content = open(sample, encoding="utf-8").read()
-        m = re.search(r"(<script>\n\n  document\.getElementById\('year'\).*?</script>)", content, re.S)
-        _SCRIPT_CACHE = m.group(1)
+        m = re.search(r"(<script>\n\n  document\.getElementById\('year'\).*?)(</script>)", content, re.S)
+        base = m.group(1)
+        # Le fichier modèle peut déjà contenir le bloc de fraîcheur (ajouté par
+        # la migration du 29/07/2026) — on le retire avant de le rajouter une
+        # seule fois, pour ne jamais dupliquer ce bloc dans les nouvelles pages.
+        marker = "\n  // Bandeau \"informations qui peuvent avoir évolué\""
+        idx = base.find(marker)
+        if idx != -1:
+            base = base[:idx]
+        _SCRIPT_CACHE = base + FRESHNESS_JS + m.group(2)
     return _SCRIPT_CACHE
 
 
@@ -314,7 +355,7 @@ def render_article_page(a, body_html, all_articles, idx):
   </div>
 </section>
 
-<section class="article-prose story-block">
+<section class="article-prose story-block" data-date-iso="{a["date_iso"]}">
   <div class="container-narrow">
     <div class="arch-frame reveal" style="margin-bottom:40px;aspect-ratio:16/9;border-radius:24px;">
       <img src="{a["image"]}" alt="{a["image_alt"]}">

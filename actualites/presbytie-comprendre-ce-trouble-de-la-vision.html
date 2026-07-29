@@ -148,7 +148,7 @@
   </div>
 </section>
 
-<section class="article-prose story-block">
+<section class="article-prose story-block" data-date-iso="2026-02-11">
   <div class="container-narrow">
     <div class="arch-frame reveal" style="margin-bottom:40px;aspect-ratio:16/9;border-radius:24px;">
       <img src="/images/sante/maladies-modele-oeil.jpg" alt="Personne d'une quarantaine d'années tenant un livre à bout de bras pour mieux lire">
@@ -179,33 +179,34 @@
       <h2>D'autres articles qui pourraient vous intéresser</h2>
     </div>
     <div class="article-grid">
-      <a href="/actualites/nouvel-an-lunaire-triangle-de-choisy.html" class="article-card reveal" data-category="vie-boutique">
-        <div class="article-img"><img src="/images/accueil/hero-boutique.jpg" alt="Rue commerçante animée du Triangle de Choisy près de l'esplanade des Olympiades à Paris" loading="lazy"></div>
+      <a href="/actualites/novacel-celene-traitement-anti-reflet-teinte-nude.html" class="article-card reveal" data-category="tech-verres">
+        <div class="article-img"><img src="/images/conseils/traitements-verres.jpg" alt="Gros plan sur des verres de lunettes montrant de légers reflets colorés sur la surface" loading="lazy"></div>
+        <div class="article-card-body">
+          <span class="article-tag" style="--accent:var(--terracotta-dark);--accent-bg:rgba(163,79,44,0.14);">Technologies verres</span>
+          <h3>Célène de Novacel : quand le traitement anti-reflet devient un choix esthétique</h3>
+          <p>Le verrier français Novacel présente Célène, un traitement anti-reflet à la teinte nude, pensé pour sublimer le regard.</p>
+          <div class="article-meta"><span>20 janvier 2026</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
+        </div>
+      </a>
+      <a href="/actualites/une-journee-type-a-la-boutique.html" class="article-card reveal" data-category="vie-boutique">
+        <div class="article-img"><img src="/images/accueil/boutique-ambiance.jpg" alt="Intérieur chaleureux de la boutique Maison Mikis avec présentoirs de lunettes et comptoir en bois" loading="lazy"></div>
         <div class="article-card-body">
           <span class="article-tag" style="--accent:var(--terracotta);--accent-bg:rgba(193,101,59,0.12);">Vie de la boutique</span>
-          <h3>Le Nouvel An lunaire vu depuis notre vitrine du Triangle de Choisy</h3>
-          <p>Chaque année, le Nouvel An lunaire redonne au Triangle de Choisy des couleurs particulières.</p>
-          <div class="article-meta"><span>13 février 2026</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
+          <h3>Une journée type à la Maison Mikis</h3>
+          <p>Entre l'ouverture du rideau et le dernier ajustage du soir, voici à quoi ressemble une journée à la Maison Mikis.</p>
+          <div class="article-meta"><span>27 novembre 2025</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
         </div>
       </a>
-      <a href="/actualites/acouphenes-comprendre-bruit-qui-ne-sarrete-jamais.html" class="article-card reveal" data-category="sante-auditive">
-        <div class="article-img"><img src="/images/audition/parcours-audition.jpg" alt="Personne se tenant l'oreille, gênée par un bruit interne persistant" loading="lazy"></div>
+      <a href="/actualites/comprendre-devis-normalise-lunettes-aides-auditives.html" class="article-card reveal" data-category="remboursements">
+        <div class="article-img"><img src="/images/audition/accompagnement.jpg" alt="Gros plan sur un devis papier et une paire de lunettes posés sur un comptoir d'opticien" loading="lazy"></div>
         <div class="article-card-body">
-          <span class="article-tag" style="--accent:var(--terracotta);--accent-bg:rgba(193,101,59,0.12);">Santé auditive</span>
-          <h3>Acouphènes : comprendre ce bruit qui ne s'arrête jamais</h3>
-          <p>Sifflement, bourdonnement, grésillement : les acouphènes concernent des millions de Français, souvent en silence.</p>
-          <div class="article-meta"><span>5 mars 2026</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
+          <span class="article-tag" style="--accent:var(--wood);--accent-bg:rgba(185,138,94,0.16);">Remboursements &amp; démarches</span>
+          <h3>Le devis normalisé chez l'opticien et l'audioprothésiste : comment le lire</h3>
+          <p>Un document obligatoire, au format identique chez tous les professionnels, vous permet de comparer deux offres avant d'acheter.</p>
+          <div class="article-meta"><span>18 novembre 2025</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
         </div>
       </a>
-      <a href="/actualites/lunettes-engagees-matieres-durables-eco-responsables.html" class="article-card reveal" data-category="mode-lunettes">
-        <div class="article-img"><img src="/images/actualites/tendances-montures.jpg" alt="Gros plan élégant sur une paire de lunettes en acétate coloré posée sur un support en bois naturel" loading="lazy"></div>
-        <div class="article-card-body">
-          <span class="article-tag" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">Mode &amp; tendances</span>
-          <h3>Lunettes engagées : quand la mode optique mise sur les matières durables</h3>
-          <p>Acétate biosourcé, matériaux recyclés, réparabilité : la lunette durable n'est plus une niche mais une vraie tendance.</p>
-          <div class="article-meta"><span>16 mars 2026</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
-        </div>
-      </a>
+
     </div>
   </div>
 </section>
@@ -378,6 +379,28 @@
     });
   }
 
+
+  // Bandeau "informations qui peuvent avoir évolué" — calculé côté client à
+  // chaque visite (pas figé au moment de la génération), pour rester exact
+  // même des mois après la publication sans avoir à régénérer la page.
+  (function() {
+    const proseSection = document.querySelector('.article-prose[data-date-iso]');
+    if (!proseSection) return;
+    const published = new Date(proseSection.getAttribute('data-date-iso'));
+    if (isNaN(published)) return;
+    const months = (Date.now() - published.getTime()) / (1000 * 60 * 60 * 24 * 30.44);
+    if (months < 6) return;
+    const label = months >= 12 ? "plus d'un an" : "plus de 6 mois";
+    const notice = document.createElement('div');
+    notice.className = 'article-freshness-notice';
+    notice.innerHTML = '<span class="icon" aria-hidden="true">\u24D8</span><span>Cet article a été publié il y a ' + label + " — certaines informations (réglementation, prix, produits) peuvent avoir évolué depuis. N'hésitez pas à vérifier les détails importants auprès de notre équipe en boutique.</span>";
+    const frame = proseSection.querySelector('.arch-frame');
+    if (frame && frame.nextSibling) {
+      frame.parentNode.insertBefore(notice, frame.nextSibling);
+    } else {
+      proseSection.querySelector('.container-narrow').prepend(notice);
+    }
+  })();
 </script>
 
 </body>

@@ -152,6 +152,13 @@ copié verbatim).
 Règles strictes :
 - N'invente JAMAIS une nouveauté qui n'existe pas réellement dans les résultats de recherche.
 - Si rien de neuf n'est trouvé pour aucune source, réponds exactement {{"no_novelty": true}}.
+- **Seuil d'importance éditoriale — sois exigeant.** Une simple différence par rapport à la dernière vérification ne suffit PAS à justifier un article. Ne rédige un article QUE si la nouveauté correspond à au moins une de ces catégories :
+  - Lancement d'un vrai nouveau produit ou d'une nouvelle technologie
+  - Résultat financier ou annonce stratégique significative (croissance notable, acquisition, changement de direction)
+  - Changement réglementaire ou législatif touchant l'optique/l'audition (remboursements, normes, obligations)
+  - Étude, enquête ou statistique notable d'une autorité de santé ou d'un organisme professionnel reconnu
+  - Événement de fond pour la profession (congrès majeur, évolution de norme BIAP, etc.)
+  Ignore explicitement : mises à jour cosmétiques de site web, republications, changements de prix mineurs, contenu promotionnel sans substance, sponsoring d'événements mondains sans lien direct avec le métier, nominations à des postes non stratégiques. Dans le doute, ne publie pas — mieux vaut manquer une semaine que publier un article creux.
 - Ne publie JAMAIS sur un sujet déjà couvert (voir la liste des slugs déjà utilisés).
 - Le corps de l'article (body_html) doit faire 400-700 mots, structuré en 2-4 sections <h2>/<p>, ton factuel.
 - meta_description : 150-160 caractères. excerpt : une phrase courte pour une carte.
