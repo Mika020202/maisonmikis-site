@@ -1,0 +1,72 @@
+{
+  "_note": "Reconstruit le 28/07/2026 après la perte du pipeline original (incident du 27/07/2026, voir PIPELINE.md). Contenu identique à la version d'origine du 26/07/2026, documentée dans le récap projet.",
+  "sante-visuelle": {
+    "label": "Santé visuelle",
+    "sources": [
+      {"name": "Acuité", "url": null, "note": "URL à revérifier, non confirmée en accès direct"},
+      {"name": "Bien Vu", "url": "https://bienvu.ws", "note": "Domaine réel .ws, pas .net"},
+      {"name": "France Optique", "url": null, "note": "URL à revérifier"},
+      {"name": "SFO", "url": "https://www.sfo-online.fr", "note": "Société Française d'Ophtalmologie"},
+      {"name": "SNOF", "url": null, "note": "Page potentiellement rendue en JS, à surveiller"},
+      {"name": "FNOF", "url": null, "note": "URL de la page actus a pu changer récemment, à revérifier"}
+    ]
+  },
+  "sante-auditive": {
+    "label": "Santé auditive",
+    "sources": [
+      {"name": "Audiologie Demain", "url": null},
+      {"name": "Audio Infos / L'Ouïe Magazine", "url": null, "note": "Édité par EDP Audio"},
+      {"name": "Audio Infos 365", "url": null}
+    ]
+  },
+  "mode-lunettes": {
+    "label": "Mode & tendances",
+    "sources": [
+      {"name": "Thélios (LVMH)", "url": null, "note": "Fabrique Fendi, Fred, Loewe, Celine, Dior, Givenchy"},
+      {"name": "EssilorLuxottica", "url": null, "note": "Fabrique Ray-Ban, Prada, Miu Miu, Ralph Lauren, Armani"},
+      {"name": "Kering Eyewear", "url": null, "note": "Fabrique Gucci, Saint Laurent"},
+      {"name": "Safilo", "url": null, "note": "Fabrique Marc Jacobs"},
+      {"name": "Marcolin", "url": null, "note": "Fabrique Guess"},
+      {"name": "Marchon", "url": null, "note": "Fabrique Longchamp"},
+      {"name": "Andy Brook", "url": null, "note": "Marque indépendante"},
+      {"name": "CHIMI", "url": null, "note": "Marque indépendante"},
+      {"name": "LOOL", "url": null, "note": "Marque indépendante"}
+    ],
+    "rotation_note": "19 marques au total (voir marques.html) — 7 vérifiées par semaine, cycle complet ~3 semaines. Une sortie de collection n'est pas un flux quotidien."
+  },
+  "tech-verres": {
+    "label": "Technologies verres",
+    "sources": [
+      {"name": "Essilor", "url": "https://espace-presse.essilor.fr/communiques-de-presse-essilor-france/"},
+      {"name": "Novacel", "url": "https://novacel-optical.com/actualites/"}
+    ]
+  },
+  "tech-lentilles": {
+    "label": "Technologies lentilles",
+    "sources": [
+      {"name": "CooperVision", "url": null},
+      {"name": "Bausch & Lomb", "url": null, "note": "Newsroom internationale en anglais, pas de fil FR — à traduire"},
+      {"name": "Ophtalmic Compagnie", "url": null},
+      {"name": "Alcon", "url": null, "note": "Newsroom internationale en anglais"},
+      {"name": "Johnson & Johnson Vision", "url": null, "note": "Newsroom internationale en anglais"},
+      {"name": "Menicon", "url": null},
+      {"name": "Laboratoire LCS", "url": null, "note": "Aucune page actus dédiée trouvée, LinkedIn en repli, priorité basse"}
+    ]
+  },
+  "remboursements": {
+    "label": "Remboursements & démarches",
+    "sources": [
+      {"name": "CRAMIF", "url": null, "note": "Flux généraliste, à filtrer par mots-clés optique/audio/100% Santé, pas de rubrique dédiée"}
+    ]
+  },
+  "vie-boutique": {
+    "label": "Vie de la boutique",
+    "sources": [],
+    "note": "Non couvert par une source externe — traité ponctuellement par recherche web classique si besoin, hors du rythme automatique."
+  },
+  "enfant": {
+    "label": "Vision & audition de l'enfant",
+    "sources": [],
+    "note": "Non couvert par une source externe — traité ponctuellement par recherche web classique si besoin, hors du rythme automatique."
+  }
+}
