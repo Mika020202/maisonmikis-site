@@ -1,6 +1,6 @@
 {
   "_note": "Reconstruit le 28/07/2026 après incident de perte du 27/07/2026. Stocké dans le dépôt Git (persistant), plus jamais dans /home/claude/.",
-  "baseline_done": false,
+  "baseline_done": true,
   "baseline_note": "La toute première exécution doit seulement enregistrer l'état actuel des sources sans publier, pour éviter de publier d'un coup tout l'historique existant.",
   "used_slugs": [
     "fatigue-oculaire-ecrans",
@@ -28,7 +28,36 @@
     "otites-repetition-enfant-audition-langage",
     "essilor-varilux-immersia-verre-progressif-interieur"
   ],
-  "last_seen_by_source": {},
+  "last_seen_by_source": {
+    "Acuité": "EssilorLuxottica publie résultats S1 2026, croissance +9,7%",
+    "Bien Vu": "Dossier sur la télémédecine et l'IA dans l'optique",
+    "France Optique": "Collection LILY : élégance féminine contemporaine (22/07/2026)",
+    "SFO": "Congrès 133e annoncé en avril 2027 ; replays du 132e disponibles",
+    "SNOF": "Ralliement à la grève des médecins libéraux, janvier 2026",
+    "FNOF": "Combat contre l'accès aux données médicales par les OCAM (loi anti-fraudes)",
+    "Audiologie Demain": "Bernafon enrichit la gamme Encanta avec solutions non rechargeables",
+    "Audio Infos / L'Ouïe Magazine": "Loi anti-fraude change les règles du jeu (13/07/2026)",
+    "Audio Infos 365": "37e Congrès mondial d'audiologie (WCA 2026) à Séoul",
+    "Thélios (LVMH)": "Sponsor officiel lunetterie de la Biennale Cinéma 2026 à Venise",
+    "EssilorLuxottica": "Résultats S1 2026 : CA de 14,8 Mds€, +9,7% (28/07/2026)",
+    "Kering Eyewear": "Résultats S1 2026 : Eyewear à 965 M€, +8% comparable (28/07/2026)",
+    "Safilo": "Acquisition de SPY+ et Serengeti finalisée (01/07/2026)",
+    "Marcolin": "Lancement capsule Timberland Eyewear Iconic 2026 (22/07/2026)",
+    "Marchon": "Nicola Zotta nommé président d'Eyewear Marchon & Marcolin (janvier 2026)",
+    "Andy Brook": "Mise à jour site professionnel B2B pour opticiens (mai 2026)",
+    "CHIMI": "Collection printemps-été 2026 avec campagne \"The Trial\" par Shadrinsky",
+    "LOOL": "Lancement Aurora Tortoise : montures légères 18g (12/05/2026)",
+    "Essilor": "Label RSE AFNOR niveau « exemplaire » obtenu (06/07/2026)",
+    "Novacel": "Certification atelier de montage Lindberg obtenue ; anti-reflets Célène lancé",
+    "CooperVision": "Expansion livraison J+1 Biofinity XR Toric aux États-Unis (16/06/2026)",
+    "Bausch & Lomb": "Publication résultats T2 2026 prévue le 29 juillet 2026",
+    "Ophtalmic Compagnie": "Nouveau catalogue Ophtalmic Intelligence System 2026 (12/05/2026)",
+    "Alcon": "Résultats T1 2026 en croissance +6% portés par Unity et Tryptyr",
+    "Johnson & Johnson Vision": "Vision Care Q2 : +5,6% à 1,45 Md$ ; invest. 1 Md$ à Jacksonville",
+    "Menicon": "Célébration 75e anniversaire ; lancement projet \"Winds of Progress\" (fév. 2026)",
+    "Laboratoire LCS": "Lancement AKS Freeform, lentille sclérale personnalisée nouvelle génération (16/01/2026)",
+    "CRAMIF": "Congé supplémentaire de naissance (CSN) effectif au 1er juillet 2026"
+  },
   "mode_lunettes_brand_rotation": {
     "brands_order": [
       "Ray-Ban",
