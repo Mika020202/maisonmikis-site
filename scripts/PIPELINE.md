@@ -89,22 +89,43 @@ Le client a demandé un **email à chaque publication** (informatif, pas de vali
 préalable requise), **jamais de push**. Voir la section "Mode d'exécution" ci-dessous
 pour le mécanisme technique d'envoi selon l'option retenue.
 
-## Mode d'exécution — ⚠️ point non encore tranché au 28/07/2026
-Deux architectures possibles, à confirmer avec le client avant réactivation de toute
-tâche planifiée :
+## Mode d'exécution — décidé le 28/07/2026 : GitHub Actions
+Le client a choisi l'option GitHub Actions (voir échange du 28/07/2026) plutôt
+qu'une tâche planifiée Claude, précisément pour éviter de reproduire le problème de
+persistance qui a causé l'incident du 27/07/2026. Le workflow tourne directement
+sur l'infrastructure GitHub, indépendant de toute session Claude ou du PC du client.
 
-**Option A — GitHub Actions (recommandée)** : un workflow `.github/workflows/`
-tourne chaque semaine directement sur l'infrastructure GitHub (cron natif), appelle
-l'API Anthropic pour rédiger l'article, exécute ce pipeline, et pousse via le jeton
-`GITHUB_TOKEN` fourni automatiquement par Actions (pas de jeton personnel à gérer).
-Nécessite une clé API Anthropic stockée comme secret GitHub Actions, donc un coût
-d'usage API à la charge du client.
+**Fichiers concernés :**
+- `.github/workflows/actualites-weekly.yml` — déclenche l'exécution tous les lundis
+  07:00 UTC (aussi déclenchable manuellement depuis l'onglet "Actions" du dépôt,
+  bouton "Run workflow").
+- `scripts/weekly_run.py` — appelle l'API Anthropic (avec l'outil `web_search`)
+  pour vérifier les sources et rédiger un article si une vraie nouveauté existe,
+  puis publie via `add_article.py`.
 
-**Option B — Tâche planifiée Claude** : nécessite qu'un jeton d'accès GitHub reste
-disponible à chaque exécution. Comme chaque session planifiée repart d'un
-environnement neuf (cause de l'incident du 27/07/2026), ce jeton devrait être
-redonné à chaque fois ou stocké d'une façon qui reste à définir — moins robuste que
-l'option A pour ce cas d'usage précis.
+**Mise en service (à faire une seule fois) :**
+1. Créer une clé API sur `console.anthropic.com` (compte séparé de Claude.ai).
+2. Dans le dépôt GitHub → Settings → Secrets and variables → Actions → "New
+   repository secret" → nom `ANTHROPIC_API_KEY`, valeur = la clé créée à l'étape 1.
+3. Aucune autre configuration nécessaire : le push se fait via le jeton
+   `GITHUB_TOKEN` fourni automatiquement par Actions à chaque exécution (scope
+   limité à ce seul dépôt, pas de jeton personnel à gérer ni à renouveler).
+
+**Notification au client :** pas de service d'envoi d'email dédié configuré (aurait
+nécessité des identifiants SMTP supplémentaires en secret). À la place, le client
+doit activer, une seule fois, la notification native de GitHub pour les workflows :
+GitHub → photo de profil → Settings → Notifications → section "Actions" → cocher
+"Send notifications for failed workflow runs only" ou, pour être notifié à CHAQUE
+exécution (succès compris, cohérent avec la demande initiale), configurer plutôt le
+"Watch" du dépôt sur "All Activity" (bouton "Watch" en haut de la page du dépôt).
+Si le client veut un email plus détaillé (avec le titre de l'article directement
+dans le corps du message plutôt qu'un simple lien vers le run), ça reste possible
+en ajoutant une étape d'envoi SMTP au workflow — non fait par défaut pour limiter le
+nombre de secrets à gérer.
+
+**Premier test recommandé :** déclencher manuellement le workflow une fois
+("Run workflow" dans l'onglet Actions) après avoir ajouté le secret, pour vérifier
+que la passe baseline s'exécute sans erreur avant d'attendre le premier lundi.
 
 ## ⚠️ Incident du 27/07/2026 (pour mémoire)
 La première exécution planifiée s'est lancée dans une session cloud neuve et vide :

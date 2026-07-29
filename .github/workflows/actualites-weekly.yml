@@ -1,0 +1,40 @@
+name: Actualités — veille et publication hebdomadaire
+
+on:
+  schedule:
+    # Tous les lundis 07:00 UTC (~9h Paris en été) — même créneau que l'ancienne
+    # tâche planifiée Claude, désactivée le 27/07/2026.
+    - cron: "0 7 * * 1"
+  workflow_dispatch: {}  # permet aussi un déclenchement manuel depuis l'onglet Actions
+
+permissions:
+  contents: write  # nécessaire pour que le job puisse committer/pousser
+
+jobs:
+  veille-actualites:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du dépôt
+        uses: actions/checkout@v4
+
+      - name: Configuration Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Exécution de la veille
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 scripts/weekly_run.py
+
+      - name: Commit et push si un article a été publié (ou si la baseline a changé)
+        run: |
+          git config user.name "Maison Mikis Automatisation"
+          git config user.email "automatisation@maisonmikis.fr"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "Actualités : mise à jour automatique hebdomadaire ($(date -u +%Y-%m-%d))"
+            git push
+          else
+            echo "Rien à committer cette semaine (aucune nouveauté détectée ou baseline déjà à jour)."
+          fi
