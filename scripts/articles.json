@@ -1,19 +1,5 @@
 [
   {
-    "slug": "test-article-verification-pipeline",
-    "category": "sante-visuelle",
-    "image": "/images/sante/conseils-fatigue-oculaire.jpg",
-    "image_alt": "Image de test",
-    "accent_style": "--accent:var(--wood);--accent-bg:rgba(185,138,94,0.16);",
-    "category_label": "Santé visuelle",
-    "title": "Article de test — vérification du pipeline",
-    "excerpt": "Article de test technique, à supprimer immédiatement après vérification.",
-    "date_display": "3 août 2026",
-    "date_iso": "2026-08-03",
-    "meta_description": "Ceci est un article de test pour vérifier que le pipeline d'ajout fonctionne correctement avant tout usage réel.",
-    "page_title": "Article de test | Maison Mikis"
-  },
-  {
     "slug": "fatigue-oculaire-ecrans",
     "category": "sante-visuelle",
     "image": "/images/sante/conseils-fatigue-oculaire.jpg",
