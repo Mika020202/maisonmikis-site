@@ -259,15 +259,19 @@ jobs:
           # --- Empreinte de FORME du mot de passe (ne revele aucun caractere) ---
           # Le depot est public : on n'affiche ni le mot de passe, ni sa longueur,
           # ni aucun de ses caracteres. On indique uniquement s'il est compose
-          # exclusivement de lettres et de chiffres. Rapproche de la consigne
-          # donnee au client (« choisissez un mot de passe en lettres et chiffres
-          # uniquement »), cela permet de savoir si la NOUVELLE valeur est bien
-          # arrivee jusqu'au secret GitHub, ou si l'ancienne y est restee.
+          # exclusivement de caracteres de la liste convenue avec le client :
+          # lettres, chiffres, et les trois symboles  -  _  .
+          # IONOS exige au moins un caractere special : ces trois-la conviennent
+          # et sont sans danger pour sshpass/lftp (le mot de passe est lu dans la
+          # variable d'environnement SSHPASS, jamais place dans une ligne de
+          # commande). Rapproche de la consigne donnee au client, ce controle
+          # permet de savoir si la NOUVELLE valeur est bien arrivee jusqu'au
+          # secret GitHub, ou si l'ancienne y est restee.
           case "$SSHPASS" in
-            *[!A-Za-z0-9]*)
-              echo "Forme du mot de passe enregistre : contient au moins un caractere qui n'est ni une lettre ni un chiffre." ;;
+            *[!A-Za-z0-9._-]*)
+              echo "Forme du mot de passe enregistre : contient au moins un caractere hors de la liste convenue (lettres, chiffres, - _ .)." ;;
             *)
-              echo "Forme du mot de passe enregistre : uniquement des lettres et des chiffres." ;;
+              echo "Forme du mot de passe enregistre : conforme a la consigne convenue (lettres, chiffres, - _ . uniquement)." ;;
           esac
 
           # --- Quelles portes sont ouvertes sur l'hebergement ? ----------------
