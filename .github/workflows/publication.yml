@@ -221,6 +221,7 @@ jobs:
         env:
           IONOS_HOST:    ${{ secrets.IONOS_HOST }}
           IONOS_USER:    ${{ secrets.IONOS_USER }}
+          IONOS_USER_ALT: ${{ secrets.IONOS_USER_ALT }}
           SSHPASS:       ${{ secrets.IONOS_PASSWORD }}
           LFTP_PASSWORD: ${{ secrets.IONOS_PASSWORD }}
         run: |
@@ -276,12 +277,36 @@ jobs:
           #     retour a la ligne : lftp avalerait l'adresse du serveur comme si
           #     elle faisait partie de la derniere commande. D'ou l'aplatissement
           #     par « tr » juste avant l'appel.
-          VOIE_SFTP=$(printf '%s' "
-            set sftp:auto-confirm yes;
-            set sftp:connect-program 'sshpass -e ssh -a -x -l $IONOS_USER -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=no -o PreferredAuthentications=password,keyboard-interactive';
-            set net:max-retries 1;
-            set net:timeout 20;
-          " | tr '\n' ' ')
+          voie_sftp() {
+            printf '%s' "
+              set sftp:auto-confirm yes;
+              set sftp:connect-program 'sshpass -e ssh -a -x -l $1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=no -o PreferredAuthentications=password,keyboard-interactive';
+              set net:max-retries 1;
+              set net:timeout 20;
+            " | tr '\n' ' '
+          }
+
+          # --- Quelles methodes d'authentification le serveur propose-t-il ? ---
+          # On frappe a la porte SANS presenter le moindre mot de passe
+          # (PreferredAuthentications=none) : le serveur repond alors
+          # « Permission denied (...) » en listant les methodes qu'il accepte.
+          # Aucun secret n'est transmis, aucun n'est affiche.
+          if [ "$PORTE_22" = "ouverte" ]; then
+            METHODES=$(timeout 15 ssh -o StrictHostKeyChecking=no \
+                                      -o UserKnownHostsFile=/dev/null \
+                                      -o BatchMode=yes \
+                                      -o PubkeyAuthentication=no \
+                                      -o PreferredAuthentications=none \
+                                      "$IONOS_USER@$IONOS_HOST" true 2>&1 \
+                       | grep -i "permission denied" | head -1 || true)
+            echo "Reponse du serveur sans mot de passe : ${METHODES:-aucune}"
+            case "$METHODES" in
+              *password*|*keyboard-interactive*)
+                echo "Le serveur accepte l'authentification par mot de passe ✔" ;;
+              *publickey*)
+                echo "::warning::Le serveur ne propose que l'authentification par cle pour cet identifiant : le mot de passe ne pourra jamais passer." ;;
+            esac
+          fi
 
           VOIE_FTPS=$(printf '%s' "
             set ftp:ssl-force true;
@@ -311,18 +336,40 @@ jobs:
 
           PROTOCOLE=""
           AUTH_REFUSEE=0
+          COMPTE_UTILISE=""
 
           if [ "$PORTE_22" = "ouverte" ]; then
-            echo "--- Tentative 1 : SFTP ---"
+            echo "--- Tentative 1 : SFTP avec l'identifiant enregistre ---"
             set +e
-            lftp -c "$VOIE_SFTP open sftp://$IONOS_HOST; $ACTIONS" > /tmp/sftp.log 2>&1
+            lftp -c "$(voie_sftp "$IONOS_USER") open sftp://$IONOS_HOST; $ACTIONS" > /tmp/sftp1.log 2>&1
             RC_SFTP=$?
             set -e
-            cat /tmp/sftp.log
+            cat /tmp/sftp1.log
             if [ "$RC_SFTP" -eq 0 ]; then
               PROTOCOLE="SFTP"
-            elif grep -qiE "permission denied|authentication failed|login incorrect" /tmp/sftp.log; then
-              AUTH_REFUSEE=1
+              COMPTE_UTILISE="principal"
+            else
+              if grep -qiE "permission denied|authentication failed|login incorrect" /tmp/sftp1.log; then
+                AUTH_REFUSEE=1
+              fi
+              # Cet hebergement comporte deux acces SFTP. Si le mot de passe
+              # enregistre appartient en realite au second, autant le decouvrir
+              # ici plutot que de faire tatonner le client.
+              if [ -n "${IONOS_USER_ALT:-}" ]; then
+                echo "--- Tentative 2 : SFTP avec le second acces SFTP ---"
+                set +e
+                lftp -c "$(voie_sftp "$IONOS_USER_ALT") open sftp://$IONOS_HOST; $ACTIONS" > /tmp/sftp2.log 2>&1
+                RC_SFTP2=$?
+                set -e
+                cat /tmp/sftp2.log
+                if [ "$RC_SFTP2" -eq 0 ]; then
+                  PROTOCOLE="SFTP"
+                  COMPTE_UTILISE="secondaire"
+                  AUTH_REFUSEE=0
+                fi
+              else
+                echo "--- Second acces SFTP non renseigne (secret IONOS_USER_ALT absent) : essai unique. ---"
+              fi
             fi
           else
             echo "--- SFTP ignore : le port 22 ne repond pas sur cet hebergement. ---"
@@ -356,6 +403,8 @@ jobs:
                 echo "2. le mot de passe **de l'acces SFTP**, qui est distinct du mot de passe de connexion a IONOS — il se redefinit depuis cette meme page ;"
                 echo "3. puis re-enregistrer \`IONOS_USER\` et \`IONOS_PASSWORD\` dans Settings → Secrets and variables → Actions."
                 echo ""
+                echo "Les deux acces SFTP de l'hebergement ont ete essayes avec le mot de passe enregistre : aucun des deux ne l'accepte."
+                echo ""
                 echo "Le site en ligne n'a pas ete touche."
               } >> "$GITHUB_STEP_SUMMARY"
             else
@@ -369,6 +418,15 @@ jobs:
               } >> "$GITHUB_STEP_SUMMARY"
             fi
             exit 1
+          fi
+
+          if [ "$COMPTE_UTILISE" = "secondaire" ]; then
+            echo "::warning::La connexion a reussi avec le SECOND acces SFTP, pas avec celui enregistre dans IONOS_USER."
+            {
+              echo "ℹ️ **Le mot de passe enregistre correspond au second acces SFTP**, pas au premier."
+              echo "Il faut basculer \`IONOS_USER\` sur ce second identifiant (un identifiant n'est pas un secret)."
+              echo ""
+            } >> "$GITHUB_STEP_SUMMARY"
           fi
 
           case "$MODE" in
