@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="RFV22sLGR_g4pfYghQAlKFtBIV64vG5hz6ztsw15mFY" />
-<title>Nos Marques | Ray-Ban, Prada, Loewe, Miu Miu... | Maison Mikis</title>
-<meta name="description" content="Ray-Ban, Fendi, Fred, Loewe, Celine, Prada, Miu Miu, Armani et bien d'autres : découvrez la sélection de marques de Maison Mikis, opticien-audioprothésiste à Paris 13e.">
-<meta property="og:title" content="Nos Marques | Ray-Ban, Prada, Loewe, Miu Miu... | Maison Mikis">
-<meta property="og:description" content="Ray-Ban, Fendi, Fred, Loewe, Celine, Prada, Miu Miu, Armani et bien d'autres : découvrez la sélection de marques de Maison Mikis, opticien-audioprothésiste à Paris 13e.">
+<title>Nos Marques — Ray-Ban, Prada, Dior… | Maison Mikis</title>
+<meta name="description" content="Ray-Ban, Dior, Prada, Loewe, Celine, Miu Miu, LOOL, CHIMI : les 19 maisons sélectionnées par Maison Mikis, opticien à Paris 13e, en quatre familles.">
+<meta property="og:title" content="Nos Marques — Ray-Ban, Prada, Dior… | Maison Mikis">
+<meta property="og:description" content="Ray-Ban, Dior, Prada, Loewe, Celine, Miu Miu, LOOL, CHIMI : les 19 maisons sélectionnées par Maison Mikis, opticien à Paris 13e, en quatre familles.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:url" content="https://www.maisonmikis.fr/marques.html">
@@ -41,8 +41,13 @@
     "closes": "19:30"
   },
   "sameAs": [
-    "https://www.instagram.com/maisonmikis/"
-  ]
+    "https://www.instagram.com/maisonmikis/",
+    "https://maps.google.com/?cid=6701951749895757703",
+    "https://www.pagesjaunes.fr/pros/65236969",
+    "https://lopticien.net/75/paris/maison-mikis-h9h",
+    "https://maison-mikis-paris.monopticien.com/"
+  ],
+  "hasMap": "https://maps.google.com/?cid=6701951749895757703"
 }
 </script>
 <script type="application/ld+json">
@@ -68,11 +73,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;500;700;800&family=Archivo+Black&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Comfortaa:wght@600;700&family=Space+Grotesk:wght@700&family=Marcellus&family=Anton&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site.css?v=237df1d2">
+<link rel="stylesheet" href="/site.css?v=beeadff5">
 </head>
 <body>
 
-<header id="siteHeader">
+<header id="siteHeader" class="scrolled">
   <div class="container">
     <a href="/index.html" class="logo">
       <div class="logo-mark">M</div>
@@ -91,9 +96,9 @@
       <a href="/contact.html">Nous rendre visite</a>
     </nav>
     <div class="header-actions">
-      <a href="tel:0182280018" class="header-phone">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        01 82 28 00 18
+      <a href="tel:0182280018" class="header-phone-bubble">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="phone-full">01 82 28 00 18</span>
       </a>
       <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
@@ -185,16 +190,127 @@
   </div>
 </section>
 
-<section class="marques">
+<style>
+  .brand-family{padding-top:34px;padding-bottom:34px;}
+  .brand-family + .brand-family{border-top:1px solid rgba(0,0,0,.06);}
+  .brand-family .section-head{max-width:760px;margin-bottom:26px;}
+  .brand-family .family-intro{margin-top:10px;}
+  .marques-intro .section-head{max-width:760px;margin:0 auto;}
+  .family-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px;}
+  .family-nav a{font-size:.86rem;letter-spacing:.02em;padding:8px 16px;border:1px solid rgba(0,0,0,.14);border-radius:999px;text-decoration:none;color:inherit;transition:background .2s,border-color .2s;}
+  .family-nav a:hover{background:rgba(193,101,59,.08);border-color:var(--terracotta);}
+</style>
+
+<section class="marques marques-intro">
   <div class="container">
     <div class="section-head center">
       <span class="eyebrow">Un choix exigeant</span>
-      <p style="max-width:640px;margin:0 auto;">Chez Maison Mikis, nous choisissons nos partenaires avec la même exigence que nous mettons dans notre conseil : un savoir-faire réel, une histoire, une signature. Voici les maisons que vous retrouvez actuellement en boutique.</p>
+      <h2>Dix-neuf maisons, choisies une par une</h2>
+      <p>Nous ne référençons pas un catalogue : nous choisissons. Chaque maison présente en boutique a été retenue pour trois raisons concrètes — une fabrication dont nous connaissons l'origine, un service après-vente qui répond réellement quand une branche casse ou qu'une charnière prend du jeu, et une gamme de formes assez large pour habiller des visages différents. C'est ce qui explique que vous ne trouviez pas ici certaines marques très diffusées : elles ne cochaient pas les trois cases.</p>
+      <p>Pour vous y retrouver, la sélection est présentée en quatre familles. Elles ne correspondent pas à des gammes de prix mais à des manières de dessiner une monture — et c'est souvent ce critère-là, plus que le budget, qui fait qu'une paire vous va ou ne vous va pas.</p>
     <div class="brand-stats">
       <div class="brand-stat"><strong>19</strong><span>Maisons</span></div>
       <div class="brand-stat"><strong>5</strong><span>Pays représentés</span></div>
       <div class="brand-stat"><strong>1846</strong><span>Maison la plus ancienne</span></div>
     </div>
+      <nav class="family-nav" aria-label="Familles de marques">
+        <a href="#maisons-de-couture">Maisons de couture</a>
+        <a href="#intemporels">Intemporels</a>
+        <a href="#savoir-faire-francais">Savoir-faire français</a>
+        <a href="#createurs-independants">Créateurs indépendants</a>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<section class="marques brand-family" id="maisons-de-couture">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Haute couture</span>
+      <h2>Les maisons de couture</h2>
+      <p class="family-intro">Ce sont les noms que tout le monde connaît, et ce sont aussi ceux sur lesquels on se trompe le plus souvent : une monture signée par une grande maison n'est pas une monture « de luxe » interchangeable, c'est le prolongement d'un vocabulaire de formes construit sur plusieurs décennies. Chez Dior ou Celine, la ligne reste sobre et le geste précis ; chez Gucci, Fendi ou Miu Miu, elle s'autorise la couleur, le volume et le motif. Nous vous aidons à trouver, à l'intérieur de cette famille, celle dont l'écriture correspond réellement à votre visage et à votre manière de vous habiller — et non simplement le logo le plus visible.</p>
+    </div>
+    <div class="brand-grid">
+      <div class="brand-card reveal" id="dior" style="--accent:var(--wood);--accent-bg:rgba(185,138,94,0.16);">
+        <div class="brand-card-body">
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/dior.png" alt="Logo Dior" loading="lazy"></div>
+          <div class="brand-meta">🇫🇷 Fondée en 1946 · France</div>
+        </div>
+        <p>Fondée à Paris en 1946 par Christian Dior, la maison bouleverse la mode dès 1947 avec le « New Look », qui redonne à la silhouette féminine sa taille marquée et ses jupes amples. Une élégance parisienne intemporelle, que l'on retrouve aujourd'hui jusque dans ses montures.</p>
+      </div>
+      <div class="brand-card reveal" id="celine" style="--accent:var(--terracotta);--accent-bg:rgba(193,101,59,0.12);">
+        <div class="brand-card-body">
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/celine.png" alt="Logo Celine" loading="lazy"></div>
+          <div class="brand-meta">🇫🇷 Fondée en 1945 · France</div>
+        </div>
+        <p>Fondée à Paris en 1945 par Céline Vipiana, la maison a débuté par la chaussure sur-mesure avant de s'imposer dans la maroquinerie et le prêt-à-porter. Une élégance discrète, façon « quiet luxury », que l'on retrouve dans des montures aussi sobres qu'affirmées.</p>
+      </div>
+      <div class="brand-card reveal" id="givenchy" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">
+        <div class="brand-card-body">
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/givenchy.png" alt="Logo Givenchy" loading="lazy"></div>
+          <div class="brand-meta">🇫🇷 Fondée en 1952 · France</div>
+        </div>
+        <p>Fondée à Paris en 1952 par Hubert de Givenchy, la maison se distingue très tôt par sa collaboration avec Audrey Hepburn, qu'il habille dès 1954. Une élégance épurée et raffinée, entre haute couture et modernité, qui irrigue toute sa ligne de lunetterie.</p>
+      </div>
+      <div class="brand-card reveal" id="saint-laurent" style="--accent:var(--terracotta-dark);--accent-bg:rgba(163,79,44,0.14);">
+        <div class="brand-card-body">
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/saint-laurent.png" alt="Logo Saint Laurent" loading="lazy"></div>
+          <div class="brand-meta">🇫🇷 Fondée en 1961 · France</div>
+        </div>
+        <p>Fondée à Paris en 1961 par Yves Saint Laurent et Pierre Bergé, la maison impose dès 1966 le smoking pour femme et la ligne Rive Gauche, pionnière du prêt-à-porter de luxe. Devenue Saint Laurent Paris en 2012 sous la direction d'Hedi Slimane, elle cultive une élégance rock et acérée qui se prolonge jusque dans ses montures.</p>
+      </div>
+      <div class="brand-card reveal" id="fendi" style="--accent:var(--wood-dark);--accent-bg:rgba(140,98,57,0.16);">
+        <div class="brand-card-body">
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/fendi.png" alt="Logo Fendi" loading="lazy"></div>
+          <div class="brand-meta">🇮🇹 Fondée en 1925 · Italie</div>
+        </div>
+        <p>Née à Rome en 1925 d'un atelier de maroquinerie fondé par Adele et Edoardo Fendi, la maison italienne a bâti sa réputation sur un savoir-faire d'exception en cuir et en fourrure, porté pendant plus de cinquante ans par Karl Lagerfeld. Ce même souci du détail se retrouve dans ses montures.</p>
+      </div>
+      <div class="brand-card reveal" id="prada" style="--accent:var(--wood);--accent-bg:rgba(185,138,94,0.16);">
+        <div class="brand-card-body">
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/prada.png" alt="Logo Prada" loading="lazy"></div>
+          <div class="brand-meta">🇮🇹 Fondée en 1913 · Italie</div>
+        </div>
+        <p>Fondée à Milan en 1913 par Mario Prada comme maroquinier de luxe, la maison doit sa réinvention à sa petite-fille Miuccia Prada, qui lui insuffle dès les années 1980 un esthétisme minimaliste et intellectuel — une élégance épurée que l'on retrouve jusque dans ses montures.</p>
+      </div>
+      <div class="brand-card reveal" id="miu-miu" style="--accent:var(--terracotta);--accent-bg:rgba(193,101,59,0.12);">
+        <div class="brand-card-body">
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/miu-miu.png" alt="Logo Miu Miu" loading="lazy"></div>
+          <div class="brand-meta">🇮🇹 Fondée en 1993 · Italie</div>
+        </div>
+        <p>Créée par Miuccia Prada au début des années 1990 comme la petite sœur facétieuse de Prada, Miu Miu cultive un esprit provocateur et ludique, entre audace et fraîcheur. Une lunetterie qui n'a pas peur de jouer avec les codes.</p>
+      </div>
+      <div class="brand-card reveal" id="gucci" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">
+        <div class="brand-card-body">
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/gucci.png" alt="Logo Gucci" loading="lazy"></div>
+          <div class="brand-meta">🇮🇹 Fondée en 1921 · Italie</div>
+        </div>
+        <p>Fondée à Florence en 1921 par Guccio Gucci comme sellerie de cuir fin, la maison italienne s'impose au fil du XXe siècle comme une référence du luxe, entre héritage équestre et esprit maximaliste. Une audace transalpine que l'on retrouve dans chacune de ses lunettes.</p>
+      </div>
+      <div class="brand-card reveal" id="armani" style="--accent:var(--terracotta-dark);--accent-bg:rgba(163,79,44,0.14);">
+        <div class="brand-card-body">
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/armani.png" alt="Logo Armani" loading="lazy"></div>
+          <div class="brand-meta">🇮🇹 Fondée en 1975 · Italie</div>
+        </div>
+        <p>Fondée à Milan en 1975 par Giorgio Armani et Sergio Galeotti, la maison a révolutionné le vestiaire en déstructurant la veste pour une élégance plus fluide. Une sophistication discrète que l'on retrouve dans chacune de ses montures, entre rigueur et douceur des lignes.</p>
+      </div>
+      <div class="brand-card reveal" id="loewe" style="--accent:var(--wood-dark);--accent-bg:rgba(140,98,57,0.16);">
+        <div class="brand-card-body">
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/loewe.png" alt="Logo Loewe" loading="lazy"></div>
+          <div class="brand-meta">🇪🇸 Fondée en 1846 · Espagne</div>
+        </div>
+        <p>Fondée à Madrid en 1846 par le maître-cuirier Enrique Loewe Roessberg, Loewe compte parmi les plus anciennes maisons de cuir d'Europe. Une exigence artisanale que l'on retrouve dans chacune de ses montures, pensées comme de petits objets de maroquinerie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="marques brand-family" id="intemporels">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Classiques</span>
+      <h2>Les intemporels et l'esprit américain</h2>
+      <p class="family-intro">Une paire que l'on garde dix ans ne se choisit pas comme une paire de saison. Ces maisons ont en commun d'avoir créé des silhouettes qui n'ont jamais quitté le paysage — l'Aviator et la Wayfarer de Ray-Ban, la ligne universitaire de Ralph Lauren — et de proposer des montures dont les formes restent lisibles quelle que soit l'année. C'est la famille vers laquelle nous orientons souvent une première paire de solaires, ou une monture de vue destinée à être portée tous les jours au bureau : le risque de s'en lasser est faible, et les pièces détachées restent disponibles longtemps.</p>
     </div>
     <div class="brand-grid">
       <div class="brand-card reveal" id="ray-ban" style="--accent:var(--wood);--accent-bg:rgba(185,138,94,0.16);">
@@ -204,76 +320,6 @@
         </div>
         <p>Fondée en 1937 aux États-Unis pour équiper les pilotes de l'armée américaine de verres anti-éblouissants, la maison invente cette même année l'Aviator, puis dessine en 1952 le Wayfarer — deux silhouettes devenues les plus copiées de l'histoire des lunettes.</p>
       </div>
-      <div class="brand-card reveal" id="fendi" style="--accent:var(--terracotta);--accent-bg:rgba(193,101,59,0.12);">
-        <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/fendi.png" alt="Logo Fendi" loading="lazy"></div>
-          <div class="brand-meta">🇮🇹 Fondée en 1925 · Italie</div>
-        </div>
-        <p>Née à Rome en 1925 d'un atelier de maroquinerie fondé par Adele et Edoardo Fendi, la maison italienne a bâti sa réputation sur un savoir-faire d'exception en cuir et en fourrure, porté pendant plus de cinquante ans par Karl Lagerfeld. Ce même souci du détail se retrouve dans ses montures.</p>
-      </div>
-      <div class="brand-card reveal" id="fred" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">
-        <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/fred.png" alt="Logo Fred" loading="lazy"></div>
-          <div class="brand-meta">🇫🇷 Fondée en 1936 · France</div>
-        </div>
-        <p>Fondée à Paris en 1936 par Fred Samuel, surnommé le « joaillier solaire », la maison doit sa renommée au bracelet Force 10, né en 1966 de l'univers du câble marin. Depuis 1988, cette signature se prolonge jusque dans ses montures, où le maillon torsadé devient motif.</p>
-      </div>
-      <div class="brand-card reveal" id="loewe" style="--accent:var(--terracotta-dark);--accent-bg:rgba(163,79,44,0.14);">
-        <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/loewe.png" alt="Logo Loewe" loading="lazy"></div>
-          <div class="brand-meta">🇪🇸 Fondée en 1846 · Espagne</div>
-        </div>
-        <p>Fondée à Madrid en 1846 par le maître-cuirier Enrique Loewe Roessberg, Loewe compte parmi les plus anciennes maisons de cuir d'Europe. Une exigence artisanale que l'on retrouve dans chacune de ses montures, pensées comme de petits objets de maroquinerie.</p>
-      </div>
-      <div class="brand-card reveal" id="celine" style="--accent:var(--wood-dark);--accent-bg:rgba(140,98,57,0.16);">
-        <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/celine.png" alt="Logo Celine" loading="lazy"></div>
-          <div class="brand-meta">🇫🇷 Fondée en 1945 · France</div>
-        </div>
-        <p>Fondée à Paris en 1945 par Céline Vipiana, la maison a débuté par la chaussure sur-mesure avant de s'imposer dans la maroquinerie et le prêt-à-porter. Une élégance discrète, façon « quiet luxury », que l'on retrouve dans des montures aussi sobres qu'affirmées.</p>
-      </div>
-      <div class="brand-card reveal" id="marc-jacobs" style="--accent:var(--wood);--accent-bg:rgba(185,138,94,0.16);">
-        <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/marc-jacobs.png" alt="Logo Marc Jacobs" loading="lazy"></div>
-          <div class="brand-meta">🇺🇸 Fondée en 1986 · États-Unis</div>
-        </div>
-        <p>Lancée à New York au milieu des années 1980, la maison Marc Jacobs s'impose dès 1992 avec sa collection dite « grunge », qui bouscule les codes du prêt-à-porter américain. Un esprit pop et facétieux qui irrigue toute sa ligne de lunetterie.</p>
-      </div>
-      <div class="brand-card reveal" id="prada" style="--accent:var(--terracotta);--accent-bg:rgba(193,101,59,0.12);">
-        <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/prada.png" alt="Logo Prada" loading="lazy"></div>
-          <div class="brand-meta">🇮🇹 Fondée en 1913 · Italie</div>
-        </div>
-        <p>Fondée à Milan en 1913 par Mario Prada comme maroquinier de luxe, la maison doit sa réinvention à sa petite-fille Miuccia Prada, qui lui insuffle dès les années 1980 un esthétisme minimaliste et intellectuel — une élégance épurée que l'on retrouve jusque dans ses montures.</p>
-      </div>
-      <div class="brand-card reveal" id="andy-brook" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">
-        <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/andy-brook.png" alt="Logo Andy Brook" loading="lazy"></div>
-          <div class="brand-meta">🇫🇷 Fondée en 2017 · France</div>
-        </div>
-        <p>Fondée en France en 2017, Andy Brook est une jeune maison qui mise sur un savoir-faire artisanal et des matières premium, assemblées à la main. Une approche contemporaine et exigeante de la lunetterie, portée par une génération attachée au fabriqué avec soin.</p>
-      </div>
-      <div class="brand-card reveal" id="chimi" style="--accent:var(--terracotta-dark);--accent-bg:rgba(163,79,44,0.14);">
-        <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/chimi.png" alt="Logo CHIMI" loading="lazy"></div>
-          <div class="brand-meta">🇸🇪 Fondée en 2016 · Suède</div>
-        </div>
-        <p>Fondée à Stockholm en 2016 par Charlie Lindström et Daniel Djurdjevic, CHIMI incarne une lunetterie scandinave minimaliste et colorée, pensée pour s'accorder à tous les styles. Une fraîcheur nordique, entre simplicité des formes et générosité des teintes.</p>
-      </div>
-      <div class="brand-card reveal" id="miu-miu" style="--accent:var(--wood-dark);--accent-bg:rgba(140,98,57,0.16);">
-        <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/miu-miu.png" alt="Logo Miu Miu" loading="lazy"></div>
-          <div class="brand-meta">🇮🇹 Fondée en 1993 · Italie</div>
-        </div>
-        <p>Créée par Miuccia Prada au début des années 1990 comme la petite sœur facétieuse de Prada, Miu Miu cultive un esprit provocateur et ludique, entre audace et fraîcheur. Une lunetterie qui n'a pas peur de jouer avec les codes.</p>
-      </div>
-      <div class="brand-card reveal" id="lool" style="--accent:var(--wood);--accent-bg:rgba(185,138,94,0.16);">
-        <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/lool.png" alt="Logo LOOL" loading="lazy"></div>
-          <div class="brand-meta">🇪🇸 Fondée en 2016 · Espagne</div>
-        </div>
-        <p>Fondée à Barcelone en 2016 par le designer Aris Rubio et l'entrepreneur Alex Carrasco, LOOL réinvente la monture en acier inoxydable, découpée au laser et assemblée sans une seule vis grâce à sa charnière brevetée. Une lunetterie ultralégère, à l'esthétique inspirée de l'architecture rétrofuturiste.</p>
-      </div>
       <div class="brand-card reveal" id="ralph-lauren" style="--accent:var(--terracotta);--accent-bg:rgba(193,101,59,0.12);">
         <div class="brand-card-body">
           <div class="brand-logo-plate"><img class="brand-logo" src="/logos/ralph-lauren.png" alt="Logo Ralph Lauren" loading="lazy"></div>
@@ -281,54 +327,78 @@
         </div>
         <p>Fondée à New York en 1967 par Ralph Lauren, la maison a démocratisé dans le monde entier une élégance « preppy » si américaine, entre héritage universitaire et art de vivre. Ses montures perpétuent ce classicisme intemporel, chic et évident.</p>
       </div>
-      <div class="brand-card reveal" id="armani" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">
+      <div class="brand-card reveal" id="marc-jacobs" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">
         <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/armani.png" alt="Logo Armani" loading="lazy"></div>
-          <div class="brand-meta">🇮🇹 Fondée en 1975 · Italie</div>
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/marc-jacobs.png" alt="Logo Marc Jacobs" loading="lazy"></div>
+          <div class="brand-meta">🇺🇸 Fondée en 1986 · États-Unis</div>
         </div>
-        <p>Fondée à Milan en 1975 par Giorgio Armani et Sergio Galeotti, la maison a révolutionné le vestiaire en déstructurant la veste pour une élégance plus fluide. Une sophistication discrète que l'on retrouve dans chacune de ses montures, entre rigueur et douceur des lignes.</p>
+        <p>Lancée à New York au milieu des années 1980, la maison Marc Jacobs s'impose dès 1992 avec sa collection dite « grunge », qui bouscule les codes du prêt-à-porter américain. Un esprit pop et facétieux qui irrigue toute sa ligne de lunetterie.</p>
       </div>
-      <div class="brand-card reveal" id="longchamp" style="--accent:var(--terracotta-dark);--accent-bg:rgba(163,79,44,0.14);">
-        <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/longchamp.png" alt="Logo Longchamp" loading="lazy"></div>
-          <div class="brand-meta">🇫🇷 Fondée en 1948 · France</div>
-        </div>
-        <p>Fondée à Paris en 1948 par Jean Cassegrain, Longchamp débute dans la maroquinerie fine avant de devenir, en 1993, la maison du Pliage — ce sac pliable en toile et cuir devenu un classique mondial. Une élégance française pratique, transmise de génération en génération au sein de la famille Cassegrain.</p>
-      </div>
-      <div class="brand-card reveal" id="guess" style="--accent:var(--wood-dark);--accent-bg:rgba(140,98,57,0.16);">
+      <div class="brand-card reveal" id="guess" style="--accent:var(--terracotta-dark);--accent-bg:rgba(163,79,44,0.14);">
         <div class="brand-card-body">
           <div class="brand-logo-plate"><img class="brand-logo" src="/logos/guess.png" alt="Logo Guess" loading="lazy"></div>
           <div class="brand-meta">🇺🇸 Fondée en 1981 · États-Unis</div>
         </div>
         <p>Fondée à Los Angeles en 1981 par les frères Marciano, Guess impose d'emblée un denim ajusté qui tranche avec les coupes amples de l'époque, puis des campagnes en noir et blanc devenues cultes. Un esprit américain affirmé, porté par son triangle devenu l'un des logos les plus reconnaissables de la mode.</p>
       </div>
-      <div class="brand-card reveal" id="dior" style="--accent:var(--wood);--accent-bg:rgba(185,138,94,0.16);">
+    </div>
+  </div>
+</section>
+
+<section class="marques brand-family" id="savoir-faire-francais">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Savoir-faire français</span>
+      <h2>La maroquinerie et la joaillerie françaises</h2>
+      <p class="family-intro">Deux maisons parisiennes venues d'un autre métier — le bracelet pour Fred, le sac pour Longchamp — et qui ont transposé leur savoir-faire dans la lunetterie sans en changer les codes. On y retrouve des détails que l'on remarque à l'usage plus qu'en vitrine : un maillon repris sur la branche, une épaisseur de métal juste, une charnière qui ne prend pas de jeu. C'est une famille que nous recommandons volontiers à qui cherche une monture discrète mais signée, sans logo apparent.</p>
+    </div>
+    <div class="brand-grid">
+      <div class="brand-card reveal" id="fred" style="--accent:var(--wood-dark);--accent-bg:rgba(140,98,57,0.16);">
         <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/dior.png" alt="Logo Dior" loading="lazy"></div>
-          <div class="brand-meta">🇫🇷 Fondée en 1946 · France</div>
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/fred.png" alt="Logo Fred" loading="lazy"></div>
+          <div class="brand-meta">🇫🇷 Fondée en 1936 · France</div>
         </div>
-        <p>Fondée à Paris en 1946 par Christian Dior, la maison bouleverse la mode dès 1947 avec le « New Look », qui redonne à la silhouette féminine sa taille marquée et ses jupes amples. Une élégance parisienne intemporelle, que l'on retrouve aujourd'hui jusque dans ses montures.</p>
+        <p>Fondée à Paris en 1936 par Fred Samuel, surnommé le « joaillier solaire », la maison doit sa renommée au bracelet Force 10, né en 1966 de l'univers du câble marin. Depuis 1988, cette signature se prolonge jusque dans ses montures, où le maillon torsadé devient motif.</p>
       </div>
-      <div class="brand-card reveal" id="gucci" style="--accent:var(--terracotta);--accent-bg:rgba(193,101,59,0.12);">
+      <div class="brand-card reveal" id="longchamp" style="--accent:var(--wood);--accent-bg:rgba(185,138,94,0.16);">
         <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/gucci.png" alt="Logo Gucci" loading="lazy"></div>
-          <div class="brand-meta">🇮🇹 Fondée en 1921 · Italie</div>
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/longchamp.png" alt="Logo Longchamp" loading="lazy"></div>
+          <div class="brand-meta">🇫🇷 Fondée en 1948 · France</div>
         </div>
-        <p>Fondée à Florence en 1921 par Guccio Gucci comme sellerie de cuir fin, la maison italienne s'impose au fil du XXe siècle comme une référence du luxe, entre héritage équestre et esprit maximaliste. Une audace transalpine que l'on retrouve dans chacune de ses lunettes.</p>
+        <p>Fondée à Paris en 1948 par Jean Cassegrain, Longchamp débute dans la maroquinerie fine avant de devenir, en 1993, la maison du Pliage — ce sac pliable en toile et cuir devenu un classique mondial. Une élégance française pratique, transmise de génération en génération au sein de la famille Cassegrain.</p>
       </div>
-      <div class="brand-card reveal" id="saint-laurent" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">
+    </div>
+  </div>
+</section>
+
+<section class="marques brand-family" id="createurs-independants">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Indépendants</span>
+      <h2>Les créateurs indépendants</h2>
+      <p class="family-intro">C'est la partie de la sélection dont nous sommes le plus fiers, parce qu'elle ne se trouve pas partout. Ces trois maisons ne dépendent d'aucun grand groupe : elles fabriquent en petites séries et concentrent leur travail sur la construction de la monture plutôt que sur la notoriété du nom. LOOL assemble ses montures en acier découpé au laser, sans une seule vis ; CHIMI travaille des acétates colorés dans une grammaire scandinave épurée ; Andy Brook mise sur l'assemblage à la main et des matières haut de gamme. Si vous cherchez une paire que personne d'autre ne portera dans votre immeuble, commencez par celles-là.</p>
+    </div>
+    <div class="brand-grid">
+      <div class="brand-card reveal" id="lool" style="--accent:var(--terracotta);--accent-bg:rgba(193,101,59,0.12);">
         <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/saint-laurent.png" alt="Logo Saint Laurent" loading="lazy"></div>
-          <div class="brand-meta">🇫🇷 Fondée en 1961 · France</div>
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/lool.png" alt="Logo LOOL" loading="lazy"></div>
+          <div class="brand-meta">🇪🇸 Fondée en 2016 · Espagne</div>
         </div>
-        <p>Fondée à Paris en 1961 par Yves Saint Laurent et Pierre Bergé, la maison impose dès 1966 le smoking pour femme et la ligne Rive Gauche, pionnière du prêt-à-porter de luxe. Devenue Saint Laurent Paris en 2012 sous la direction d'Hedi Slimane, elle cultive une élégance rock et acérée qui se prolonge jusque dans ses montures.</p>
+        <p>Fondée à Barcelone en 2016 par le designer Aris Rubio et l'entrepreneur Alex Carrasco, LOOL réinvente la monture en acier inoxydable, découpée au laser et assemblée sans une seule vis grâce à sa charnière brevetée. Une lunetterie ultralégère, à l'esthétique inspirée de l'architecture rétrofuturiste.</p>
       </div>
-      <div class="brand-card reveal" id="givenchy" style="--accent:var(--terracotta-dark);--accent-bg:rgba(163,79,44,0.14);">
+      <div class="brand-card reveal" id="chimi" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">
         <div class="brand-card-body">
-          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/givenchy.png" alt="Logo Givenchy" loading="lazy"></div>
-          <div class="brand-meta">🇫🇷 Fondée en 1952 · France</div>
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/chimi.png" alt="Logo CHIMI" loading="lazy"></div>
+          <div class="brand-meta">🇸🇪 Fondée en 2016 · Suède</div>
         </div>
-        <p>Fondée à Paris en 1952 par Hubert de Givenchy, la maison se distingue très tôt par sa collaboration avec Audrey Hepburn, qu'il habille dès 1954. Une élégance épurée et raffinée, entre haute couture et modernité, qui irrigue toute sa ligne de lunetterie.</p>
+        <p>Fondée à Stockholm en 2016 par Charlie Lindström et Daniel Djurdjevic, CHIMI incarne une lunetterie scandinave minimaliste et colorée, pensée pour s'accorder à tous les styles. Une fraîcheur nordique, entre simplicité des formes et générosité des teintes.</p>
+      </div>
+      <div class="brand-card reveal" id="andy-brook" style="--accent:var(--terracotta-dark);--accent-bg:rgba(163,79,44,0.14);">
+        <div class="brand-card-body">
+          <div class="brand-logo-plate"><img class="brand-logo" src="/logos/andy-brook.png" alt="Logo Andy Brook" loading="lazy"></div>
+          <div class="brand-meta">🇫🇷 Fondée en 2017 · France</div>
+        </div>
+        <p>Fondée en France en 2017, Andy Brook est une jeune maison qui mise sur un savoir-faire artisanal et des matières premium, assemblées à la main. Une approche contemporaine et exigeante de la lunetterie, portée par une génération attachée au fabriqué avec soin.</p>
       </div>
     </div>
   </div>
@@ -340,13 +410,55 @@
       <div class="split-text reveal">
         <span class="eyebrow">En boutique</span>
         <h2>Le plus simple : venir les essayer</h2>
-        <p>Photos et fiches produits ne remplacent jamais l'essayage. Venez découvrir l'ensemble de notre sélection en boutique, Galerie Oslo – Olympiades, et repartez avec les conseils adaptés à votre visage, votre correction et votre budget.</p>
+        <p>Photos et fiches produits ne remplacent jamais l'essayage. Une monture qui paraît parfaite à l'écran peut appuyer sur le nez, glisser dès que vous baissez la tête, ou couper le regard parce que la hauteur du cercle ne correspond pas à votre visage. Ces trois points ne se voient sur aucune photo.</p>
+        <p>En boutique, nous regardons d'abord votre écart pupillaire, la hauteur de vos yeux dans la monture et la façon dont elle se pose sur votre nez et vos oreilles — puis seulement le style. C'est aussi le moment où votre correction entre en jeu : une forte myopie supporte mal les grands cercles, une progression a besoin d'une certaine hauteur de verre. Nous vous le disons avant l'achat, pas après.</p>
+        <p>Comptez une vingtaine de minutes pour un essayage tranquille, sans rendez-vous. Si une référence précise vous intéresse, appelez-nous avant de venir : nous vérifions qu'elle est bien en boutique dans votre coloris.</p>
         <a href="/contact.html" class="btn btn-outline" style="margin-top:6px;">Nous rendre visite</a>
       </div>
       <div class="arch-frame reveal">
         <img src="https://images.pexels.com/photos/5766564/pexels-photo-5766564.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop" alt="Présentoir de montures Maison Mikis" loading="lazy">
       </div>
     </div>
+  </div>
+</section>
+
+
+<section class="related-articles story-block">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Mode & tendances</span>
+      <h2>Nos articles sur le sujet</h2>
+    </div>
+    <div class="article-grid">
+      <a href="/actualites/tendances-montures-2026.html" class="article-card reveal" data-category="mode-lunettes">
+        <div class="article-img"><img src="/images/actualites/tendances-montures.jpg" alt="Portrait mode avec lunettes de soleil fines, tendances 2026" loading="lazy"></div>
+        <div class="article-card-body">
+          <span class="article-tag" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">Mode &amp; tendances</span>
+          <h3>Tendances montures 2026 : quelles formes et couleurs privilégier</h3>
+          <p>Formes géométriques, retour du papillon, écaille intemporelle : le tour d'horizon des tendances lunettes 2026.</p>
+          <div class="article-meta"><span>26 juillet 2026</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
+        </div>
+      </a>
+      <a href="/actualites/lunettes-engagees-matieres-durables-eco-responsables.html" class="article-card reveal" data-category="mode-lunettes">
+        <div class="article-img"><img src="/images/actualites/tendances-montures.jpg" alt="Gros plan élégant sur une paire de lunettes en acétate coloré posée sur un support en bois naturel" loading="lazy"></div>
+        <div class="article-card-body">
+          <span class="article-tag" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">Mode &amp; tendances</span>
+          <h3>Lunettes engagées : quand la mode optique mise sur les matières durables</h3>
+          <p>Acétate biosourcé, matériaux recyclés, réparabilité : la lunette durable n'est plus une niche mais une vraie tendance.</p>
+          <div class="article-meta"><span>16 mars 2026</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
+        </div>
+      </a>
+      <a href="/actualites/lunettes-connectees-ray-ban-meta-mode-tech.html" class="article-card reveal" data-category="mode-lunettes">
+        <div class="article-img"><img src="/images/actualites/tendances-montures.jpg" alt="Portrait mode d'une personne élégante portant des lunettes de soleil noires de style Wayfarer" loading="lazy"></div>
+        <div class="article-card-body">
+          <span class="article-tag" style="--accent:var(--sage);--accent-bg:rgba(138,148,131,0.18);">Mode &amp; tendances</span>
+          <h3>Ray-Ban Meta : quand la lunette connectée devient un objet de mode</h3>
+          <p>Entre caméra intégrée, assistant vocal et mini-écran dans le verre, la lunette connectée pose de nouvelles questions au moment de choisir sa monture.</p>
+          <div class="article-meta"><span>4 novembre 2025</span><span class="more">Lire l'article <span aria-hidden="true">⤢</span></span></div>
+        </div>
+      </a>
+    </div>
+    <div class="block-more-center"><a href="/actualites.html" class="block-more">Voir toutes nos actualités →</a></div>
   </div>
 </section>
 
@@ -370,6 +482,7 @@
         <div>
           <h4>Navigation</h4>
           <ul>
+            <li><a href="/notre-histoire.html">Notre histoire</a></li>
             <li><a href="/nos-conseils.html">Nos Conseils</a></li>
             <li><a href="/marques.html">Nos Marques</a></li>
             <li><a href="/espace-sante.html">Espace Santé</a></li>
@@ -389,6 +502,7 @@
     </div>
     <div class="footer-bottom">
       <span>© <span id="year"></span> Maison Mikis — Tous droits réservés.</span>
+      <span><a href="/mentions-legales.html">Mentions légales</a> · <a href="/mentions-legales.html#confidentialite">Confidentialité</a></span>
       <span>Optique · Audition · Paris 13e</span>
     </div>
   </div>
@@ -405,10 +519,10 @@
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  const header = document.getElementById('siteHeader');
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 40);
-  });
+  /* Le header garde en permanence la classe "scrolled" (demande du client,
+     31/07/2026) : fond creme translucide et bulle d'onglet actif terracotta
+     des le haut de page. L'ancien listener de scroll qui basculait la classe
+     au-dela de 40px a donc ete supprime. */
 
   const burger = document.getElementById('burger');
   const nav = document.getElementById('mainNav');

@@ -12,6 +12,10 @@
     --line:#E4D8C6;
     --shadow: 0 20px 50px -20px rgba(43,38,33,0.25);
     --radius-arch: 200px 200px 12px 12px;
+    --header-h: 70px;
+    /* Cadrage vertical par defaut des photos de bandeau. Surchargeable page
+       par page via hero_pos dans render_page(). */
+    --hero-pos: 15%;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -22,6 +26,10 @@
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+    /* Le header est desormais opaque en permanence (31/07/2026) : on decale
+       tout le contenu de sa hauteur pour que la photo commence sous le menu
+       au lieu de passer derriere. */
+    padding-top:var(--header-h);
   }
   h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:500;line-height:1.15;color:var(--charcoal);}
   a{text-decoration:none;color:inherit;}
@@ -75,28 +83,45 @@
     color:var(--cream);display:flex;align-items:center;justify-content:center;
     font-size:19px;flex-shrink:0;
   }
+  .logo{flex-shrink:0;}
   .logo-text{line-height:1.1;}
-  .logo-text .name{font-size:17px;font-weight:600;color:var(--cream);transition:color .35s;}
+  .logo-text .name{font-size:17px;font-weight:600;color:var(--cream);transition:color .35s;white-space:nowrap;}
   header.scrolled .logo-text .name{color:var(--charcoal);}
-  .logo-text .tag{font-family:'Inter',sans-serif;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(251,246,239,0.75);transition:color .35s;}
+  .logo-text .tag{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(251,246,239,0.75);transition:color .35s;white-space:nowrap;}
   header.scrolled .logo-text .tag{color:var(--wood-dark);}
-  nav.main-nav{display:flex;gap:2px;}
+  /* La marge negative compense le rembourrage horizontal des bulles : sans
+     elle, les six onglets occuperaient ~120px de plus qu'avant et viendraient
+     toucher le logo autour de 1000px de large. */
+  nav.main-nav{display:flex;align-items:center;gap:0;flex-shrink:1;margin:0 -12px;}
   nav.main-nav a{
-    font-size:13.5px;font-weight:500;color:var(--cream);position:relative;
-    padding:10px 15px;border-radius:100px;transition:all .25s ease;white-space:nowrap;
+    font-size:13px;font-weight:500;color:var(--cream);position:relative;
+    padding:8px 12px;border-radius:100px;border:1px solid transparent;
+    transition:color .35s, background .25s ease, border-color .25s ease;white-space:nowrap;
   }
-  nav.main-nav a:hover, nav.main-nav a.active{background:rgba(251,246,239,0.16);}
   header.scrolled nav.main-nav a{color:var(--charcoal-soft);}
-  header.scrolled nav.main-nav a:hover, header.scrolled nav.main-nav a.active{
-    background:rgba(193,101,59,0.10);color:var(--terracotta-dark);font-weight:600;
+  nav.main-nav a:hover{color:var(--terracotta);}
+  /* Onglet de la page en cours : bulle « voile translucide » (piste 1 validee
+     par le client le 30/07/2026). Le marquage .active est deja emis par
+     render_header(), donc c'est un changement purement CSS. */
+  nav.main-nav a.active{
+    background:rgba(251,246,239,0.18);
+    border-color:rgba(251,246,239,0.30);
+    color:var(--cream);
   }
-  .header-actions{display:flex;align-items:center;gap:12px;}
-  .header-phone{
-    font-size:13px;font-weight:600;color:var(--cream);transition:all .35s;
-    display:flex;align-items:center;gap:7px;background:rgba(251,246,239,0.14);
-    padding:8px 14px 8px 12px;border-radius:100px;white-space:nowrap;
+  header.scrolled nav.main-nav a.active{
+    background:rgba(193,101,59,0.10);
+    border-color:rgba(193,101,59,0.22);
+    color:var(--terracotta);
   }
-  header.scrolled .header-phone{color:var(--charcoal-soft);background:var(--cream-2);}
+  .header-actions{display:flex;align-items:center;gap:14px;flex-shrink:0;}
+  .header-phone-bubble{
+    display:flex;align-items:center;gap:7px;white-space:nowrap;
+    background:var(--terracotta);color:var(--cream);
+    font-size:13px;font-weight:600;
+    padding:9px 18px;border-radius:100px;border:1.5px solid transparent;
+    transition:background .25s ease, transform .25s ease, box-shadow .25s ease;
+  }
+  .header-phone-bubble:hover{background:var(--terracotta-dark);transform:translateY(-2px);box-shadow:0 10px 20px -10px rgba(163,79,44,0.55);}
   .burger{display:none;width:26px;height:20px;position:relative;cursor:pointer;background:none;border:none;}
   .burger span{position:absolute;left:0;right:0;height:2px;background:var(--cream);transition:all .3s;}
   header.scrolled .burger span{background:var(--charcoal);}
@@ -104,7 +129,7 @@
 
   /* HERO (homepage full) */
   .hero{
-    min-height:100vh;position:relative;display:flex;align-items:center;
+    min-height:calc(100vh - var(--header-h));position:relative;display:flex;align-items:center;
     background:linear-gradient(180deg, rgba(43,38,33,0.55), rgba(43,38,33,0.72)),
       url('https://picsum.photos/id/1074/1800/1100') center/cover no-repeat;
   }
@@ -113,7 +138,7 @@
     background:linear-gradient(180deg, rgba(140,98,57,0.25), rgba(43,38,33,0.55));
     mix-blend-mode:multiply;pointer-events:none;
   }
-  .hero-content{position:relative;z-index:2;color:var(--cream);max-width:680px;padding-top:60px;}
+  .hero-content{position:relative;z-index:2;color:var(--cream);max-width:680px;padding-top:0;}
   .hero-content .eyebrow{color:#E7B08C;}
   .hero-content h1{font-size:clamp(38px,5.4vw,66px);margin-bottom:22px;color:var(--cream);}
   .hero-content p{font-size:18px;color:rgba(251,246,239,0.88);max-width:520px;margin-bottom:38px;}
@@ -128,21 +153,25 @@
 
   /* PAGE HERO (inner pages) */
   .page-hero{
-    position:relative;padding:172px 0 84px;color:var(--cream);
+    position:relative;padding:56px 0 56px;color:var(--cream);
+    /* 31/07/2026 : cadrage descendu (demande du client). Le bandeau garde sa
+       hauteur, on remonte la fenetre de cadrage dans l'image (15% au lieu de
+       50%) : la photo parait descendue et c'est son bas qui est rogne. */
     background:linear-gradient(180deg, rgba(43,38,33,0.62), rgba(43,38,33,0.78)),
-      var(--hero-img) center/cover no-repeat;
+      var(--hero-img) center var(--hero-pos, 15%)/cover no-repeat;
   }
   .page-hero .eyebrow{color:#E7B08C;}
   .page-hero h1{color:var(--cream);font-size:clamp(32px,4.6vw,52px);max-width:760px;}
   .page-hero p{color:rgba(251,246,239,0.85);max-width:600px;margin-top:16px;font-size:16.5px;}
+  .page-hero.page-hero--compact{padding:58px 0 41px;}
   .breadcrumb{font-size:12.5px;color:rgba(251,246,239,0.65);margin-bottom:18px;}
   .breadcrumb a{color:rgba(251,246,239,0.85);}
   .breadcrumb a:hover{color:var(--cream);text-decoration:underline;}
 
   /* PAGE HERO — SCROLLING PHOTO MARQUEE (defile de mode) */
   .hero-marquee{
-    position:relative;min-height:400px;overflow:hidden;
-    padding:150px 0 56px; /* same top clearance as .page-hero so text never collides with the header */
+    position:relative;min-height:267px;overflow:hidden;
+    padding:100px 0 37px; /* hauteur de bandeau conservee : le contenu est cale en bas, ce padding pilote la hauteur de la frise */
     display:flex;align-items:flex-end;background:var(--wood-dark);
   }
   .hero-marquee-track{
@@ -227,6 +256,47 @@
   .service-card h3{font-size:19px;margin-bottom:10px;}
   .service-card p{font-size:14.5px;color:var(--charcoal-soft);}
   .service-card .more{display:inline-block;margin-top:14px;font-size:13.5px;font-weight:600;color:var(--terracotta);}
+
+  /* HOMEPAGE — aperçu des 4 univers (cartes photo) */
+  .services-refined{background:var(--cream-2);padding:96px 0;}
+  .section-head-split{
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:end;
+    margin-bottom:56px;padding-bottom:28px;border-bottom:1px solid var(--line);
+  }
+  .section-head-split h2{font-size:clamp(28px,3.2vw,36px);margin-top:10px;}
+  .section-head-split > p{color:var(--charcoal-soft);font-size:15.5px;max-width:420px;margin:0;}
+  .refined-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  .refined-card{
+    display:block;background:var(--cream);border-radius:20px;overflow:hidden;
+    border:1px solid var(--line);text-decoration:none;color:inherit;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  }
+  .refined-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:transparent;}
+  .refined-photo{
+    position:relative;height:148px;background:var(--img) center/cover no-repeat;
+    transition:transform .6s ease;
+  }
+  .refined-photo::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(43,38,33,0) 55%, rgba(43,38,33,0.4) 100%);
+  }
+  .refined-card:hover .refined-photo{transform:scale(1.07);}
+  .refined-icon{
+    position:absolute;left:18px;bottom:-22px;z-index:2;width:44px;height:44px;border-radius:13px;
+    background:var(--terracotta);color:var(--cream);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 22px -8px rgba(43,38,33,0.45);transition:background .3s ease;
+  }
+  .refined-card:hover .refined-icon{background:var(--terracotta-dark);}
+  .refined-body{padding:36px 22px 26px;}
+  .refined-body h3{font-size:19px;margin-bottom:9px;}
+  .refined-body p{font-size:14px;color:var(--charcoal-soft);margin-bottom:15px;}
+  .refined-body .more{display:inline-block;font-size:13.5px;font-weight:600;color:var(--terracotta);transition:transform .25s ease;}
+  .refined-card:hover .more{transform:translateX(3px);}
+  @media (max-width:900px){.refined-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:760px){
+    .section-head-split{grid-template-columns:1fr;gap:14px;}
+    .refined-grid{grid-template-columns:1fr;}
+  }
 
   /* AMBIANCE GALLERY */
   .ambiance{background:var(--cream);}
@@ -419,17 +489,106 @@
     display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;margin-top:2px;
   }
   .article-prose .pull-quote{margin:30px 0;}
+
+  /* ====================================================================
+     GABARIT SEO EDITORIAL (31/07/2026, soir)
+     1. .answer-lead  : reponse directe de 40-60 mots placee juste sous le
+        titre. C'est ce bloc que Google et les moteurs de reponse IA
+        extraient en priorite. Doit rester court : au-dela de ~60 mots il
+        cesse d'etre extractible tel quel.
+     2. .article-prose h3 / table / ol : sous-niveaux, tableaux
+        comparatifs et listes numerotees, formats les plus repris par les
+        AI Overviews et les extraits enrichis.
+     3. .article-faq  : FAQ VISIBLE en HTML. Le rich result FAQ a ete
+        supprime par Google en mai-juin 2026, mais le format reste lu par
+        les moteurs de reponse et utile au lecteur — on le garde donc en
+        HTML lisible, sans compter sur un affichage enrichi.
+     ==================================================================== */
+  .answer-lead{
+    margin:0 0 34px;padding:22px 26px;background:var(--cream-2);
+    border:1px solid var(--line);border-left:3px solid var(--sage);border-radius:16px;
+  }
+  .answer-lead p{font-size:17px;line-height:1.65;color:var(--charcoal);margin-bottom:0;font-weight:500;}
+  .answer-lead .eyebrow{margin-bottom:8px;display:block;}
+
+  .article-prose h3{font-size:clamp(17px,1.9vw,20px);margin:30px 0 12px;color:var(--charcoal);}
+  .article-prose ol{margin:20px 0 24px;padding-left:22px;list-style:decimal;}
+  .article-prose ol li{font-size:15.5px;color:var(--charcoal-soft);line-height:1.7;margin-bottom:10px;padding-left:4px;}
+  .article-prose ul.plain-list{margin:20px 0 24px;padding-left:20px;list-style:disc;}
+  .article-prose ul.plain-list li{font-size:15.5px;color:var(--charcoal-soft);line-height:1.7;margin-bottom:9px;}
+
+  .table-wrap{overflow-x:auto;margin:26px 0 30px;-webkit-overflow-scrolling:touch;}
+  .article-prose table{
+    width:100%;border-collapse:collapse;font-size:14.5px;background:var(--cream-2);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  }
+  .article-prose thead th{
+    background:var(--sage);color:var(--cream);text-align:left;font-weight:600;
+    padding:12px 16px;font-size:13.5px;letter-spacing:.02em;
+  }
+  .article-prose tbody td{
+    padding:12px 16px;border-top:1px solid var(--line);color:var(--charcoal-soft);
+    line-height:1.6;vertical-align:top;
+  }
+  .article-prose tbody tr td:first-child{font-weight:600;color:var(--charcoal);}
+
+  .article-faq{margin:46px 0 4px;}
+  .article-faq h2{margin-bottom:8px;}
+  .article-faq .faq-intro{font-size:15px;color:var(--charcoal-soft);margin-bottom:22px;}
+  .article-faq .faq-item{
+    padding:20px 24px;background:var(--cream-2);border:1px solid var(--line);
+    border-radius:14px;margin-bottom:12px;
+  }
+  .article-faq .faq-item h3{margin:0 0 8px;font-size:16.5px;line-height:1.4;}
+  .article-faq .faq-item p{font-size:15px;margin-bottom:0;}
+
   .article-source-note{
     margin-top:40px;padding:18px 22px;background:var(--cream-2);border-radius:14px;
     font-size:12.5px;color:var(--charcoal-soft);border:1px solid var(--line);
   }
-  .article-freshness-notice{
-    margin:0 0 32px;padding:14px 20px;background:rgba(193,101,59,0.10);border-radius:14px;
-    font-size:13px;line-height:1.5;color:var(--charcoal-soft);border:1px solid rgba(193,101,59,0.28);
-    display:flex;gap:10px;align-items:flex-start;
-  }
-  .article-freshness-notice .icon{flex-shrink:0;font-size:15px;line-height:1.4;}
   .related-articles{background:var(--cream-2);}
+
+  /* ====================================================================
+     MAILLAGE INTERNE (31/07/2026)
+     Les liens du corps de page etaient invisibles : la regle globale
+     a{text-decoration:none;color:inherit} les rendait indistinguables du
+     texte. On style donc explicitement les liens contextuels, dans les
+     articles comme dans les pages (classe .ilink).
+     ==================================================================== */
+  .article-prose p a, .article-prose li a, .ilink{
+    color:var(--terracotta-dark);
+    border-bottom:1px solid rgba(193,101,59,0.38);
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .article-prose p a:hover, .article-prose li a:hover, .ilink:hover{
+    color:var(--terracotta);border-bottom-color:var(--terracotta);
+  }
+
+  /* Encadre "Pour aller plus loin", en fin de corps d'article */
+  .go-further{
+    margin:46px 0 4px;padding:26px 28px;background:var(--cream-2);
+    border:1px solid var(--line);border-left:3px solid var(--terracotta);
+    border-radius:16px;
+  }
+  .go-further .eyebrow{margin-bottom:8px;}
+  .go-further h3{font-size:19px;margin-bottom:18px;}
+  .go-further ul{display:flex;flex-direction:column;gap:14px;}
+  .go-further li{display:flex;gap:12px;align-items:flex-start;}
+  .go-further .arrow{color:var(--terracotta);flex-shrink:0;font-size:13px;line-height:1.7;}
+  .article-prose .go-further a, .go-further a{
+    font-weight:600;color:var(--charcoal);font-size:15px;line-height:1.45;border-bottom:none;
+  }
+  .article-prose .go-further a:hover, .go-further a:hover{color:var(--terracotta);border-bottom:none;}
+  .go-further .go-desc{display:block;font-weight:400;font-size:13.5px;color:var(--charcoal-soft);margin-top:3px;}
+
+  /* Lien discret en fin de bloc de page (accueil, pages de service) */
+  .block-more{
+    display:inline-block;margin-top:22px;font-size:14px;font-weight:600;
+    color:var(--terracotta);border-bottom:1px solid rgba(193,101,59,0.4);
+    transition:color .2s ease,border-color .2s ease;
+  }
+  .block-more:hover{color:var(--terracotta-dark);border-bottom-color:var(--terracotta-dark);}
+  .block-more-center{text-align:center;margin-top:36px;}
 
   /* ACTUALITÉS — bulle agrandie (modale) : le contenu complet de l'article est
      chargé depuis sa page dédiée (fetch) et affiché sans quitter la page en
@@ -523,6 +682,8 @@
   .footer-links ul li{margin-bottom:9px;font-size:14px;}
   .footer-links a:hover{color:var(--terracotta);}
   .footer-bottom{padding-top:26px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12.5px;color:rgba(251,246,239,0.45);}
+  .footer-bottom a{border-bottom:1px solid rgba(251,246,239,0.22);transition:color .2s ease,border-color .2s ease;}
+  .footer-bottom a:hover{color:var(--terracotta);border-bottom-color:var(--terracotta);}
 
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .8s ease;}
   .reveal.in{opacity:1;transform:translateY(0);}
@@ -541,23 +702,41 @@
     .reimburse-grid{grid-template-columns:1fr;}
     .article-grid{grid-template-columns:1fr 1fr;}
   }
-  @media (max-width:760px){
+  @media (max-width:1130px){
+    /* En dessous de cette largeur, la barre de navigation (7 onglets) ne
+       tient plus confortablement sur une seule ligne à côté du logo et de la
+       bulle téléphone — on bascule sur le menu burger plutôt que de laisser
+       les onglets se couper ou passer à la ligne.
+       Historique du seuil : 980px, puis 1010px le 30/07/2026 (les bulles
+       d'onglet ajoutent du rembourrage horizontal), puis 1130px le
+       31/07/2026 avec le retour de l'onglet « Nous rendre visite ».
+       Mesure : la nav a besoin de 1057px utiles, soit 1113px de fenetre ;
+       1130px laisse une marge de securite. */
     nav.main-nav{
       position:fixed;top:0;right:-100%;height:100vh;width:78%;max-width:340px;
-      background:var(--cream);flex-direction:column;padding:110px 36px;gap:28px;
+      background:var(--cream);flex-direction:column;padding:110px 30px;gap:11px;margin:0;
       transition:right .4s ease;box-shadow:-10px 0 40px rgba(0,0,0,0.15);
     }
     nav.main-nav.open{right:0;}
-    nav.main-nav a{color:var(--charcoal);font-size:16px;padding:12px 18px;}
-    nav.main-nav a:hover, nav.main-nav a.active{
-      background:rgba(193,101,59,0.10);color:var(--terracotta-dark);font-weight:600;
+    nav.main-nav a{color:var(--charcoal);font-size:16px;padding:9px 16px;align-self:flex-start;}
+    /* Dans le panneau burger le fond est deja creme : la bulle prend la
+       teinte terracotta quel que soit l'etat de defilement. */
+    nav.main-nav a.active, header.scrolled nav.main-nav a.active{
+      background:rgba(193,101,59,0.10);
+      border-color:rgba(193,101,59,0.22);
+      color:var(--terracotta);
     }
-    .header-phone{display:none;}
     .burger{display:block;}
+  }
+  @media (max-width:480px){
+    .header-phone-bubble span.phone-full{display:none;}
+  }
+  @media (max-width:760px){
     section{padding:76px 0;}
     .story-block{padding:56px 0;}
-    .page-hero{padding:150px 0 64px;}
-    .hero-marquee{min-height:340px;padding:130px 0 40px;}
+    .page-hero{padding:44px 0 43px;}
+    .page-hero.page-hero--compact{padding:46px 0 31px;}
+    .hero-marquee{min-height:227px;padding:87px 0 27px;}
     .services-grid{grid-template-columns:1fr;}
     .marques-grid{grid-template-columns:repeat(2,1fr);}
     .brand-grid{grid-template-columns:1fr;}
