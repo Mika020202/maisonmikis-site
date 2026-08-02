@@ -236,39 +236,49 @@ jobs:
             exit 0
           fi
 
-          # Controle de forme du mot de passe, SANS jamais reveler sa valeur :
-          # un espace ou un retour a la ligne colle par megarde est la cause
-          # d'echec d'authentification la plus frequente.
+          # --- Controles de forme, SANS jamais reveler la moindre valeur -------
+          # On n'affiche que des longueurs et la nature des chaines. Cela suffit
+          # a reperer les erreurs de saisie les plus frequentes (champ interverti,
+          # adresse e-mail mise a la place de l'identifiant, espace colle par le
+          # copier-coller) sans qu'un secret n'apparaisse dans le journal.
+          echo "Identifiant enregistre : ${#IONOS_USER} caracteres, commence par « ${IONOS_USER:0:2} »"
+          echo "Hote enregistre        : ${#IONOS_HOST} caracteres"
+          case "$IONOS_HOST" in
+            *.webspace-host.com) echo "Hote          : forme attendue (…webspace-host.com) ✔" ;;
+            *) echo "::warning::L'hote enregistre ne se termine pas par .webspace-host.com : verifier IONOS_HOST." ;;
+          esac
+          case "$IONOS_USER" in
+            *@*) echo "::warning::L'identifiant enregistre ressemble a une adresse e-mail. L'acces SFTP IONOS n'utilise PAS l'adresse du compte, mais un identifiant technique du type su123456." ;;
+          esac
           NETTOYE=$(printf '%s' "$SSHPASS" | tr -d ' \t\r\n')
           if [ "${#NETTOYE}" -ne "${#SSHPASS}" ]; then
             echo "::warning::Le mot de passe IONOS enregistre contient un espace ou un retour a la ligne. C'est probablement une scorie de copier-coller."
-            echo "⚠️ Le mot de passe IONOS enregistre contient un espace ou un retour a la ligne en trop : a re-saisir si la connexion echoue." >> "$GITHUB_STEP_SUMMARY"
+            echo "⚠️ Le mot de passe IONOS enregistre contient un espace ou un retour a la ligne en trop : a re-saisir." >> "$GITHUB_STEP_SUMMARY"
           fi
 
-          # Deux voies possibles vers le meme hebergement. On essaie la plus
-          # sure d'abord (SFTP, chiffree de bout en bout), et si l'hebergeur ne
-          # l'accepte pas on bascule sur FTPS (FTP chiffre par TLS). Le mot de
-          # passe n'apparait sur aucune ligne de commande : SFTP le lit dans
-          # SSHPASS, FTPS dans LFTP_PASSWORD via --env-password.
-          #
-          # Deux pieges de lftp, verifies l'un et l'autre en conditions reelles,
-          # qui expliquent les deux echecs du 02/08/2026 :
-          #
+          # --- Quelles portes sont ouvertes sur l'hebergement ? ----------------
+          # On teste l'ouverture des ports avant de lancer lftp : cela distingue
+          # nettement « le serveur ne repond pas » (protocole indisponible) de
+          # « le serveur repond mais refuse les identifiants ».
+          porte_ouverte() {
+            timeout 8 bash -c "exec 3<>/dev/tcp/$1/$2" >/dev/null 2>&1
+          }
+          PORTE_22="fermee"; PORTE_21="fermee"
+          if porte_ouverte "$IONOS_HOST" 22; then PORTE_22="ouverte"; fi
+          if porte_ouverte "$IONOS_HOST" 21; then PORTE_21="ouverte"; fi
+          echo "Port 22 (SFTP) : $PORTE_22 — Port 21 (FTP/FTPS) : $PORTE_21"
+
+          # Deux pieges de lftp, verifies l'un et l'autre en conditions reelles :
           #  1. lftp ne transmet PAS le nom d'utilisateur a ssh. L'adresse
-          #     sftp://utilisateur@hote ne sert qu'a lftp lui-meme : ssh, lui,
-          #     se connecte alors sous le compte local de la machine ("runner"),
-          #     d'ou un refus d'authentification qui n'a rien a voir avec le mot
-          #     de passe. Le nom d'utilisateur doit donc etre donne explicitement
-          #     a ssh, avec -l.
-          #
+          #     sftp://utilisateur@hote ne sert qu'a lftp lui-meme ; ssh se
+          #     connecterait sous le compte local de la machine. D'ou le -l.
           #  2. une chaine de commandes passee a -e ne doit contenir AUCUN
-          #     retour a la ligne : lftp avale sinon l'adresse du serveur comme
-          #     si elle faisait partie de la derniere commande. Les blocs
-          #     ci-dessous restent lisibles sur plusieurs lignes, puis sont
-          #     aplatis par « tr » juste avant l'appel.
+          #     retour a la ligne : lftp avalerait l'adresse du serveur comme si
+          #     elle faisait partie de la derniere commande. D'ou l'aplatissement
+          #     par « tr » juste avant l'appel.
           VOIE_SFTP=$(printf '%s' "
             set sftp:auto-confirm yes;
-            set sftp:connect-program 'sshpass -e ssh -a -x -l $IONOS_USER -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=no';
+            set sftp:connect-program 'sshpass -e ssh -a -x -l $IONOS_USER -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=no -o PreferredAuthentications=password,keyboard-interactive';
             set net:max-retries 1;
             set net:timeout 20;
           " | tr '\n' ' ')
@@ -279,7 +289,7 @@ jobs:
             set ftp:passive-mode true;
             set ssl:verify-certificate no;
             set net:max-retries 1;
-            set net:timeout 20;
+            set net:timeout 15;
           " | tr '\n' ' ')
 
           case "$MODE" in
@@ -300,18 +310,65 @@ jobs:
           esac
 
           PROTOCOLE=""
-          echo "--- Tentative 1 : SFTP ---"
-          if lftp -c "$VOIE_SFTP open sftp://$IONOS_HOST; $ACTIONS"; then
-            PROTOCOLE="SFTP"
-          else
-            echo "--- SFTP refuse par l'hebergement. Tentative 2 : FTPS ---"
-            if lftp -u "$IONOS_USER" --env-password -e "$VOIE_FTPS $ACTIONS bye" "ftp://$IONOS_HOST"; then
-              PROTOCOLE="FTPS"
-            else
-              echo "::error::Ni SFTP ni FTPS n'ont abouti. Les identifiants IONOS sont a verifier (utilisateur ou mot de passe)."
-              echo "❌ Connexion a l'hebergement impossible, en SFTP comme en FTPS. Rien n'a ete modifie : le site en ligne est intact." >> "$GITHUB_STEP_SUMMARY"
-              exit 1
+          AUTH_REFUSEE=0
+
+          if [ "$PORTE_22" = "ouverte" ]; then
+            echo "--- Tentative 1 : SFTP ---"
+            set +e
+            lftp -c "$VOIE_SFTP open sftp://$IONOS_HOST; $ACTIONS" > /tmp/sftp.log 2>&1
+            RC_SFTP=$?
+            set -e
+            cat /tmp/sftp.log
+            if [ "$RC_SFTP" -eq 0 ]; then
+              PROTOCOLE="SFTP"
+            elif grep -qiE "permission denied|authentication failed|login incorrect" /tmp/sftp.log; then
+              AUTH_REFUSEE=1
             fi
+          else
+            echo "--- SFTP ignore : le port 22 ne repond pas sur cet hebergement. ---"
+          fi
+
+          if [ -z "$PROTOCOLE" ] && [ "$PORTE_21" = "ouverte" ]; then
+            echo "--- Tentative 2 : FTPS ---"
+            set +e
+            lftp -u "$IONOS_USER" --env-password -e "$VOIE_FTPS $ACTIONS bye" "ftp://$IONOS_HOST" > /tmp/ftps.log 2>&1
+            RC_FTPS=$?
+            set -e
+            cat /tmp/ftps.log
+            if [ "$RC_FTPS" -eq 0 ]; then
+              PROTOCOLE="FTPS"
+            elif grep -qiE "530|login incorrect|not logged in" /tmp/ftps.log; then
+              AUTH_REFUSEE=1
+            fi
+          elif [ -z "$PROTOCOLE" ]; then
+            echo "--- FTPS ignore : le port 21 ne repond pas sur cet hebergement (c'est normal, les espaces web IONOS sont en SFTP seul). ---"
+          fi
+
+          # --- Diagnostic clair en cas d'echec --------------------------------
+          if [ -z "$PROTOCOLE" ]; then
+            if [ "$AUTH_REFUSEE" -eq 1 ]; then
+              echo "::error::L'hebergement IONOS repond, mais il refuse la connexion : l'identifiant ou le mot de passe SFTP enregistre ne correspond pas. Rien n'a ete modifie en ligne."
+              {
+                echo "❌ **Identifiants refuses par IONOS.** Le serveur repond bien, la recette est donc correcte : c'est le couple identifiant / mot de passe qui ne passe pas."
+                echo ""
+                echo "A verifier dans l'espace client IONOS, rubrique **SFTP & SSH** :"
+                echo "1. l'identifiant SFTP exact (du type \`su123456\`, ce n'est **pas** l'adresse e-mail du compte IONOS) ;"
+                echo "2. le mot de passe **de l'acces SFTP**, qui est distinct du mot de passe de connexion a IONOS — il se redefinit depuis cette meme page ;"
+                echo "3. puis re-enregistrer \`IONOS_USER\` et \`IONOS_PASSWORD\` dans Settings → Secrets and variables → Actions."
+                echo ""
+                echo "Le site en ligne n'a pas ete touche."
+              } >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "::error::Aucune voie de transfert disponible vers l'hebergement (ports 22 et 21 injoignables). Rien n'a ete modifie en ligne."
+              {
+                echo "❌ **L'hebergement ne repond sur aucune voie de transfert** (port 22 : $PORTE_22, port 21 : $PORTE_21)."
+                echo ""
+                echo "Il faut activer l'acces SFTP/SSH dans l'espace client IONOS, ou verifier l'adresse du serveur enregistree dans \`IONOS_HOST\`."
+                echo ""
+                echo "Le site en ligne n'a pas ete touche."
+              } >> "$GITHUB_STEP_SUMMARY"
+            fi
+            exit 1
           fi
 
           case "$MODE" in
