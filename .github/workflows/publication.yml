@@ -250,17 +250,37 @@ jobs:
           # l'accepte pas on bascule sur FTPS (FTP chiffre par TLS). Le mot de
           # passe n'apparait sur aucune ligne de commande : SFTP le lit dans
           # SSHPASS, FTPS dans LFTP_PASSWORD via --env-password.
-          VOIE_SFTP="set sftp:auto-confirm yes;
-                     set sftp:connect-program 'sshpass -e ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=no -o PreferredAuthentications=password -o NumberOfPasswordPrompts=1';
-                     set net:max-retries 1;
-                     set net:timeout 15;"
+          #
+          # Deux pieges de lftp, verifies l'un et l'autre en conditions reelles,
+          # qui expliquent les deux echecs du 02/08/2026 :
+          #
+          #  1. lftp ne transmet PAS le nom d'utilisateur a ssh. L'adresse
+          #     sftp://utilisateur@hote ne sert qu'a lftp lui-meme : ssh, lui,
+          #     se connecte alors sous le compte local de la machine ("runner"),
+          #     d'ou un refus d'authentification qui n'a rien a voir avec le mot
+          #     de passe. Le nom d'utilisateur doit donc etre donne explicitement
+          #     a ssh, avec -l.
+          #
+          #  2. une chaine de commandes passee a -e ne doit contenir AUCUN
+          #     retour a la ligne : lftp avale sinon l'adresse du serveur comme
+          #     si elle faisait partie de la derniere commande. Les blocs
+          #     ci-dessous restent lisibles sur plusieurs lignes, puis sont
+          #     aplatis par « tr » juste avant l'appel.
+          VOIE_SFTP=$(printf '%s' "
+            set sftp:auto-confirm yes;
+            set sftp:connect-program 'sshpass -e ssh -a -x -l $IONOS_USER -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=no';
+            set net:max-retries 1;
+            set net:timeout 20;
+          " | tr '\n' ' ')
 
-          VOIE_FTPS="set ftp:ssl-force true;
-                     set ftp:ssl-protect-data true;
-                     set ftp:passive-mode true;
-                     set ssl:verify-certificate no;
-                     set net:max-retries 1;
-                     set net:timeout 15;"
+          VOIE_FTPS=$(printf '%s' "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ftp:passive-mode true;
+            set ssl:verify-certificate no;
+            set net:max-retries 1;
+            set net:timeout 20;
+          " | tr '\n' ' ')
 
           case "$MODE" in
             "Tester la connexion IONOS")
@@ -281,7 +301,7 @@ jobs:
 
           PROTOCOLE=""
           echo "--- Tentative 1 : SFTP ---"
-          if lftp -c "$VOIE_SFTP open sftp://$IONOS_USER@$IONOS_HOST; $ACTIONS"; then
+          if lftp -c "$VOIE_SFTP open sftp://$IONOS_HOST; $ACTIONS"; then
             PROTOCOLE="SFTP"
           else
             echo "--- SFTP refuse par l'hebergement. Tentative 2 : FTPS ---"
