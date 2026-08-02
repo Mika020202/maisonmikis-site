@@ -213,14 +213,16 @@ jobs:
           fi
 
       # -------------------------------------------------------------------
-      # 5. Envoi vers IONOS, en SFTP. Aucun code tiers ne touche le mot de
-      #    passe : uniquement lftp et sshpass, issus des depots Ubuntu.
+      # 5. Envoi vers IONOS. On tente d'abord le SFTP, puis le FTPS si
+      #    l'hebergement refuse le premier. Aucun code tiers ne touche le mot
+      #    de passe : uniquement lftp et sshpass, issus des depots Ubuntu.
       # -------------------------------------------------------------------
       - name: Envoyer vers IONOS
         env:
-          IONOS_HOST: ${{ secrets.IONOS_HOST }}
-          IONOS_USER: ${{ secrets.IONOS_USER }}
-          SSHPASS:    ${{ secrets.IONOS_PASSWORD }}
+          IONOS_HOST:    ${{ secrets.IONOS_HOST }}
+          IONOS_USER:    ${{ secrets.IONOS_USER }}
+          SSHPASS:       ${{ secrets.IONOS_PASSWORD }}
+          LFTP_PASSWORD: ${{ secrets.IONOS_PASSWORD }}
         run: |
           set -euo pipefail
 
@@ -234,28 +236,72 @@ jobs:
             exit 0
           fi
 
-          CONNEXION="set sftp:auto-confirm yes;
-                     set sftp:connect-program 'sshpass -e ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null';
-                     set net:max-retries 3;
-                     set net:timeout 20;
-                     open sftp://$IONOS_USER@$IONOS_HOST;"
+          # Controle de forme du mot de passe, SANS jamais reveler sa valeur :
+          # un espace ou un retour a la ligne colle par megarde est la cause
+          # d'echec d'authentification la plus frequente.
+          NETTOYE=$(printf '%s' "$SSHPASS" | tr -d ' \t\r\n')
+          if [ "${#NETTOYE}" -ne "${#SSHPASS}" ]; then
+            echo "::warning::Le mot de passe IONOS enregistre contient un espace ou un retour a la ligne. C'est probablement une scorie de copier-coller."
+            echo "⚠️ Le mot de passe IONOS enregistre contient un espace ou un retour a la ligne en trop : a re-saisir si la connexion echoue." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          # Deux voies possibles vers le meme hebergement. On essaie la plus
+          # sure d'abord (SFTP, chiffree de bout en bout), et si l'hebergeur ne
+          # l'accepte pas on bascule sur FTPS (FTP chiffre par TLS). Le mot de
+          # passe n'apparait sur aucune ligne de commande : SFTP le lit dans
+          # SSHPASS, FTPS dans LFTP_PASSWORD via --env-password.
+          VOIE_SFTP="set sftp:auto-confirm yes;
+                     set sftp:connect-program 'sshpass -e ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=no -o PreferredAuthentications=password -o NumberOfPasswordPrompts=1';
+                     set net:max-retries 1;
+                     set net:timeout 15;"
+
+          VOIE_FTPS="set ftp:ssl-force true;
+                     set ftp:ssl-protect-data true;
+                     set ftp:passive-mode true;
+                     set ssl:verify-certificate no;
+                     set net:max-retries 1;
+                     set net:timeout 15;"
 
           case "$MODE" in
             "Tester la connexion IONOS")
               mkdir -p /tmp/test
               date -u +"Relais GitHub vers IONOS operationnel - %Y-%m-%d %H:%M:%S UTC" \
                 > /tmp/test/_test-relais-github.txt
-              lftp -c "$CONNEXION cd /public; put /tmp/test/_test-relais-github.txt; cls -l _test-relais-github.txt;"
-              echo "✅ Connexion IONOS operationnelle. A verifier : https://www.maisonmikis.fr/_test-relais-github.txt" >> "$GITHUB_STEP_SUMMARY"
+              ACTIONS="cd /public; put /tmp/test/_test-relais-github.txt; cls -l _test-relais-github.txt;"
               ;;
 
             "Supprimer le fichier de test")
-              lftp -c "$CONNEXION cd /public; rm -f _test-relais-github.txt;"
-              echo "Fichier de test supprime." >> "$GITHUB_STEP_SUMMARY"
+              ACTIONS="cd /public; rm -f _test-relais-github.txt;"
               ;;
 
             *)
-              lftp -c "$CONNEXION mirror --reverse --verbose --parallel=4 --no-perms --exclude-glob .DS_Store /tmp/enligne/ /public/;"
-              echo "✅ Site mis en ligne sur https://www.maisonmikis.fr/" >> "$GITHUB_STEP_SUMMARY"
+              ACTIONS="mirror --reverse --verbose --parallel=4 --no-perms --exclude-glob .DS_Store /tmp/enligne/ /public/;"
+              ;;
+          esac
+
+          PROTOCOLE=""
+          echo "--- Tentative 1 : SFTP ---"
+          if lftp -c "$VOIE_SFTP open sftp://$IONOS_USER@$IONOS_HOST; $ACTIONS"; then
+            PROTOCOLE="SFTP"
+          else
+            echo "--- SFTP refuse par l'hebergement. Tentative 2 : FTPS ---"
+            if lftp -u "$IONOS_USER" --env-password -e "$VOIE_FTPS $ACTIONS bye" "ftp://$IONOS_HOST"; then
+              PROTOCOLE="FTPS"
+            else
+              echo "::error::Ni SFTP ni FTPS n'ont abouti. Les identifiants IONOS sont a verifier (utilisateur ou mot de passe)."
+              echo "❌ Connexion a l'hebergement impossible, en SFTP comme en FTPS. Rien n'a ete modifie : le site en ligne est intact." >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+          fi
+
+          case "$MODE" in
+            "Tester la connexion IONOS")
+              echo "✅ Connexion IONOS operationnelle (voie $PROTOCOLE). A verifier : https://www.maisonmikis.fr/_test-relais-github.txt" >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            "Supprimer le fichier de test")
+              echo "Fichier de test supprime (voie $PROTOCOLE)." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            *)
+              echo "✅ Site mis en ligne sur https://www.maisonmikis.fr/ (voie $PROTOCOLE)." >> "$GITHUB_STEP_SUMMARY"
               ;;
           esac
