@@ -1,0 +1,261 @@
+name: Publication Maison Mikis
+
+# ---------------------------------------------------------------------------
+#  PUBLICATION AUTONOME DU SITE maisonmikis.fr
+#
+#  Ce fichier est la recette complete. Il tourne sur les serveurs de GitHub :
+#  ni ordinateur allume, ni navigateur ouvert, ni session en cours.
+#
+#  Chaque lundi matin, automatiquement :
+#     1. la veille verifie les sources professionnelles du secteur ;
+#     2. s'il y a une vraie nouveaute, elle fait rediger un article ;
+#     3. build.py regenere l'INTEGRALITE du site a partir du modele unique ;
+#     4. tout est envoye sur l'hebergement IONOS.
+#
+#  Quatre actions sont aussi lancables a la main (onglet Actions -> Run workflow),
+#  y compris depuis un telephone.
+#
+#  Les identifiants ne figurent NULLE PART dans ce fichier. Ils sont lus dans
+#  les "Secrets" du depot, saisis par le proprietaire du depot lui-meme :
+#     IONOS_HOST         -> access-5020982937.webspace-host.com
+#     IONOS_USER         -> su582728
+#     IONOS_PASSWORD     -> le mot de passe SFTP IONOS
+#     ANTHROPIC_API_KEY  -> la cle qui permet a la veille de rediger
+#
+#  Regle de securite structurante : la mise en ligne se fait en "mirror" SANS
+#  l'option --delete. Ce workflow sait ajouter et remplacer des fichiers sur le
+#  serveur, il ne sait PAS en supprimer. Une erreur ne peut donc pas vider le
+#  site.
+# ---------------------------------------------------------------------------
+
+on:
+  schedule:
+    # Tous les lundis a 07h00 UTC (09h00 heure de Paris en ete, 08h00 en hiver).
+    - cron: '0 7 * * 1'
+
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Que voulez-vous faire ?"
+        type: choice
+        default: "Remettre tout le site en ligne"
+        options:
+          - "Remettre tout le site en ligne"
+          - "Publication hebdomadaire (veille + mise en ligne)"
+          - "Tester la connexion IONOS"
+          - "Supprimer le fichier de test"
+
+  push:
+    branches: [ main ]
+    paths:
+      - '**.zip'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publication-maison-mikis
+  cancel-in-progress: false
+
+jobs:
+  publication:
+    name: Publication du site
+    runs-on: ubuntu-latest
+
+    env:
+      # Sur declenchement automatique (lundi) ou depot d'archive, on prend le
+      # mode complet ; sinon celui choisi dans le menu deroulant.
+      MODE: >-
+        ${{ github.event_name == 'workflow_dispatch'
+            && inputs.mode
+            || (github.event_name == 'schedule'
+                && 'Publication hebdomadaire (veille + mise en ligne)'
+                || 'Remettre tout le site en ligne') }}
+
+    steps:
+      - name: Recuperer le depot
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Installer les outils de transfert
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends lftp sshpass unzip rsync
+
+      # -------------------------------------------------------------------
+      # 1. Archive deposee a la racine (mise en place initiale, corrections
+      #    ponctuelles). Son contenu est range dans le depot, puis l'archive
+      #    est supprimee.
+      # -------------------------------------------------------------------
+      - name: Integrer une archive deposee
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          zips=( *.zip )
+          if [ ${#zips[@]} -eq 0 ]; then
+            echo "Aucune archive deposee : rien a integrer."
+            exit 0
+          fi
+
+          rm -rf /tmp/depot && mkdir -p /tmp/depot
+          for z in "${zips[@]}"; do
+            echo "Archive detectee : $z"
+            if unzip -l "$z" | grep -q '\.\./'; then
+              echo "::error::Archive refusee : chemin suspect dans $z"
+              exit 1
+            fi
+            unzip -o -q "$z" -d /tmp/depot
+          done
+
+          # Filet de securite : on n'accepte que des fichiers attendus.
+          find /tmp/depot -type f \
+            ! -iregex '.*\.\(html\|htm\|css\|js\|xml\|txt\|json\|jpg\|jpeg\|png\|webp\|gif\|svg\|ico\|woff\|woff2\|pdf\|py\)$' \
+            -print -delete
+
+          # Une archive peut contenir un dossier public/ ou directement les
+          # fichiers : les deux formes sont acceptees.
+          if [ -d /tmp/depot/public ]; then SRC=/tmp/depot/public; else SRC=/tmp/depot; fi
+          cp -R "$SRC/." .
+          rm -f "${zips[@]}"
+
+          git config user.name  "Publication Maison Mikis"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Rien de nouveau apres integration."
+          else
+            git commit -m "Integration de l'archive deposee"
+            git push
+            echo "Archive integree et supprimee de la racine."
+          fi
+
+      # -------------------------------------------------------------------
+      # 2. Veille hebdomadaire. Elle n'ecrit qu'un fichier de donnees
+      #    (scripts/articles_auto.json) : aucune page HTML n'est produite ici.
+      #    Si rien de neuf n'est trouve, elle ne fait rien, et c'est normal.
+      # -------------------------------------------------------------------
+      - name: Veille et redaction de l'article
+        if: ${{ contains(env.MODE, 'Publication hebdomadaire') }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+            echo "::warning::ANTHROPIC_API_KEY absent : veille ignoree, le site sera simplement remis en ligne tel quel."
+            echo "⚠️ La cle ANTHROPIC_API_KEY n'est pas renseignee : aucune redaction cette semaine." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          python3 scripts/veille.py
+
+      # -------------------------------------------------------------------
+      # 3. Regeneration du site. build.py est le SEUL generateur : il reecrit
+      #    toutes les pages, la feuille de style et le sitemap a partir du
+      #    modele unique. Un article ajoute par la veille passe donc par
+      #    exactement le meme gabarit que les articles ecrits a la main.
+      # -------------------------------------------------------------------
+      - name: Regenerer le site
+        if: ${{ env.MODE != 'Tester la connexion IONOS' && env.MODE != 'Supprimer le fichier de test' }}
+        run: |
+          set -euo pipefail
+          python3 build.py
+
+      - name: Enregistrer les changements
+        if: ${{ env.MODE != 'Tester la connexion IONOS' && env.MODE != 'Supprimer le fichier de test' }}
+        run: |
+          set -euo pipefail
+          git config user.name  "Publication Maison Mikis"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Le site est deja a jour : rien a enregistrer."
+          else
+            git commit -m "Publication automatique du $(date -u +%d/%m/%Y)"
+            git push
+            echo "Modifications enregistrees dans le depot."
+          fi
+
+      # -------------------------------------------------------------------
+      # 4. Preparation de ce qui part reellement en ligne.
+      #    On construit un dossier propre : le site, et rien d'autre. Les
+      #    scripts, la recette GitHub et les fichiers techniques ne quittent
+      #    jamais le depot.
+      # -------------------------------------------------------------------
+      - name: Preparer les fichiers a mettre en ligne
+        if: ${{ env.MODE != 'Tester la connexion IONOS' && env.MODE != 'Supprimer le fichier de test' }}
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/enligne && mkdir -p /tmp/enligne
+          rsync -a \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'scripts' \
+            --exclude '.gitignore' \
+            --exclude 'CNAME' \
+            --exclude 'README*' \
+            --exclude '*.py' \
+            --exclude '*.zip' \
+            --exclude '.DS_Store' \
+            ./ /tmp/enligne/
+
+          PAGES=$(find /tmp/enligne -name '*.html' | wc -l)
+          echo "Pages preparees : $PAGES"
+          if [ ! -f /tmp/enligne/index.html ] || [ "$PAGES" -lt 30 ]; then
+            echo "::error::Prevention : seulement $PAGES page(s) HTML preparee(s). Mise en ligne annulee, le site en place n'est pas touche."
+            exit 1
+          fi
+          if [ -n "$(find /tmp/enligne -name '*.py' -print -quit)" ]; then
+            echo "::error::Un script Python se trouve dans les fichiers a publier. Mise en ligne annulee."
+            exit 1
+          fi
+
+      # -------------------------------------------------------------------
+      # 5. Envoi vers IONOS, en SFTP. Aucun code tiers ne touche le mot de
+      #    passe : uniquement lftp et sshpass, issus des depots Ubuntu.
+      # -------------------------------------------------------------------
+      - name: Envoyer vers IONOS
+        env:
+          IONOS_HOST: ${{ secrets.IONOS_HOST }}
+          IONOS_USER: ${{ secrets.IONOS_USER }}
+          SSHPASS:    ${{ secrets.IONOS_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${IONOS_HOST:-}" ] || [ -z "${IONOS_USER:-}" ] || [ -z "${SSHPASS:-}" ]; then
+            if [ "$MODE" = "Tester la connexion IONOS" ]; then
+              echo "::error::Les secrets IONOS_HOST / IONOS_USER / IONOS_PASSWORD ne sont pas renseignes."
+              exit 1
+            fi
+            echo "::warning::Secrets IONOS absents : le site n'a pas ete mis en ligne (le depot, lui, est a jour)."
+            echo "⚠️ Les identifiants IONOS ne sont pas encore enregistres : rien n'a ete mis en ligne." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          CONNEXION="set sftp:auto-confirm yes;
+                     set sftp:connect-program 'sshpass -e ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null';
+                     set net:max-retries 3;
+                     set net:timeout 20;
+                     open sftp://$IONOS_USER@$IONOS_HOST;"
+
+          case "$MODE" in
+            "Tester la connexion IONOS")
+              mkdir -p /tmp/test
+              date -u +"Relais GitHub vers IONOS operationnel - %Y-%m-%d %H:%M:%S UTC" \
+                > /tmp/test/_test-relais-github.txt
+              lftp -c "$CONNEXION cd /public; put /tmp/test/_test-relais-github.txt; cls -l _test-relais-github.txt;"
+              echo "✅ Connexion IONOS operationnelle. A verifier : https://www.maisonmikis.fr/_test-relais-github.txt" >> "$GITHUB_STEP_SUMMARY"
+              ;;
+
+            "Supprimer le fichier de test")
+              lftp -c "$CONNEXION cd /public; rm -f _test-relais-github.txt;"
+              echo "Fichier de test supprime." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+
+            *)
+              lftp -c "$CONNEXION mirror --reverse --verbose --parallel=4 --no-perms --exclude-glob .DS_Store /tmp/enligne/ /public/;"
+              echo "✅ Site mis en ligne sur https://www.maisonmikis.fr/" >> "$GITHUB_STEP_SUMMARY"
+              ;;
+          esac
