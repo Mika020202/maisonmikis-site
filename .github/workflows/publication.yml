@@ -256,6 +256,19 @@ jobs:
             echo "::warning::Le mot de passe IONOS enregistre contient un espace ou un retour a la ligne. C'est probablement une scorie de copier-coller."
             echo "⚠️ Le mot de passe IONOS enregistre contient un espace ou un retour a la ligne en trop : a re-saisir." >> "$GITHUB_STEP_SUMMARY"
           fi
+          # --- Empreinte de FORME du mot de passe (ne revele aucun caractere) ---
+          # Le depot est public : on n'affiche ni le mot de passe, ni sa longueur,
+          # ni aucun de ses caracteres. On indique uniquement s'il est compose
+          # exclusivement de lettres et de chiffres. Rapproche de la consigne
+          # donnee au client (« choisissez un mot de passe en lettres et chiffres
+          # uniquement »), cela permet de savoir si la NOUVELLE valeur est bien
+          # arrivee jusqu'au secret GitHub, ou si l'ancienne y est restee.
+          case "$SSHPASS" in
+            *[!A-Za-z0-9]*)
+              echo "Forme du mot de passe enregistre : contient au moins un caractere qui n'est ni une lettre ni un chiffre." ;;
+            *)
+              echo "Forme du mot de passe enregistre : uniquement des lettres et des chiffres." ;;
+          esac
 
           # --- Quelles portes sont ouvertes sur l'hebergement ? ----------------
           # On teste l'ouverture des ports avant de lancer lftp : cela distingue
