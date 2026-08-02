@@ -6,7 +6,7 @@ name: Publication Maison Mikis
 #  Ce fichier est la recette complete. Il tourne sur les serveurs de GitHub :
 #  ni ordinateur allume, ni navigateur ouvert, ni session en cours.
 #
-#  Chaque lundi matin, automatiquement :
+#  Chaque lundi et chaque jeudi matin, automatiquement :
 #     1. la veille verifie les sources professionnelles du secteur ;
 #     2. s'il y a une vraie nouveaute, elle fait rediger un article ;
 #     3. build.py regenere l'INTEGRALITE du site a partir du modele unique ;
@@ -30,8 +30,19 @@ name: Publication Maison Mikis
 
 on:
   schedule:
-    # Tous les lundis a 07h00 UTC (09h00 heure de Paris en ete, 08h00 en hiver).
+    # DEUX publications par semaine, a la demande du client (02/08/2026) :
+    # "je souhaite deux articles par semaine, qui sont publies automatiquement
+    #  sans que je fasse quoi que ce soit".
+    # Les deux passages sont identiques : meme veille, meme seuil editorial,
+    # meme controle qualite. Le second n'est pas un rattrapage du premier.
+    # veille.py ne publie qu'UN article par execution au maximum, et refuse un
+    # slug deja utilise : deux passages ne peuvent pas produire de doublon.
+    # A savoir : si aucune vraie nouveaute ne franchit le seuil, le passage se
+    # termine sans rien publier. C'est voulu, et le client en a ete informe.
+    # Lundi a 07h00 UTC (09h00 heure de Paris en ete, 08h00 en hiver).
     - cron: '0 7 * * 1'
+    # Jeudi a 07h00 UTC — meme heure, pour espacer les deux articles.
+    - cron: '0 7 * * 4'
 
   workflow_dispatch:
     inputs:
@@ -63,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      # Sur declenchement automatique (lundi) ou depot d'archive, on prend le
+      # Sur declenchement automatique (lundi et jeudi) ou depot d'archive, on prend le
       # mode complet ; sinon celui choisi dans le menu deroulant.
       MODE: >-
         ${{ github.event_name == 'workflow_dispatch'
