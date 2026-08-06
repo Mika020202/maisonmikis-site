@@ -35,7 +35,7 @@ import sys
 import unicodedata
 import urllib.error
 import urllib.request
-from datetime import date
+from datetime import date, timedelta
 
 SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SCRIPTS_DIR)
@@ -254,12 +254,22 @@ def run_weekly(sources, state, site):
 
     system = """Tu es l'équipe éditoriale du site maisonmikis.fr, opticien et
 audioprothésiste indépendant à Paris 13e. Tu tiens une veille hebdomadaire : tu
-vérifies des sources professionnelles, et tu ne rédiges un article QUE si une
-vraie nouveauté est apparue depuis la dernière vérification.
+vérifies des sources professionnelles, et tu ne rédiges un article QUE si un fait
+réellement notable mérite d'être porté à la connaissance des clients de la
+boutique.
+
+FENÊTRE DE RECHERCHE — soixante jours.
+Tu ne te limites pas à ce qui est apparu depuis la dernière vérification. Tu
+retiens tout fait notable des SOIXANTE derniers jours qui n'a pas encore été
+traité sur le site. La liste des sujets déjà couverts t'est donnée plus bas :
+si un fait important des dernières semaines n'y figure pas, il est légitime de
+l'écrire aujourd'hui, même s'il date de plusieurs semaines. Un décret publié il
+y a un mois et jamais expliqué à nos clients reste une information neuve POUR EUX.
+À qualité égale, tu préfères le fait le plus récent.
 
 SEUIL D'IMPORTANCE — sois exigeant, c'est le cœur de ta mission.
-Une simple différence avec la dernière vérification NE SUFFIT PAS. Tu ne rédiges
-que si la nouveauté relève d'au moins une de ces catégories :
+L'ancienneté n'est pas un critère de rejet ; la faiblesse du sujet en est un.
+Tu ne rédiges que si le fait relève d'au moins une de ces catégories :
   - lancement d'un vrai produit ou d'une vraie technologie ;
   - changement réglementaire ou de remboursement touchant l'optique ou l'audition ;
   - étude, enquête ou statistique notable d'une autorité de santé ou d'un
@@ -269,8 +279,10 @@ que si la nouveauté relève d'au moins une de ces catégories :
 Tu ignores explicitement : mise à jour cosmétique de site, republication, variation
 de prix, communiqué promotionnel sans substance, sponsoring mondain, nomination à
 un poste non stratégique, marronnier saisonnier.
-Dans le doute, tu ne publies pas. Une semaine sans article est un bon résultat ;
-un article creux abîme le site.
+Un article creux abîme le site : mieux vaut ne rien publier que publier du vide.
+Mais avant de renoncer, tu dois avoir réellement balayé les soixante derniers
+jours et vérifié qu'aucun fait de ces catégories n'est resté non traité. Ne
+renonce que si ce balayage ne donne rien.
 
 Si rien ne franchit ce seuil, réponds EXACTEMENT : {"no_novelty": true}
 
@@ -304,12 +316,14 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
     user = (
         "Sources à vérifier :\n"
         + json.dumps(flatten_sources(sources), ensure_ascii=False, indent=2)
-        + "\n\nDernière publication vue pour chaque source, lors de la vérification "
-          "précédente :\n"
+        + "\n\nPour information seulement — dernière publication repérée sur chaque "
+          "source lors d'un passage précédent. Ce n'est PAS une borne : un fait "
+          "antérieur peut très bien n'avoir jamais été traité chez nous.\n"
         + json.dumps(state.get("last_seen_by_source", {}), ensure_ascii=False, indent=2)
         + "\n\nTitres déjà publiés sur le site (ne redis pas la même chose) :\n"
         + "\n".join("- " + t for t in titres_existants)
-        + "\n\nNous sommes le %s." % today.isoformat()
+        + "\n\nNous sommes le %s. Ta fenêtre de recherche va donc du %s à "
+          "aujourd'hui." % (today.isoformat(), (today - timedelta(days=60)).isoformat())
     )
 
     try:
