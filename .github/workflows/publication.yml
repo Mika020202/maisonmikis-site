@@ -84,7 +84,7 @@ concurrency:
 jobs:
   publication:
     name: Publication du site
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     env:
       # Sur declenchement automatique (lundi et jeudi) ou depot d'archive, on prend le
