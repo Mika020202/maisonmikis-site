@@ -146,21 +146,11 @@ SHARED_CSS = """
   header.scrolled .burger span{background:var(--charcoal);}
   .burger span:nth-child(1){top:0;} .burger span:nth-child(2){top:9px;} .burger span:nth-child(3){top:18px;}
 
-  /* HERO (homepage full) */
-  .hero{
-    min-height:calc(100vh - var(--header-h));position:relative;display:flex;align-items:center;
-    background:linear-gradient(180deg, rgba(43,38,33,0.55), rgba(43,38,33,0.72)),
-      url('https://picsum.photos/id/1074/1800/1100') center/cover no-repeat;
-  }
-  .hero::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(140,98,57,0.25), rgba(43,38,33,0.55));
-    mix-blend-mode:multiply;pointer-events:none;
-  }
-  .hero-content{position:relative;z-index:2;color:var(--cream);max-width:680px;padding-top:0;}
-  .hero-content .eyebrow{color:#E7B08C;}
-  .hero-content h1{font-size:clamp(38px,5.4vw,66px);margin-bottom:22px;color:var(--cream);}
-  .hero-content p{font-size:18px;color:rgba(251,246,239,0.88);max-width:520px;margin-bottom:38px;}
+  /* HERO — boutons d'appel a l'action du bandeau.
+     Les regles .hero / .hero::after / .hero-content ont ete retirees le
+     06/08/2026 : plus aucune page ne portait class="hero" (tous les bandeaux
+     utilisent .page-hero), et .hero pointait encore sur une image picsum.photos
+     externe. Ne pas les reintroduire. */
   .hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
   .hero-scroll{
     position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2;
@@ -583,6 +573,38 @@ SHARED_CSS = """
     color:var(--terracotta);border-bottom-color:var(--terracotta);
   }
 
+  /* --------------------------------------------------------------------
+     COMPLEMENT 06/08/2026 — la classe .ilink ecrite le 31/07 n'a jamais ete
+     posee dans le HTML : les liens contextuels des PAGES (hors articles)
+     restaient donc invisibles, notamment les 3 renvois de contact.html vers
+     l'Espace Sante. On cible desormais directement les <p> de corps de page.
+     Deux variantes : sombre sur fond clair, creme sur fond fonce/terracotta.
+     :not(.btn) preserve les boutons, .breadcrumb et .block-more ne sont pas
+     dans des <p> et ne sont donc pas touches.
+     -------------------------------------------------------------------- */
+  .split-text p a:not(.btn), .section-head p a:not(.btn),
+  .faq-item p a:not(.btn), .marques-intro p a:not(.btn),
+  .legal p a:not(.btn), .legal li a:not(.btn){
+    color:var(--terracotta-dark);
+    border-bottom:1px solid rgba(193,101,59,0.38);
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .split-text p a:not(.btn):hover, .section-head p a:not(.btn):hover,
+  .faq-item p a:not(.btn):hover, .marques-intro p a:not(.btn):hover,
+  .legal p a:not(.btn):hover, .legal li a:not(.btn):hover{
+    color:var(--terracotta);border-bottom-color:var(--terracotta);
+  }
+  .cta-band p a:not(.btn), .dark-card p a:not(.btn),
+  .dark-section .section-head p a:not(.btn){
+    color:var(--cream);
+    border-bottom:1px solid rgba(251,246,239,0.45);
+    transition:border-color .2s ease;
+  }
+  .cta-band p a:not(.btn):hover, .dark-card p a:not(.btn):hover,
+  .dark-section .section-head p a:not(.btn):hover{
+    border-bottom-color:var(--cream);
+  }
+
   /* Encadre "Pour aller plus loin", en fin de corps d'article */
   .go-further{
     margin:46px 0 4px;padding:26px 28px;background:var(--cream-2);
@@ -996,11 +1018,13 @@ FOOTER = """<footer>
             <li><a href="/espace-sante.html">Espace Santé</a></li>
             <li><a href="/espace-audition.html">Espace Audition</a></li>
             <li><a href="/actualites.html">Actualités</a></li>
+            <li><a href="/opticien-paris-13.html">Opticien à Paris 13e</a></li>
           </ul>
         </div>
         <div>
           <h4>Contact</h4>
           <ul>
+            <li>Galerie Oslo – Olympiades</li>
             <li>44 Avenue d'Ivry, 75013 Paris</li>
             <li>01 82 28 00 18</li>
             <li>mikis75013@gmail.com</li>
@@ -1011,7 +1035,7 @@ FOOTER = """<footer>
     <div class="footer-bottom">
       <span>© <span id="year"></span> Maison Mikis — Tous droits réservés.</span>
       <span><a href="/mentions-legales.html">Mentions légales</a> · <a href="/mentions-legales.html#confidentialite">Confidentialité</a></span>
-      <span>Optique · Audition · Paris 13e</span>
+      <span>Opticien et audioprothésiste à Paris 13e — Olympiades</span>
     </div>
   </div>
 </footer>"""
@@ -1144,9 +1168,9 @@ def render_page(active_key, title, description, path, body, hero_img=None, extra
 BODY_BOUTIQUE = """
 <section class="page-hero page-hero--compact">
   <div class="container">
-    <span class="eyebrow">Opticien &amp; audioprothésiste — Paris 13e</span>
-    <h1>Bienvenue chez Maison Mikis</h1>
-    <p>Au cœur du Triangle de Choisy, une maison familiale dédiée à votre vue et à votre audition : conseil sincère, marques choisies avec exigence, et le temps qu'il faut pour bien vous accompagner.</p>
+    <span class="eyebrow">Galerie Oslo — Olympiades · 44 avenue d'Ivry</span>
+    <h1>Opticien et audioprothésiste à Paris 13e</h1>
+    <p>Maison Mikis est une maison familiale installée au cœur du Triangle de Choisy, dédiée à votre vue et à votre audition : conseil sincère, marques choisies avec exigence, et le temps qu'il faut pour bien vous accompagner.</p>
     <div class="hero-actions">
       <a href="/contact.html" class="btn btn-primary">Prendre rendez-vous</a>
       <a href="/marques.html" class="btn btn-ghost">Découvrir nos marques</a>
@@ -1437,7 +1461,7 @@ BODY_BOUTIQUE = """
     <div class="section-head center">
       <span class="eyebrow">Nous rendre visite</span>
       <h2>Infos pratiques</h2>
-      <p>Galerie Oslo – Olympiades, au pied des tours, à deux minutes de la sortie du métro.</p>
+      <p>Galerie Oslo – Olympiades, au pied des tours, à deux minutes de la sortie du métro. Tout savoir sur <a href="/opticien-paris-13.html">votre opticien à Paris 13e</a> : services, quartiers desservis et accès.</p>
     </div>
     <div class="contact-grid">
       <div class="contact-info-card reveal">
@@ -2604,6 +2628,21 @@ OPTICIAN_JSONLD = """<script type="application/ld+json">
     "postalCode": "75013",
     "addressCountry": "FR"
   },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 48.8234642,
+    "longitude": 2.3660567
+  },
+  "areaServed": [
+    {"@type": "AdministrativeArea", "name": "Paris 13e arrondissement"},
+    {"@type": "Place", "name": "Olympiades"},
+    {"@type": "Place", "name": "Triangle de Choisy"},
+    {"@type": "Place", "name": "Tolbiac"},
+    {"@type": "Place", "name": "Place d'Italie"},
+    {"@type": "Place", "name": "Porte d'Ivry"},
+    {"@type": "Place", "name": "Avenue de France"},
+    {"@type": "City", "name": "Ivry-sur-Seine"}
+  ],
   "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday"],
@@ -6045,7 +6084,7 @@ def render_actualites_index():
 <section class="cta-band">
   <div class="container">
     <h2>Une question sur votre vue ou votre audition ?</h2>
-    <p>Nos conseils en ligne ne remplacent pas un vrai échange avec l'équipe — venez nous en parler en boutique.</p>
+    <p>Nos conseils en ligne ne remplacent pas un vrai échange avec l'équipe : venez nous en parler chez votre <a href="/opticien-paris-13.html">opticien à Paris 13e</a>, Galerie Oslo – Olympiades.</p>
     <a href="/contact.html" class="btn btn-primary">Prendre rendez-vous</a>
   </div>
 </section>
@@ -6102,7 +6141,7 @@ def render_article_page(article):
 <section class="cta-band">
   <div class="container">
     <h2>Envie d'en discuter avec nous ?</h2>
-    <p>Prenez rendez-vous en boutique, Galerie Oslo – Olympiades, pour un conseil personnalisé.</p>
+    <p>Maison Mikis est votre <a href="/opticien-paris-13.html">opticien et audioprothésiste à Paris 13e</a>, Galerie Oslo – Olympiades, 44 avenue d'Ivry. Prenez rendez-vous pour un conseil personnalisé.</p>
     <a href="/contact.html" class="btn btn-primary">Prendre rendez-vous</a>
   </div>
 </section>
@@ -6160,6 +6199,170 @@ def sync_sitemap():
     return len(blocks)
 
 
+# ============================================================================
+# PAGE "OPTICIEN A PARIS 13E" (creee le 06/08/2026)
+# ----------------------------------------------------------------------------
+# Raison d'etre : l'audit SERP du 06/08/2026 a montre que la fiche Google
+# ressort bien sur "opticien paris 13 olympiades", mais que maisonmikis.fr
+# n'apparait NULLE PART dans les resultats web de cette requete : aucune page
+# du site ne ciblait la recherche. Cette page comble ce trou.
+# Contrainte : page de contenu reel (services, quartiers, acces, FAQ), pas une
+# page satellite. Aucune classe CSS nouvelle : tout reutilise SHARED_CSS.
+# La page est referencee dans le FOOTER (donc depuis les 35 pages) et dans le
+# cta-band commun aux articles. Elle doit etre ajoutee A LA MAIN au sitemap :
+# sync_sitemap() ne traite que les articles.
+# ============================================================================
+BODY_OPTICIEN_PARIS_13 = """
+<section class="page-hero page-hero--compact">
+  <div class="container">
+    <div class="breadcrumb"><a href="/index.html">La Boutique</a> / Opticien à Paris 13e</div>
+    <span class="eyebrow">Galerie Oslo — Olympiades · 44 avenue d'Ivry</span>
+    <h1>Opticien à Paris 13e</h1>
+    <p>Maison Mikis est un opticien et audioprothésiste indépendant installé dans le 13e arrondissement de Paris, au pied de la dalle des Olympiades. Lunettes de vue, solaires, lentilles de contact et solutions auditives, avec le temps qu'il faut pour bien faire.</p>
+    <div class="hero-actions">
+      <a href="/contact.html" class="btn btn-primary">Prendre rendez-vous</a>
+      <a href="tel:0182280018" class="btn btn-ghost">01 82 28 00 18</a>
+    </div>
+  </div>
+</section>
+
+<section class="story-block">
+  <div class="container-narrow">
+    <div class="answer-lead">
+      <p>Maison Mikis est un opticien indépendant du 13e arrondissement de Paris, situé 44 avenue d'Ivry dans la Galerie Oslo, à la sortie du métro Olympiades. La boutique est ouverte du mardi au samedi de 10h à 19h30 et réunit sous le même toit l'optique, les lentilles et un espace audition avec audioprothésiste.</p>
+    </div>
+    <p>Le 13e arrondissement ne manque pas d'opticiens : entre les enseignes de la place d'Italie, celles du centre commercial Italie Deux et les magasins des grandes avenues, le choix est large. Ce qui distingue une maison de quartier d'une chaîne, ce n'est ni le catalogue ni le prix affiché en vitrine, c'est le temps accordé à chaque personne et le fait de retrouver le même interlocuteur d'une visite à l'autre.</p>
+    <p>Nous avons ouvert Maison Mikis avec cette idée simple : un opticien de quartier doit pouvoir vous recevoir sans rendez-vous pour resserrer une charnière, et vous consacrer une heure quand il s'agit de choisir un équipement que vous porterez tous les jours pendant deux ans. Les deux comptent autant l'un que l'autre.</p>
+  </div>
+</section>
+
+<section class="dark-section">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Nos métiers</span>
+      <h2>Ce que nous faisons en boutique</h2>
+    </div>
+    <div class="card-grid-3">
+      <div class="dark-card reveal">
+        <div class="badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBF6EF" stroke-width="2"><circle cx="7" cy="13" r="4"/><circle cx="17" cy="13" r="4"/><path d="M11 13h2"/></svg></div>
+        <h3>Optique</h3>
+        <p>Lunettes de vue et solaires, montures optiques et solaires à votre correction, verres unifocaux et progressifs, traitements antireflet, photochromiques et polarisants. Examen de vue en salle dédiée, adaptation de la correction sur ordonnance en cours de validité, ajustage et réparation, y compris sur des paires achetées ailleurs. Prise en charge Sécurité sociale, mutuelles et 100 % Santé.</p>
+      </div>
+      <div class="dark-card reveal">
+        <div class="badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBF6EF" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Lentilles de contact</h3>
+        <p>Lentilles journalières, bimensuelles et mensuelles, souples et rigides, toriques pour l'astigmatisme et multifocales pour la presbytie. Apprentissage de la pose et du retrait pour les premières fois, essais avant commande, renouvellement et produits d'entretien. Nous suivons l'ordonnance de votre ophtalmologiste et restons disponibles entre deux rendez-vous si quelque chose vous gêne.</p>
+      </div>
+      <div class="dark-card reveal">
+        <div class="badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBF6EF" stroke-width="2"><path d="M6 18a6 6 0 1 1 12-6c0 4-3 4-3 7a2 2 0 0 1-4 0"/><circle cx="12" cy="12" r="1.5"/></svg></div>
+        <h3>Audition</h3>
+        <p>Notre espace audition accueille un audioprothésiste dans une cabine dédiée : bilan auditif gratuit et sans engagement, essai d'appareils de trente jours minimum, réglages, entretien et suivi inclus sur toute la durée de vie de l'appareil. Là aussi, le 100 % Santé s'applique, avec une classe d'appareils intégralement prise en charge.</p>
+      </div>
+    </div>
+    <div class="block-more-center"><a href="/espace-audition.html" class="block-more">Découvrir l'Espace Audition →</a></div>
+  </div>
+</section>
+
+<section class="split story-block">
+  <div class="container">
+    <div class="split-grid">
+      <div class="split-text reveal">
+        <span class="eyebrow">Notre quartier</span>
+        <h2>Du Triangle de Choisy à la Bibliothèque</h2>
+        <p>La boutique se trouve au cœur du Triangle de Choisy, entre l'avenue d'Ivry, l'avenue de Choisy et le boulevard Masséna. C'est un quartier dense, très vivant en journée, où l'on croise autant de familles installées là depuis trente ans que d'étudiants et de jeunes actifs arrivés récemment.</p>
+        <p>Nous recevons naturellement les habitants des Olympiades et des tours voisines, mais aussi ceux qui descendent de Tolbiac et de la place d'Italie, ceux du quartier Jeanne d'Arc, et de plus en plus de personnes qui travaillent avenue de France ou près de la Bibliothèque François-Mitterrand et passent en fin de journée.</p>
+        <p>Beaucoup viennent aussi de la Porte d'Ivry et d'Ivry-sur-Seine, que quelques centaines de mètres séparent de la boutique. Le 13e est un arrondissement qui se traverse à pied plus qu'on ne le croit, et c'est très bien ainsi.</p>
+      </div>
+      <div class="split-text reveal">
+        <span class="eyebrow">Y venir</span>
+        <h2>Comment nous rejoindre</h2>
+        <p>Le plus simple reste la ligne 14 : la station Olympiades est terminus, et sa sortie débouche avenue d'Ivry à quelques dizaines de mètres de la Galerie Oslo. Depuis Saint-Lazare, Châtelet ou Gare de Lyon, vous êtes chez nous sans changement.</p>
+        <p>Par la ligne 7, les stations Tolbiac et Porte d'Ivry sont à une dizaine de minutes de marche, et Maison Blanche à un quart d'heure. Le tramway T3a s'arrête Porte d'Ivry et Porte de Choisy, à quelques minutes également.</p>
+        <p>En voiture, le stationnement de surface est payant et souvent saturé en fin de journée ; les parkings souterrains autour de la dalle sont la solution la plus confortable, surtout le samedi. La galerie et la boutique sont de plain-pied, accessibles en fauteuil roulant et avec une poussette.</p>
+        <ul class="check-list-grid">
+          <li><span class="check">✓</span> Métro 14 — Olympiades, à 100 m</li>
+          <li><span class="check">✓</span> Métro 7 — Tolbiac et Porte d'Ivry</li>
+          <li><span class="check">✓</span> Tramway T3a — Porte d'Ivry</li>
+          <li><span class="check">✓</span> Bus 27, 62, 83 et 183</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="split alt story-block">
+  <div class="container">
+    <div class="split-grid reverse">
+      <div class="split-text reveal">
+        <span class="eyebrow">Sans rendez-vous</span>
+        <h2>Passer nous voir</h2>
+        <p>Vous n'avez pas besoin de prévenir pour essayer des montures, faire ajuster une paire, remplacer des plaquettes, commander des lentilles ou poser une question. Ces gestes-là ne se planifient pas et nous les faisons volontiers, même si vos lunettes viennent d'ailleurs.</p>
+        <p>Le rendez-vous devient utile dès qu'il faut du temps : une vingtaine de minutes pour un <a href="/espace-sante.html">examen de vue</a>, une quarantaine pour un <a href="/espace-audition.html">bilan auditif</a>. Un appel au <a href="tel:0182280018">01 82 28 00 18</a> suffit, souvent pour un créneau dans la même semaine.</p>
+      </div>
+      <div class="split-text reveal">
+        <span class="eyebrow">Nos horaires</span>
+        <h2>Quand nous sommes ouverts</h2>
+        <p>Du mardi au samedi, sans interruption entre midi et deux : vous pouvez passer sur votre pause déjeuner sans crainte de trouver porte close.</p>
+        <table class="hours-table">
+          <tr class="closed"><th scope="row">Lundi</th><td>Fermé</td></tr>
+          <tr><th scope="row">Mardi</th><td>10h00 – 19h30</td></tr>
+          <tr><th scope="row">Mercredi</th><td>10h00 – 19h30</td></tr>
+          <tr><th scope="row">Jeudi</th><td>10h00 – 19h30</td></tr>
+          <tr><th scope="row">Vendredi</th><td>10h00 – 19h30</td></tr>
+          <tr><th scope="row">Samedi</th><td>10h00 – 19h30</td></tr>
+          <tr class="closed"><th scope="row">Dimanche</th><td>Fermé</td></tr>
+        </table>
+        <p>Le samedi après-midi est de loin le moment le plus fréquenté. Pour prendre votre temps sur un choix de monture, préférez le milieu de semaine ou la matinée.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story-block">
+  <div class="container-narrow">
+    <div class="section-head center">
+      <span class="eyebrow">Questions fréquentes</span>
+      <h2>Ce qu'on nous demande le plus souvent</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary>Où se trouve exactement la boutique dans le 13e ?<span class="plus">+</span></summary>
+        <p>Au 44 avenue d'Ivry, 75013 Paris, à l'intérieur de la Galerie Oslo, au pied de la dalle des Olympiades. La sortie du métro ligne 14 « Olympiades » se trouve à une centaine de mètres. Le point Plus code Google est R9F8+9C Paris si vous préférez viser directement l'entrée.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Faut-il une ordonnance pour venir chez l'opticien ?<span class="plus">+</span></summary>
+        <p>Pour des lunettes correctrices, oui : une ordonnance d'ophtalmologiste est nécessaire. En revanche, si la vôtre est encore valable, nous pouvons y adapter votre correction après un examen de vue en boutique, sans repasser par le médecin. Pour des solaires non correctrices, un ajustage ou une réparation, aucune ordonnance n'est demandée.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Proposez-vous le 100 % Santé ?<span class="plus">+</span></summary>
+        <p>Oui, en optique comme en audition. Le panier 100 % Santé donne accès à des équipements intégralement remboursés par la Sécurité sociale et votre complémentaire, sans reste à charge. Nous vous présentons systématiquement cette offre à côté des autres, sans pression et sans conditions cachées.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Y a-t-il un audioprothésiste sur place ?<span class="plus">+</span></summary>
+        <p>Oui. L'espace audition dispose d'une cabine dédiée et d'un audioprothésiste diplômé. Le bilan auditif est gratuit et sans engagement, et tout appareillage passe par un essai de trente jours minimum avant décision. C'est encore rare de trouver les deux métiers réunis dans le même magasin à Paris 13e.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Vous réparez les lunettes achetées ailleurs ?<span class="plus">+</span></summary>
+        <p>Oui, et sans que cela vous engage à quoi que ce soit. Plaquettes, vis, charnières, réglage d'un galbe ou d'une branche déformée : passez quand vous voulez pendant les horaires d'ouverture, c'est l'affaire de quelques minutes dans la grande majorité des cas.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Quels sont les quartiers du 13e que vous desservez ?<span class="plus">+</span></summary>
+        <p>Nos clients viennent principalement des Olympiades, du Triangle de Choisy, de Tolbiac, de la place d'Italie et d'Italie Deux, du quartier Jeanne d'Arc, de l'avenue de France et de la Bibliothèque, de la Porte d'Ivry et de la Porte de Choisy. Ivry-sur-Seine et Le Kremlin-Bicêtre sont également à quelques minutes.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>Passez nous voir</h2>
+    <p>Maison Mikis — Galerie Oslo, 44 avenue d'Ivry, 75013 Paris. Du mardi au samedi, 10h – 19h30. Métro 14, Olympiades.</p>
+    <a href="/contact.html" class="btn btn-primary">Nous contacter</a>
+  </div>
+</section>
+"""
+
+
 if __name__ == "__main__":
     css_path = os.path.join(OUT_DIR, "site.css")
     with open(css_path, "w", encoding="utf-8") as f:
@@ -6168,8 +6371,8 @@ if __name__ == "__main__":
 
     render_page(
         "accueil",
-        "Maison Mikis — Optique & Audition | Paris 13e",
-        "Maison Mikis, opticien et audioprothésiste à Paris 13e, Galerie Oslo – Olympiades : lunettes de vue, solaires, lentilles et solutions auditives.",
+        "Opticien et audioprothésiste à Paris 13e | Maison Mikis",
+        "Opticien et audioprothésiste à Paris 13e, Maison Mikis vous accueille Galerie Oslo – Olympiades, 44 avenue d'Ivry : lunettes de vue, solaires, lentilles et audition.",
         "index.html",
         render_accueil_body(),
         hero_img="/images/accueil/hero-boutique.jpg",
@@ -6231,8 +6434,22 @@ if __name__ == "__main__":
     )
 
     render_page(
+        "accueil",
+        "Opticien à Paris 13e — Olympiades, 44 av. d'Ivry | Maison Mikis",
+        "Opticien et audioprothésiste à Paris 13e : Maison Mikis vous reçoit Galerie Oslo, 44 avenue d'Ivry, métro Olympiades. Lunettes, lentilles, audition, 100 % Santé.",
+        "opticien-paris-13.html",
+        BODY_OPTICIEN_PARIS_13,
+        hero_img="/images/accueil/hero-boutique.jpg",
+        hero_pos="42%",
+        breadcrumb_override=[
+            ("La Boutique", f"{BASE_URL}/"),
+            ("Opticien à Paris 13e", f"{BASE_URL}/opticien-paris-13.html"),
+        ],
+    )
+
+    render_page(
         "contact",
-        "Contact | Maison Mikis Paris 13e",
+        "Contact — Opticien à Paris 13e, Olympiades | Maison Mikis",
         "Maison Mikis, 44 Avenue d'Ivry, Galerie Oslo – Olympiades, 75013 Paris. Ouvert du mardi au samedi, 10h-19h30. Métro ligne 14 — Olympiades.",
         "contact.html",
         BODY_CONTACT,
@@ -6259,7 +6476,7 @@ if __name__ == "__main__":
 
     render_page(
         "actualites",
-        "Actualités — Conseils vue et audition | Maison Mikis",
+        "Actualités vue et audition — Paris 13e | Maison Mikis",
         "Le journal Maison Mikis : santé visuelle et auditive, mode lunettes, technologies verres et lentilles, remboursements et vie de la boutique, à Paris 13e.",
         "actualites.html",
         render_actualites_index(),
