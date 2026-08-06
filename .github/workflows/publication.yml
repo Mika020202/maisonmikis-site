@@ -39,10 +39,23 @@ on:
     # slug deja utilise : deux passages ne peuvent pas produire de doublon.
     # A savoir : si aucune vraie nouveaute ne franchit le seuil, le passage se
     # termine sans rien publier. C'est voulu, et le client en a ete informe.
-    # Lundi a 07h00 UTC (09h00 heure de Paris en ete, 08h00 en hiver).
-    - cron: '0 7 * * 1'
-    # Jeudi a 07h00 UTC — meme heure, pour espacer les deux articles.
-    - cron: '0 7 * * 4'
+    # HORAIRES REVUS LE 06/08/2026, a la demande du client ("met plutot 8h00").
+    # Deux constats ont dicte ce reglage :
+    #  1. GitHub documente que les declenchements programmes sont mis en file
+    #     d'attente, et que la minute ':00' est de tres loin la plus chargee.
+    #     Le passage du lundi 03/08 cale a 07h00 UTC est parti a 16h08 UTC,
+    #     soit 9h08 de retard ; celui du jeudi 06/08 n'etait toujours pas parti
+    #     a 11h22 UTC. On quitte donc la minute ronde.
+    #  2. Un passage est court (moins de 3 minutes) et ne peut pas produire de
+    #     doublon : veille.py publie UN article au maximum et validate() refuse
+    #     un slug deja utilise. Un second creneau de rattrapage est donc sans
+    #     risque, et couvre le cas ou le premier serait avale par la file.
+    #
+    # Lundi et jeudi a 06h23 UTC = 08h23 heure de Paris en ete (07h23 en hiver).
+    - cron: '23 6 * * 1,4'
+    # Rattrapage le meme jour a 08h47 UTC = 10h47 heure de Paris en ete.
+    # Si le premier passage a publie, celui-ci se termine sans rien faire.
+    - cron: '47 8 * * 1,4'
 
   workflow_dispatch:
     inputs:
