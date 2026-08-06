@@ -26,7 +26,8 @@
     "lunettes-engagees-matieres-durables-eco-responsables",
     "renouveler-lunettes-sans-nouvelle-ordonnance-opticien",
     "otites-repetition-enfant-audition-langage",
-    "essilor-varilux-immersia-verre-progressif-interieur"
+    "essilor-varilux-immersia-verre-progressif-interieur",
+    "opticiens-ehpad-decret-2026-examens-vue"
   ],
   "last_seen_by_source": {
     "Acuité": "EssilorLuxottica publie résultats S1 2026, croissance +9,7%",
@@ -56,7 +57,8 @@
     "Johnson & Johnson Vision": "Vision Care Q2 : +5,6% à 1,45 Md$ ; invest. 1 Md$ à Jacksonville",
     "Menicon": "Célébration 75e anniversaire ; lancement projet \"Winds of Progress\" (fév. 2026)",
     "Laboratoire LCS": "Lancement AKS Freeform, lentille sclérale personnalisée nouvelle génération (16/01/2026)",
-    "CRAMIF": "Congé supplémentaire de naissance (CSN) effectif au 1er juillet 2026"
+    "CRAMIF": "Congé supplémentaire de naissance (CSN) effectif au 1er juillet 2026",
+    "Acuité (acuite.fr) — article du 17 juin 2026 sur le décret n° 2026-507 du 12 juin 2026": "Les opticiens peuvent désormais intervenir en EHPAD : ce que change le décret de juin 2026"
   },
   "mode_lunettes_brand_rotation": {
     "brands_order": [
@@ -85,5 +87,12 @@
   },
   "queue_surplus_topics": [],
   "max_publications_per_week": 2,
-  "publication_log": []
+  "publication_log": [
+    {
+      "slug": "opticiens-ehpad-decret-2026-examens-vue",
+      "title": "Les opticiens peuvent désormais intervenir en EHPAD : ce que change le décret de juin 2026",
+      "date": "2026-08-06",
+      "source": "Acuité (acuite.fr) — article du 17 juin 2026 sur le décret n° 2026-507 du 12 juin 2026"
+    }
+  ]
 }
