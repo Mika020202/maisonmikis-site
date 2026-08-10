@@ -127,21 +127,11 @@
   header.scrolled .burger span{background:var(--charcoal);}
   .burger span:nth-child(1){top:0;} .burger span:nth-child(2){top:9px;} .burger span:nth-child(3){top:18px;}
 
-  /* HERO (homepage full) */
-  .hero{
-    min-height:calc(100vh - var(--header-h));position:relative;display:flex;align-items:center;
-    background:linear-gradient(180deg, rgba(43,38,33,0.55), rgba(43,38,33,0.72)),
-      url('https://picsum.photos/id/1074/1800/1100') center/cover no-repeat;
-  }
-  .hero::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(140,98,57,0.25), rgba(43,38,33,0.55));
-    mix-blend-mode:multiply;pointer-events:none;
-  }
-  .hero-content{position:relative;z-index:2;color:var(--cream);max-width:680px;padding-top:0;}
-  .hero-content .eyebrow{color:#E7B08C;}
-  .hero-content h1{font-size:clamp(38px,5.4vw,66px);margin-bottom:22px;color:var(--cream);}
-  .hero-content p{font-size:18px;color:rgba(251,246,239,0.88);max-width:520px;margin-bottom:38px;}
+  /* HERO — boutons d'appel a l'action du bandeau.
+     Les regles .hero / .hero::after / .hero-content ont ete retirees le
+     06/08/2026 : plus aucune page ne portait class="hero" (tous les bandeaux
+     utilisent .page-hero), et .hero pointait encore sur une image picsum.photos
+     externe. Ne pas les reintroduire. */
   .hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
   .hero-scroll{
     position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2;
@@ -562,6 +552,38 @@
   }
   .article-prose p a:hover, .article-prose li a:hover, .ilink:hover{
     color:var(--terracotta);border-bottom-color:var(--terracotta);
+  }
+
+  /* --------------------------------------------------------------------
+     COMPLEMENT 06/08/2026 — la classe .ilink ecrite le 31/07 n'a jamais ete
+     posee dans le HTML : les liens contextuels des PAGES (hors articles)
+     restaient donc invisibles, notamment les 3 renvois de contact.html vers
+     l'Espace Sante. On cible desormais directement les <p> de corps de page.
+     Deux variantes : sombre sur fond clair, creme sur fond fonce/terracotta.
+     :not(.btn) preserve les boutons, .breadcrumb et .block-more ne sont pas
+     dans des <p> et ne sont donc pas touches.
+     -------------------------------------------------------------------- */
+  .split-text p a:not(.btn), .section-head p a:not(.btn),
+  .faq-item p a:not(.btn), .marques-intro p a:not(.btn),
+  .legal p a:not(.btn), .legal li a:not(.btn){
+    color:var(--terracotta-dark);
+    border-bottom:1px solid rgba(193,101,59,0.38);
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .split-text p a:not(.btn):hover, .section-head p a:not(.btn):hover,
+  .faq-item p a:not(.btn):hover, .marques-intro p a:not(.btn):hover,
+  .legal p a:not(.btn):hover, .legal li a:not(.btn):hover{
+    color:var(--terracotta);border-bottom-color:var(--terracotta);
+  }
+  .cta-band p a:not(.btn), .dark-card p a:not(.btn),
+  .dark-section .section-head p a:not(.btn){
+    color:var(--cream);
+    border-bottom:1px solid rgba(251,246,239,0.45);
+    transition:border-color .2s ease;
+  }
+  .cta-band p a:not(.btn):hover, .dark-card p a:not(.btn):hover,
+  .dark-section .section-head p a:not(.btn):hover{
+    border-bottom-color:var(--cream);
   }
 
   /* Encadre "Pour aller plus loin", en fin de corps d'article */

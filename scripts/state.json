@@ -27,7 +27,8 @@
     "renouveler-lunettes-sans-nouvelle-ordonnance-opticien",
     "otites-repetition-enfant-audition-langage",
     "essilor-varilux-immersia-verre-progressif-interieur",
-    "opticiens-ehpad-decret-2026-examens-vue"
+    "opticiens-ehpad-decret-2026-examens-vue",
+    "eclipse-solaire-2026-proteger-ses-yeux"
   ],
   "last_seen_by_source": {
     "Acuité": "EssilorLuxottica publie résultats S1 2026, croissance +9,7%",
@@ -58,7 +59,8 @@
     "Menicon": "Célébration 75e anniversaire ; lancement projet \"Winds of Progress\" (fév. 2026)",
     "Laboratoire LCS": "Lancement AKS Freeform, lentille sclérale personnalisée nouvelle génération (16/01/2026)",
     "CRAMIF": "Congé supplémentaire de naissance (CSN) effectif au 1er juillet 2026",
-    "Acuité (acuite.fr) — article du 17 juin 2026 sur le décret n° 2026-507 du 12 juin 2026": "Les opticiens peuvent désormais intervenir en EHPAD : ce que change le décret de juin 2026"
+    "Acuité (acuite.fr) — article du 17 juin 2026 sur le décret n° 2026-507 du 12 juin 2026": "Les opticiens peuvent désormais intervenir en EHPAD : ce que change le décret de juin 2026",
+    "ARS Hauts-de-France / info.gouv.fr — alertes officielles éclipse solaire 12 août 2026": "Éclipse du 12 août 2026 : comment protéger ses yeux sans se tromper"
   },
   "mode_lunettes_brand_rotation": {
     "brands_order": [
@@ -93,6 +95,12 @@
       "title": "Les opticiens peuvent désormais intervenir en EHPAD : ce que change le décret de juin 2026",
       "date": "2026-08-06",
       "source": "Acuité (acuite.fr) — article du 17 juin 2026 sur le décret n° 2026-507 du 12 juin 2026"
+    },
+    {
+      "slug": "eclipse-solaire-2026-proteger-ses-yeux",
+      "title": "Éclipse du 12 août 2026 : comment protéger ses yeux sans se tromper",
+      "date": "2026-08-10",
+      "source": "ARS Hauts-de-France / info.gouv.fr — alertes officielles éclipse solaire 12 août 2026"
     }
   ]
 }
