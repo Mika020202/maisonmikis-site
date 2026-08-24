@@ -127,8 +127,13 @@ def call_claude(system, user_message, use_web_search=True, max_tokens=8000):
         },
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=600) as resp:
-        data = json.loads(resp.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=600) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", "replace")
+        raise RuntimeError(
+            "l'API a refuse la requete (HTTP %s) : %s" % (exc.code, detail[:600])) from None
     texts = [b["text"] for b in data.get("content", []) if b.get("type") == "text"]
     return "\n".join(texts)
 
