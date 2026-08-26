@@ -3517,23 +3517,47 @@ ART_BODY_ENFANT = """
 """
 
 ART_BODY_VARILUX = """<h2>À quoi sert un verre progressif pensé pour l'intérieur ?</h2>
-<p>Nos habitudes visuelles ont changé plus vite que nos équipements. Entre le travail sur ordinateur, les messages sur téléphone, la lecture et les réunions, une grande partie de la journée se joue désormais dans un rayon de quelques mètres, à l'intérieur, et non sur l'horizon. Un verre polyvalent classique consacre pourtant une large part de sa surface à la vision de loin, celle dont on se sert le moins entre neuf heures et dix-huit heures. C'est ce déséquilibre qu'Essilor a voulu corriger avec Varilux Immersia, en déplaçant le centre de gravité du verre vers les distances proches et intermédiaires.</p>
-<p>Selon les données citées par le fabricant, l'essentiel du temps visuel d'une personne presbyte se concentre aujourd'hui sur ces distances, et une part importante de ces porteurs décrit une fatigue marquée en fin de journée, souvent liée au fait de passer sans cesse d'un écran à un autre. Ce constat n'est pas surprenant, il correspond à ce que nous entendons en boutique.</p>
+<p>Nos habitudes visuelles ont changé plus vite que nos équipements. Entre le travail sur ordinateur, les messages sur téléphone, la lecture et les réunions, une grande partie de la journée se joue désormais dans un rayon de quelques mètres, à l'intérieur, et non sur l'horizon. Un verre polyvalent classique consacre pourtant une large part de sa surface à la vision de loin, celle dont on se sert le moins entre neuf heures et dix-huit heures. C'est ce déséquilibre qu'Essilor a voulu corriger avec Varilux Immersia, commercialisé depuis le 14 avril 2026, en déplaçant le centre de gravité du verre vers les distances proches et intermédiaires.</p>
+<p>Les chiffres avancés par le fabricant pour justifier ce choix sont parlants : selon Essilor, 72 % du temps visuel d'une personne presbyte se joue aujourd'hui en vision de près et intermédiaire, 77 % des 40-65 ans déclarent mener plusieurs tâches de front entre smartphone et ordinateur, et 80 % d'entre eux ressentent une fatigue visuelle en fin de journée standard. Ces données viennent de la marque et servent son argumentaire, il faut le garder en tête. Elles correspondent néanmoins assez bien à ce que nous entendons au comptoir.</p>
+
+<h2>Varilux Immersia Mid ou Room : quelle version pour quel usage ?</h2>
+<p>C'est la question la plus utile, et celle que l'on nous pose le plus souvent depuis le lancement. Le verre existe en deux dessins, qui ne se distinguent pas par un niveau de gamme mais par la distance jusqu'à laquelle ils restent confortables. Le bon choix se fait en décrivant une journée type, pas en comparant deux fiches techniques.</p>
+
+<h3>Varilux Immersia Mid : jusqu'à 1,5 mètre</h3>
+<p>La version Mid couvre le rayon d'un bureau : l'écran, le clavier, un document papier posé à côté, le téléphone. Essilor la destine à la lecture, aux loisirs minutieux et aux environnements multi-écrans. C'est le profil de quelqu'un dont la journée se passe assis à un poste fixe, avec une ou deux dalles devant soi et peu de déplacements. En contrepartie de ce champ élargi sur les courtes distances, tout ce qui dépasse un mètre cinquante devient franchement flou.</p>
+
+<h3>Varilux Immersia Room : jusqu'à 3 mètres</h3>
+<p>La version Room étend la zone nette à l'échelle d'une pièce. Elle vise, toujours selon Essilor, les porteurs qui passent d'une activité à l'autre dans un même espace et qui ont besoin de voir les visages en face d'eux : réunion autour d'une table, consultation, enseignement, accueil. On gagne en liberté de mouvement à l'intérieur, on perd un peu de largeur sur la vision de près par rapport à la version Mid.</p>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th></th><th>Varilux Immersia Mid</th><th>Varilux Immersia Room</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Distance nette annoncée</td><td>Jusqu'à environ 1,5 m</td><td>Jusqu'à environ 3 m</td></tr>
+      <tr><td>Usage visé</td><td>Lecture, travaux minutieux, plusieurs écrans</td><td>Se déplacer et interagir dans une pièce</td></tr>
+      <tr><td>Profil type</td><td>Poste de travail fixe, journée assise</td><td>Réunions, consultations, enseignement, accueil</td></tr>
+      <tr><td>Vision de loin</td><td>Aucune au-delà de 1,5 m</td><td>Aucune au-delà de 3 m</td></tr>
+      <tr><td>Conduite et extérieur</td><td>Exclue</td><td>Exclue</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Dans les deux cas, la conclusion est la même : ce verre ne sort pas de l'immeuble. C'est un outil de travail, pas une paire de tous les jours.</p>
 
 <h2>En quoi ce verre diffère-t-il d'un progressif polyvalent ?</h2>
 <p>La différence tient moins à une prouesse technique qu'à une répartition. Les verres progressifs classiques cherchent un compromis entre trois zones : loin, intermédiaire et près. Ici, la zone de loin est volontairement réduite au profit d'un champ élargi sur les distances de la vie intérieure. Le porteur gagne en confort là où il passe ses journées, et accepte une vision de loin moins généreuse.</p>
+<p>L'argument le plus concret n'est d'ailleurs pas optique mais postural. Avec un progressif polyvalent, la zone qui permet de voir l'écran net se situe assez bas dans le verre. Quand le poste de travail ne peut pas être réglé — écran trop haut, siège non ajustable, bureau partagé — beaucoup de porteurs compensent en relevant le menton plutôt qu'en baissant les yeux, des centaines de fois par jour. C'est ce réflexe, et la tension de nuque qui l'accompagne en fin de journée, qu'un verre d'intérieur cherche à supprimer en remontant la zone utile.</p>
 
-<h3>Deux versions selon le rayon de vie</h3>
-<p>Le verre se décline en deux variantes. Selon Essilor, la première, pensée pour la lecture et le travail sur plusieurs écrans, optimise la netteté jusqu'à environ 1,50 mètre : c'est le rayon d'un bureau ou d'une table de cuisine transformée en poste de travail. La seconde, taillée pour se déplacer plus librement dans une pièce, resterait performante jusqu'à environ 3 mètres, de quoi passer d'un écran à une conversation, puis à une étagère, sans changer de lunettes. Le choix entre les deux se fait sur le quotidien réel, pas sur la fiche technique.</p>
-
-<h3>Ce que le fabricant met en avant dans la conception</h3>
-<p>Essilor indique s'être appuyé sur une modélisation prédictive du comportement visuel pour ajuster la géométrie du verre au profil du porteur, plutôt que de proposer un dessin unique. Une seconde technologie viserait à renforcer la netteté, la perception des contrastes et la stabilité de l'image dans des conditions de lumière changeantes, entre un éclairage de bureau et la luminosité variable d'un écran. Ces éléments sont présentés par la marque : ils décrivent une intention de conception, pas un résultat démontré indépendamment.</p>
+<h3>Les technologies mises en avant par Essilor</h3>
+<p>Deux noms reviennent dans la communication du fabricant. <strong>AI Twinning</strong> désigne un modèle prédictif du porteur : plutôt qu'un dessin unique appliqué à tout le monde, la géométrie du verre est ajustée à partir d'une simulation du comportement visuel réel. <strong>Wave 2.0</strong> vise la netteté et la perception des contrastes, en réduisant les aberrations optiques pour stabiliser l'image quand la luminosité change — entre un éclairage de bureau et un écran, typiquement.</p>
+<p>Ces deux éléments décrivent une intention de conception présentée par la marque. Ils ne constituent pas, à ce stade, un résultat validé par une évaluation indépendante, et nous préférons le dire plutôt que de les reprendre tels quels.</p>
 <ul class="check-list">
-<li><span class="check">✓</span> Deux versions selon l'usage : lecture et multi-écrans, ou déplacements dans une pièce</li>
-<li><span class="check">✓</span> Conception assistée par modélisation, personnalisée au porteur</li>
-<li><span class="check">✓</span> Pensé pour limiter la fatigue liée à l'alternance entre plusieurs écrans</li>
-<li><span class="check">✓</span> Cherche à éviter l'inclinaison excessive de la tête pour trouver la zone nette</li>
+<li><span class="check">✓</span> Deux versions distinctes : Immersia Mid jusqu'à 1,5 m, Immersia Room jusqu'à 3 m</li>
+<li><span class="check">✓</span> Géométrie personnalisée par modélisation prédictive (AI Twinning)</li>
+<li><span class="check">✓</span> Netteté et contrastes travaillés par la technologie Wave 2.0</li>
+<li><span class="check">✓</span> Objectif affiché : limiter l'inclinaison de la tête devant un écran</li>
 </ul>
+<p>Une limite doit rester en tête, et elle vaut pour les deux versions : il n'y a pas de vision de loin dans ce verre. Ni conduite, ni marche en extérieur, ni cinéma.</p>
 
 <h2>Faut-il remplacer ses lunettes actuelles par ce verre ?</h2>
 <p>Non, et c'est le point sur lequel nous insistons le plus. Un verre dédié à l'intérieur ne remplace pas une paire polyvalente : il la complète. Avec une vision de loin réduite, il n'est adapté ni à la conduite, ni à la marche en extérieur, ni à une salle de spectacle. Le présenter comme une paire unique serait une erreur, et le proposer systématiquement à tout porteur relèverait d'une montée en gamme que nous ne trouvons pas honnête.</p>
@@ -3545,8 +3569,8 @@ ART_BODY_VARILUX = """<h2>À quoi sert un verre progressif pensé pour l'intéri
     </thead>
     <tbody>
       <tr><td>Écran occasionnel, vie surtout en extérieur</td><td>Une paire polyvalente bien ajustée</td><td>Vérifier d'abord le centrage et l'ordonnance</td></tr>
-      <tr><td>Bureau fixe, lecture, plusieurs écrans</td><td>Version optimisée pour les courtes distances</td><td>Inadaptée à la conduite et à la marche</td></tr>
-      <tr><td>Déplacements fréquents dans une pièce</td><td>Version couvrant un rayon plus large</td><td>La vision de loin reste limitée</td></tr>
+      <tr><td>Bureau fixe, lecture, plusieurs écrans</td><td>Plutôt la version Immersia Mid</td><td>Inadaptée à la conduite et à la marche</td></tr>
+      <tr><td>Déplacements fréquents dans une pièce</td><td>Plutôt la version Immersia Room</td><td>La vision de loin reste limitée</td></tr>
       <tr><td>Fatigue de fin de journée sans baisse de vue</td><td>Bilan visuel, puis réglage du poste de travail</td><td>Un verre ne remplace pas les pauses</td></tr>
       <tr><td>Budget contraint</td><td>Prioriser la paire principale</td><td>Interroger sa complémentaire avant toute seconde paire</td></tr>
     </tbody>
@@ -3557,7 +3581,7 @@ ART_BODY_VARILUX = """<h2>À quoi sert un verre progressif pensé pour l'intéri
 <p>Ce type d'équipement s'adresse à un profil assez précis. Voici la démarche que nous suivons avant d'en parler.</p>
 <ol>
   <li><strong>Vérifier que la correction est à jour.</strong> Une bonne partie des fatigues attribuées aux écrans vient d'une ordonnance ancienne.</li>
-  <li><strong>Mesurer vos distances réelles</strong> : hauteur d'écran, éloignement du clavier, position du document papier. Un mètre ruban en dit plus long qu'un catalogue.</li>
+  <li><strong>Mesurer vos distances réelles</strong> : hauteur d'écran, éloignement du clavier, position du document papier. Un mètre ruban en dit plus long qu'un catalogue — et c'est précisément cette mesure qui départage la version Mid de la version Room.</li>
   <li><strong>Décrire précisément la gêne</strong> : moment de la journée, posture adoptée, tâche en cours. Une nuque douloureuse oriente différemment d'une vision qui se brouille.</li>
   <li><strong>Corriger d'abord l'environnement</strong> : hauteur du siège, éclairage, reflets sur la dalle, pauses régulières.</li>
   <li><strong>N'envisager une paire dédiée qu'ensuite</strong>, et sur devis, en comparant avec l'option d'un simple verre à faible dégression.</li>
@@ -5059,12 +5083,18 @@ ARTICLES = [
     {
         "slug": "essilor-varilux-immersia-verre-progressif-interieur",
         "category": "tech-verres",
-        "title": "Varilux Immersia : le nouveau verre progressif pensé pour la vie à l'intérieur",
-        "meta_title": "Varilux Immersia, le verre progressif Essilor | Maison Mikis",
-        "meta_description": "Un verre progressif dédié aux distances proches et intermédiaires : ce que propose Varilux Immersia, pour qui c'est utile et quand une paire suffit.",
-        "excerpt": "Essilor dévoile Varilux Immersia, un verre progressif conçu pour les journées passées entre lecture et écrans.",
-        "answer": "Varilux Immersia est un verre progressif d'Essilor conçu pour les distances proches et intermédiaires plutôt que pour la vision de loin. Il s'adresse aux porteurs dont la journée se passe entre lecture, écrans et déplacements dans une pièce, et vient en complément d'une paire polyvalente, non en remplacement.",
+        "title": "Varilux Immersia Mid et Room : le verre progressif Essilor pensé pour la vie à l'intérieur",
+        "meta_title": "Varilux Immersia Mid et Room : le verre Essilor | Maison Mikis",
+        "meta_description": "Varilux Immersia Mid (1,5 m) ou Room (3 m) : ce que change ce progressif d'intérieur Essilor, pour qui il est utile, et pourquoi il ne remplace pas votre paire.",
+        "excerpt": "Essilor décline Varilux Immersia en deux versions, Mid et Room, pour les journées passées entre lecture, écrans et réunions.",
+        "answer": "Varilux Immersia est un verre progressif d'Essilor conçu pour les distances proches et intermédiaires plutôt que pour la vision de loin. Il existe en deux versions : Immersia Mid, nette jusqu'à environ 1,5 mètre, pour la lecture et le travail sur plusieurs écrans ; Immersia Room, nette jusqu'à environ 3 mètres, pour se déplacer et échanger dans une pièce. Dans les deux cas, il complète une paire polyvalente et ne la remplace pas : il n'offre aucune vision de loin.",
         "faq": [
+            ("Quelle est la différence entre Varilux Immersia Mid et Immersia Room ?",
+             "La distance jusqu'à laquelle le verre reste net. La version Mid couvre environ 1,5 mètre, soit le rayon d'un bureau : écran, clavier, document papier, téléphone. La version Room va jusqu'à environ 3 mètres et permet de se déplacer dans une pièce et de voir les visages en réunion. Ce n'est pas un niveau de gamme mais un choix d'usage, qui se tranche en mesurant vos distances réelles de travail."),
+            ("Varilux Immersia remplace-t-il le Varilux Digitime ?",
+             "Immersia est la génération de progressifs d'intérieur qu'Essilor commercialise depuis avril 2026, dans la même logique que le Digitime qui l'a précédé : priorité aux distances proches et intermédiaires, pas de vision de loin. Si vous portez un Digitime et souhaitez renouveler, c'est vers cette gamme que votre opticien vous orientera. La comparaison utile se fait sur le confort ressenti et sur le devis, pas sur le nom commercial."),
+            ("Qu'est-ce que la technologie AI Twinning ?",
+             "C'est le nom qu'Essilor donne à la modélisation prédictive utilisée pour dessiner le verre : plutôt qu'une géométrie unique pour tous, le dessin est ajusté à partir d'une simulation du comportement visuel du porteur. Le verre intègre par ailleurs la technologie Wave 2.0, qui vise la netteté et les contrastes. Ces deux éléments sont présentés par le fabricant et décrivent une intention de conception, pas un résultat validé indépendamment."),
             ("Peut-on conduire avec ce type de verre ?",
              "Non. Un verre optimisé pour les distances proches et intermédiaires offre une vision de loin réduite, incompatible avec la conduite. Il s'utilise à l'intérieur, en complément d'une paire polyvalente que vous gardez pour les déplacements, l'extérieur et toute situation demandant une vision de loin nette."),
             ("Quelle différence avec un verre bureau classique ?",
@@ -5081,8 +5111,8 @@ ARTICLES = [
             ("Asnav - Association nationale pour l'amélioration de la vue", "https://www.asnav.org/"),
             ("Institut national de recherche et de sécurité", "https://www.inrs.fr/"),
         ],
-        "updated_display": "31 juillet 2026",
-        "updated_iso": "2026-07-31",
+        "updated_display": "26 août 2026",
+        "updated_iso": "2026-08-26",
         "image": "/images/actualites/tech-verres.jpg",
         "image_alt": "Personne travaillant sur un ordinateur portable avec des lunettes à verres correcteurs",
         "date_display": "14 avril 2026",
