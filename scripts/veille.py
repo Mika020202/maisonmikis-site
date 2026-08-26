@@ -235,7 +235,8 @@ Titre et métadonnées.
 - « title » : phrase claire, 55-75 caractères, sans nom de marque du site.
 - « meta_title » : se termine par « | Maison Mikis », 60 caractères maximum
   avant ce suffixe.
-- « meta_description » : 145 à 160 caractères, utile, sans superlatif creux.
+- « meta_description » : 145 à 160 caractères, JAMAIS plus de 170 : compte-les
+  avant de repondre. Utile, sans superlatif creux.
 - « excerpt » : une seule phrase, 90 à 160 caractères, pour la carte de la grille.
 
 FAQ. 3 ou 4 questions réellement posées par des clients, avec des réponses de 2 à
@@ -339,6 +340,8 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
                       "prochaine." % exc)
         return state, None
 
+    state["dernier_passage"] = today.isoformat()
+
     if result.get("no_novelty"):
         write_summary("Aucune nouveauté ne franchit le seuil éditorial cette "
                       "semaine. **Aucun article publié** — c'est le comportement "
@@ -385,6 +388,34 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
 FORBIDDEN_TAGS = ("<a ", "<a>", "<h1", "<img", "<script", "<style", "<iframe", "style=")
 
 
+def raccourcir(texte, limite):
+    """Coupe proprement a la limite : sur une fin de phrase si possible, sinon
+    sur un mot entier. Un simple depassement de longueur ne doit jamais faire
+    perdre un article entier."""
+    texte = " ".join(str(texte).split())
+    if len(texte) <= limite:
+        return texte
+    coupe = texte[:limite]
+    for sep in (". ", "! ", "? "):
+        pos = coupe.rfind(sep)
+        if pos > limite * 0.6:
+            return coupe[:pos + 1].strip()
+    pos = coupe.rfind(" ")
+    return (coupe[:pos] if pos > 0 else coupe).rstrip(" ,;:-") + "."
+
+
+def nettoyer_html(html):
+    """Retire les balises que le modele n'aurait pas du ecrire, au lieu de
+    refuser l'article : liens, images, styles, scripts ; <h1> requalifie en <h2>."""
+    html = re.sub(r"</?a\b[^>]*>", "", html, flags=re.I)
+    html = re.sub(r"<(img|script|style|iframe)\b[^>]*>.*?</\1>", "", html, flags=re.I | re.S)
+    html = re.sub(r"<(img|script|style|iframe)\b[^>]*/?>", "", html, flags=re.I)
+    html = re.sub(r'\s+style="[^"]*"', "", html, flags=re.I)
+    html = re.sub(r"\s+style='[^']*'", "", html, flags=re.I)
+    html = re.sub(r"<(/?)h1\b", r"<\1h2", html, flags=re.I)
+    return html.strip()
+
+
 def validate(r, site, known_slugs, today):
     champs = ["category", "slug", "title", "meta_title", "meta_description",
               "excerpt", "answer", "faq", "sources", "body_html"]
@@ -402,11 +433,11 @@ def validate(r, site, known_slugs, today):
     if slug in known_slugs:
         raise ValueError("slug déjà utilisé : %r (jamais d'écrasement)" % slug)
 
-    body = r["body_html"].strip()
+    body = nettoyer_html(r["body_html"])
     bas = body.lower()
     for tag in FORBIDDEN_TAGS:
         if tag in bas:
-            raise ValueError("balise interdite dans le corps : %r" % tag.strip())
+            raise ValueError("balise interdite non nettoyable : %r" % tag.strip())
     if "<h2" not in bas:
         raise ValueError("le corps ne contient aucune section <h2>")
     mots = word_count(strip_tags(body))
@@ -418,22 +449,25 @@ def validate(r, site, known_slugs, today):
         raise ValueError("bloc réponse hors norme : %d mots (attendu 40-60)"
                          % word_count(answer))
 
-    meta = r["meta_description"].strip()
-    if not 120 <= len(meta) <= 175:
-        raise ValueError("meta description hors norme : %d caractères" % len(meta))
+    meta = raccourcir(r["meta_description"], 175)
+    if len(meta) < 120:
+        raise ValueError("meta description trop courte : %d caractères" % len(meta))
 
-    titre = r["title"].strip()
-    if not 30 <= len(titre) <= 95:
-        raise ValueError("titre hors norme : %d caractères" % len(titre))
+    titre = raccourcir(r["title"], 95).rstrip(".")
+    if len(titre) < 30:
+        raise ValueError("titre trop court : %d caractères" % len(titre))
 
     meta_title = r["meta_title"].strip()
     if not meta_title.endswith("| Maison Mikis"):
         meta_title = "%s | Maison Mikis" % meta_title.rstrip(" |")
     if len(meta_title) > 90:
-        raise ValueError("meta title trop long : %d caractères" % len(meta_title))
+        base, _, suffixe = meta_title.rpartition("|")
+        meta_title = "%s | %s" % (
+            raccourcir(base, 86 - len(suffixe)).rstrip("."), suffixe.strip())
 
     faq = [(str(q).strip(), str(a).strip()) for q, a in r["faq"]]
-    if not 2 <= len(faq) <= 5:
+    faq = faq[:5]
+    if len(faq) < 2:
         raise ValueError("FAQ : %d questions (attendu 3 ou 4)" % len(faq))
     if any(not q or not a for q, a in faq):
         raise ValueError("FAQ : une question ou une réponse est vide")
@@ -442,13 +476,14 @@ def validate(r, site, known_slugs, today):
     for nom, url in r["sources"]:
         url = str(url).strip()
         if not url.startswith("https://"):
-            raise ValueError("source non https : %r" % url)
+            continue
         if any(bad in url for bad in ("google.com/search", "bing.com/search",
                                       "duckduckgo.com")):
-            raise ValueError("source invalide (page de résultats) : %r" % url)
+            continue
         sources.append((str(nom).strip(), url))
-    if not 1 <= len(sources) <= 5:
-        raise ValueError("nombre de sources inattendu : %d" % len(sources))
+    sources = sources[:5]
+    if not sources:
+        raise ValueError("aucune source exploitable")
 
     image, image_alt = pick_image(site, cat)
 
@@ -492,6 +527,17 @@ def pick_image(site, category):
 def main():
     sources = load(SOURCES_PATH)
     state = load(STATE_PATH)
+
+    # Creneau de rattrapage : il n'existe que pour le cas ou le passage du
+    # matin serait reste bloque dans la file d'attente de GitHub. Si ce
+    # passage a bien eu lieu aujourd'hui, on s'arrete ici : aucune veille
+    # relancee, aucun credit consomme pour rien.
+    if (os.environ.get("CRON_RATTRAPAGE") == "1"
+            and state.get("dernier_passage") == date.today().isoformat()):
+        write_summary("Le passage du matin a bien eu lieu aujourd'hui. "
+                      "Rattrapage inutile : aucune veille relancee, aucun "
+                      "credit consomme.")
+        return
     import build as site   # noqa: E402  (import tardif : build.py lit articles_auto.json)
 
     if not state.get("baseline_done"):
