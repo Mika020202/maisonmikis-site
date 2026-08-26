@@ -1,0 +1,22 @@
+# MAISON MIKIS - maisonmikis.fr
+# URL canonique : https://www.maisonmikis.fr (AVEC www)
+# Regroupe les 4 variantes du site sur une seule adresse, en 301.
+# Les deux regles sont limitees au domaine maisonmikis.fr : aucun autre
+# site heberge sur le meme compte ne peut etre affecte.
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# 1. Forcer HTTPS
+# La 2e condition couvre le cas d'un proxy qui termine le TLS
+# (sinon %{HTTPS} n'est jamais "on" cote Apache).
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTP_HOST} (^|\.)maisonmikis\.fr$ [NC]
+RewriteRule ^ https://www.maisonmikis.fr%{REQUEST_URI} [R=301,L]
+
+# 2. Ajouter le www
+RewriteCond %{HTTP_HOST} ^maisonmikis\.fr$ [NC]
+RewriteRule ^ https://www.maisonmikis.fr%{REQUEST_URI} [R=301,L]
+
+</IfModule>
