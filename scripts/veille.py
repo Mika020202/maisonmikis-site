@@ -103,39 +103,63 @@ def slugify(value):
 # ---------------------------------------------------------------------------
 # Appel API
 # ---------------------------------------------------------------------------
-def call_claude(system, user_message, use_web_search=True, max_tokens=8000):
+def call_claude(system, user_message, use_web_search=True, max_tokens=16000):
     """Appel direct a l'API Messages d'Anthropic. Pas de SDK : une seule
-    dependance, urllib, donc rien a installer sur le runner."""
+    dependance, urllib, donc rien a installer sur le runner.
+
+    L'API interrompt d'elle-meme les tours de recherche web trop longs et
+    renvoie stop_reason = "pause_turn". La reponse ne contient alors AUCUN
+    texte final, seulement les recherches en cours : il faut lui renvoyer sa
+    propre reponse, inchangee, pour qu'elle reprenne la ou elle s'est arretee.
+    Sans cette boucle, la veille recevait une reponse vide et echouait sur
+    "Expecting value: line 1 column 1".
+    """
     if not API_KEY:
         raise RuntimeError(
             "ANTHROPIC_API_KEY absent de l'environnement (secret du depot GitHub).")
-    body = {
-        "model": MODEL,
-        "max_tokens": max_tokens,
-        "system": system,
-        "messages": [{"role": "user", "content": user_message}],
-    }
-    if use_web_search:
-        body["tools"] = [{"type": "web_search_20250305", "name": "web_search"}]
-    req = urllib.request.Request(
-        API_URL,
-        data=json.dumps(body).encode("utf-8"),
-        headers={
-            "Content-Type": "application/json",
-            "x-api-key": API_KEY,
-            "anthropic-version": "2023-06-01",
-        },
-        method="POST",
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=600) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", "replace")
+
+    messages = [{"role": "user", "content": user_message}]
+    data = {}
+    textes = []
+
+    for _ in range(10):
+        body = {
+            "model": MODEL,
+            "max_tokens": max_tokens,
+            "system": system,
+            "messages": messages,
+        }
+        if use_web_search:
+            body["tools"] = [{"type": "web_search_20250305", "name": "web_search"}]
+        req = urllib.request.Request(
+            API_URL,
+            data=json.dumps(body).encode("utf-8"),
+            headers={
+                "Content-Type": "application/json",
+                "x-api-key": API_KEY,
+                "anthropic-version": "2023-06-01",
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=900) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", "replace")
+            raise RuntimeError(
+                "l'API a refuse la requete (HTTP %s) : %s" % (exc.code, detail[:600])) from None
+
+        contenu = data.get("content", [])
+        textes = [b["text"] for b in contenu if b.get("type") == "text"]
+        if data.get("stop_reason") != "pause_turn":
+            break
+        messages.append({"role": "assistant", "content": contenu})
+
+    if not any(t.strip() for t in textes):
         raise RuntimeError(
-            "l'API a refuse la requete (HTTP %s) : %s" % (exc.code, detail[:600])) from None
-    texts = [b["text"] for b in data.get("content", []) if b.get("type") == "text"]
-    return "\n".join(texts)
+            "l'API n'a renvoye aucun texte exploitable (stop_reason = %s). "
+            "Aucun article n'a pu etre lu." % data.get("stop_reason"))
+    return "\n".join(textes)
 
 
 def extract_json(text):
