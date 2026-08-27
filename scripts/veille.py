@@ -350,6 +350,26 @@ def run_weekly(sources, state, site):
     titres_existants = [a["title"] for a in site.ARTICLES]
     today = date.today()
 
+    # Plafond hebdomadaire. Le reglage max_publications_per_week existait dans
+    # state.json depuis l'origine, mais AUCUN code ne le lisait : trois articles
+    # ont ainsi pu paraitre le meme jour. Il est desormais applique, et verifie
+    # AVANT tout appel a l'API pour ne rien depenser inutilement.
+    plafond = int(state.get("max_publications_per_week", 2) or 2)
+    recents = 0
+    for p in state.get("publication_log", []):
+        try:
+            if (today - date.fromisoformat(p.get("date", ""))).days < 7:
+                recents += 1
+        except ValueError:
+            continue
+    if recents >= plafond:
+        write_summary("Plafond atteint : %d article(s) déjà publié(s) sur les sept "
+                      "derniers jours, pour un maximum de %d "
+                      "(`max_publications_per_week` dans `state.json`). "
+                      "**Aucune veille lancée cette fois** — aucun crédit consommé."
+                      % (recents, plafond))
+        return state, None
+
     system = """Tu es l'équipe éditoriale du site maisonmikis.fr, opticien et
 audioprothésiste indépendant à Paris 13e. Tu tiens une veille hebdomadaire : tu
 vérifies des sources professionnelles, et tu ne rédiges un article QUE si un fait
@@ -474,8 +494,24 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
     save(AUTO_PATH, auto)
 
     state.setdefault("used_slugs", []).append(article["slug"])
-    source_name = result.get("source_used", "source non précisée")
-    state.setdefault("last_seen_by_source", {})[source_name] = article["title"]
+
+    # La memoire des sources est indexee sur les noms REELS de sources.json,
+    # jamais sur le texte libre renvoye par le modele. Sans ce garde-fou, chaque
+    # publication ajoutait une clef-poubelle ("Decret n° ... relaye par ...") au
+    # lieu de mettre a jour la source : la table enflait indefiniment et etait
+    # reinjectee entiere dans le prompt a chaque passage.
+    source_name = str(result.get("source_used", "")).strip() or "source non précisée"
+    noms_reels = [s["name"] for s in flatten_sources(sources)]
+    cle = next((n for n in noms_reels if n == source_name), None)
+    if cle is None:
+        cle = next((n for n in noms_reels if n.lower() in source_name.lower()), None)
+    if cle:
+        state.setdefault("last_seen_by_source", {})[cle] = article["title"]
+    else:
+        # Sujet venu d'ailleurs (Journal officiel, rapport public...). On ne cree
+        # pas de clef : le journal de publication en garde deja la trace.
+        write_summary("_Source hors liste de veille : aucune entrée ajoutée à la "
+                      "mémoire des sources._")
     state.setdefault("publication_log", []).append({
         "slug": article["slug"],
         "title": article["title"],
