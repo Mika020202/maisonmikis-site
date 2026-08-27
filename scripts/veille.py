@@ -189,7 +189,14 @@ def call_claude(system, user_message, use_web_search=True, max_tokens=12000,
 
 def extract_json(text):
     """Le prompt exige du JSON pur ; on tolere un bloc ```json ... ``` et du
-    bavardage autour, par prudence."""
+    bavardage autour, par prudence.
+
+    strict=False est indispensable : le modele glisse regulierement un vrai saut
+    de ligne a l'interieur d'une chaine (typiquement dans body_html, qui fait
+    plusieurs milliers de caracteres). Le parseur strict refuse alors tout le
+    document avec "Invalid control character at ...", et l'article entier est
+    perdu pour un simple retour a la ligne.
+    """
     text = text.strip()
     m = re.search(r"```(?:json)?\s*(\{.*\})\s*```", text, re.S)
     if m:
@@ -198,7 +205,7 @@ def extract_json(text):
         first, last = text.find("{"), text.rfind("}")
         if first != -1 and last > first:
             text = text[first:last + 1]
-    return json.loads(text)
+    return json.loads(text, strict=False)
 
 
 # ---------------------------------------------------------------------------
