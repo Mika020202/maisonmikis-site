@@ -1,64 +1,180 @@
 {
-  "_note": "URL verifiees une par une le 27/08/2026, par consultation directe de chaque page (pas seulement par recherche). Avant cette date, 24 des 28 sources avaient url = null : la veille les cherchait a l'aveugle. Regle : ne jamais inscrire ici une URL non verifiee — une adresse inventee est pire qu'une absence d'adresse.",
+  "_note": "URL verifiees une par une le 27/08/2026, par consultation directe de chaque page (pas seulement par recherche). Avant cette date, 24 des 28 sources avaient url = null : la veille les cherchait a l'aveugle. Regle : ne jamais inscrire ici une URL non verifiee — une adresse inventee est pire qu'une absence d'adresse. Noms accentues le 27/08/2026 : ils servent de clef a last_seen_by_source dans state.json, ou les accents etaient deja presents.",
   "sante-visuelle": {
-    "label": "Sante visuelle",
+    "label": "Santé visuelle",
     "sources": [
-      {"name": "Acuite", "url": "https://www.acuite.fr/actualites", "note": "Presse professionnelle de reference, flux quotidien"},
-      {"name": "Bien Vu", "url": "https://www.bienvu.ws/", "note": "Mensuel de l'optique, editeur Vision Plurielle. Domaine en .ws"},
-      {"name": "France Optique", "url": "https://www.france-optique.com/actualites", "note": "Domaine france-optique.com avec tiret"},
-      {"name": "SFO", "url": "https://www.sfo-online.fr/actualites", "note": "Societe Francaise d'Ophtalmologie"},
-      {"name": "SNOF", "url": "https://snof.org/actualites", "note": "Syndicat National des Ophtalmologistes de France"},
-      {"name": "FNOF", "url": "https://fnof.org/actualite-federation-opticiens-juridique-social/", "note": "Federation Nationale des Opticiens de France"}
+      {
+        "name": "Acuité",
+        "url": "https://www.acuite.fr/actualites",
+        "note": "Presse professionnelle de reference, flux quotidien"
+      },
+      {
+        "name": "Bien Vu",
+        "url": "https://www.bienvu.ws/",
+        "note": "Mensuel de l'optique, editeur Vision Plurielle. Domaine en .ws"
+      },
+      {
+        "name": "France Optique",
+        "url": "https://www.france-optique.com/actualites",
+        "note": "Domaine france-optique.com avec tiret"
+      },
+      {
+        "name": "SFO",
+        "url": "https://www.sfo-online.fr/actualites",
+        "note": "Societe Francaise d'Ophtalmologie"
+      },
+      {
+        "name": "SNOF",
+        "url": "https://snof.org/actualites",
+        "note": "Syndicat National des Ophtalmologistes de France"
+      },
+      {
+        "name": "FNOF",
+        "url": "https://fnof.org/actualite-federation-opticiens-juridique-social/",
+        "note": "Federation Nationale des Opticiens de France"
+      }
     ]
   },
   "sante-auditive": {
-    "label": "Sante auditive",
+    "label": "Santé auditive",
     "sources": [
-      {"name": "Audiologie Demain", "url": "https://audiologie-demain.com/l-actualite"},
-      {"name": "Audio Infos", "url": "https://www.audioinfos365.fr/", "note": "Edite par Parresia. Anciennement liste en double sous le nom 'Audio Infos 365' : c'est la meme publication"},
-      {"name": "L'Ouie Magazine", "url": "https://www.ouiemagazine.net/", "note": "Publication distincte d'Audio Infos, longtemps confondue avec elle dans ce fichier"}
+      {
+        "name": "Audiologie Demain",
+        "url": "https://audiologie-demain.com/l-actualite"
+      },
+      {
+        "name": "Audio Infos",
+        "url": "https://www.audioinfos365.fr/",
+        "note": "Edite par Parresia. Anciennement liste en double sous le nom 'Audio Infos 365' : c'est la meme publication"
+      },
+      {
+        "name": "L'Ouïe Magazine",
+        "url": "https://www.ouiemagazine.net/",
+        "note": "Publication distincte d'Audio Infos, longtemps confondue avec elle dans ce fichier"
+      }
     ]
   },
   "mode-lunettes": {
     "label": "Mode & tendances",
     "sources": [
-      {"name": "Thelios (LVMH)", "url": "https://www.thelios.com/en-us/news", "note": "Fabrique Fendi, Fred, Loewe, Celine, Dior, Givenchy"},
-      {"name": "EssilorLuxottica", "url": "https://www.essilorluxottica.com/en/newsroom/press-releases/", "note": "Fabrique Ray-Ban, Prada, Miu Miu, Ralph Lauren, Armani"},
-      {"name": "Kering Eyewear", "url": "https://www.keringeyewear.com/fr/newsroom", "note": "Fabrique Gucci, Saint Laurent"},
-      {"name": "Safilo", "url": "https://www.safilogroup.com/en/investors/press-releases", "note": "Fabrique Marc Jacobs"},
-      {"name": "Marcolin", "url": "https://www.marcolin.com/en/media/finance-and-press/", "note": "Fabrique Guess. Rachete par VSP Vision en decembre 2025, desormais sous la meme direction que Marchon"},
-      {"name": "Marchon", "url": "https://www.marchon.com/news.html", "note": "Fabrique Longchamp. Meme groupe que Marcolin depuis decembre 2025"},
-      {"name": "Andy Brook", "url": "https://andy-brook.com/fr/", "note": "Marque independante francaise, fondee en 2017"},
-      {"name": "CHIMI", "url": "https://chimi-online.com/", "note": "Marque independante suedoise, fondee en 2016"},
-      {"name": "LOOL", "url": "https://looleyewear.com/blogs/labs", "note": "Marque independante espagnole, Barcelone, fondee en 2016"}
+      {
+        "name": "Thélios (LVMH)",
+        "url": "https://www.thelios.com/en-us/news",
+        "note": "Fabrique Fendi, Fred, Loewe, Celine, Dior, Givenchy"
+      },
+      {
+        "name": "EssilorLuxottica",
+        "url": "https://www.essilorluxottica.com/en/newsroom/press-releases/",
+        "note": "Fabrique Ray-Ban, Prada, Miu Miu, Ralph Lauren, Armani"
+      },
+      {
+        "name": "Kering Eyewear",
+        "url": "https://www.keringeyewear.com/fr/newsroom",
+        "note": "Fabrique Gucci, Saint Laurent"
+      },
+      {
+        "name": "Safilo",
+        "url": "https://www.safilogroup.com/en/investors/press-releases",
+        "note": "Fabrique Marc Jacobs"
+      },
+      {
+        "name": "Marcolin",
+        "url": "https://www.marcolin.com/en/media/finance-and-press/",
+        "note": "Fabrique Guess. Rachete par VSP Vision en decembre 2025, desormais sous la meme direction que Marchon"
+      },
+      {
+        "name": "Marchon",
+        "url": "https://www.marchon.com/news.html",
+        "note": "Fabrique Longchamp. Meme groupe que Marcolin depuis decembre 2025"
+      },
+      {
+        "name": "Andy Brook",
+        "url": "https://andy-brook.com/fr/",
+        "note": "Marque independante francaise, fondee en 2017"
+      },
+      {
+        "name": "CHIMI",
+        "url": "https://chimi-online.com/",
+        "note": "Marque independante suedoise, fondee en 2016"
+      },
+      {
+        "name": "LOOL",
+        "url": "https://looleyewear.com/blogs/labs",
+        "note": "Marque independante espagnole, Barcelone, fondee en 2016"
+      }
     ],
-    "rotation_note": "19 marques au total (voir marques.html) — 7 verifiees par semaine, cycle complet ~3 semaines. Une sortie de collection n'est pas un flux quotidien."
+    "note": "19 marques au total (voir marques.html). Il n'y a AUCUNE rotation automatique : le compteur mode_lunettes_brand_rotation de state.json n'etait lu par aucun code et a ete supprime le 27/08/2026. Le modele balaie librement les fabricants ci-dessus."
   },
   "tech-verres": {
     "label": "Technologies verres",
     "sources": [
-      {"name": "Essilor", "url": "https://espace-presse.essilor.fr/communiques-de-presse-essilor-france/"},
-      {"name": "Novacel", "url": "https://novacel-optical.com/actualites/"}
+      {
+        "name": "Essilor",
+        "url": "https://espace-presse.essilor.fr/communiques-de-presse-essilor-france/"
+      },
+      {
+        "name": "Novacel",
+        "url": "https://novacel-optical.com/actualites/"
+      }
     ]
   },
   "tech-lentilles": {
     "label": "Technologies lentilles",
     "sources": [
-      {"name": "CooperVision", "url": "https://coopervision.fr/notre-entreprise/actualites", "note": "Fil francais, pas la newsroom internationale"},
-      {"name": "Bausch + Lomb", "url": "https://www.bausch.com/newsroom/news/", "note": "Newsroom internationale en anglais, a traduire"},
-      {"name": "Ophtalmic Compagnie", "url": "https://www.ophtalmic-compagnie.fr/M%C3%A9dias/Actualites-presse/"},
-      {"name": "Alcon", "url": "https://www.alcon.com/newsroom/", "note": "Newsroom internationale en anglais"},
-      {"name": "Johnson & Johnson Vision", "url": "https://www.jjvision.com/en-us/news-media-center/", "note": "Newsroom internationale en anglais"},
-      {"name": "Menicon", "url": "https://www.menicon.fr/professional/articles/news/", "note": "Espace professionnels du site francais"},
-      {"name": "Laboratoire LCS", "url": "https://www.laboratoire-lcs.com/", "note": "Fabricant francais a Caen. Pas de page actus dediee : surveiller la page d'accueil, priorite basse"}
+      {
+        "name": "CooperVision",
+        "url": "https://coopervision.fr/notre-entreprise/actualites",
+        "note": "Fil francais, pas la newsroom internationale"
+      },
+      {
+        "name": "Bausch + Lomb",
+        "url": "https://www.bausch.com/newsroom/news/",
+        "note": "Newsroom internationale en anglais, a traduire"
+      },
+      {
+        "name": "Ophtalmic Compagnie",
+        "url": "https://www.ophtalmic-compagnie.fr/M%C3%A9dias/Actualites-presse/"
+      },
+      {
+        "name": "Alcon",
+        "url": "https://www.alcon.com/newsroom/",
+        "note": "Newsroom internationale en anglais"
+      },
+      {
+        "name": "Johnson & Johnson Vision",
+        "url": "https://www.jjvision.com/en-us/news-media-center/",
+        "note": "Newsroom internationale en anglais"
+      },
+      {
+        "name": "Menicon",
+        "url": "https://www.menicon.fr/professional/articles/news/",
+        "note": "Espace professionnels du site francais"
+      },
+      {
+        "name": "Laboratoire LCS",
+        "url": "https://www.laboratoire-lcs.com/",
+        "note": "Fabricant francais a Caen. Pas de page actus dediee : surveiller la page d'accueil, priorite basse"
+      }
     ]
   },
   "remboursements": {
-    "label": "Remboursements & demarches",
+    "label": "Remboursements & démarches",
     "sources": [
-      {"name": "Ameli — lunettes et lentilles", "url": "https://www.ameli.fr/assure/remboursements/rembourse/soins-protheses-dentaires-optique-audition/lunettes-lentilles", "note": "Page de reference : elle change quand la reglementation ou les plafonds changent"},
-      {"name": "Ameli — aides auditives", "url": "https://www.ameli.fr/assure/remboursements/rembourse/soins-protheses-dentaires-optique-audition/protheses-auditives", "note": "Idem cote audition"},
-      {"name": "CRAMIF", "url": "https://www.cramif.fr/actualites", "note": "ATTENTION : la CRAMIF traite surtout la prevention des risques professionnels, pas le 100% Sante. Source faible pour notre sujet, conservee a titre secondaire. Les deux pages Ameli ci-dessus sont bien plus pertinentes"}
+      {
+        "name": "Ameli — lunettes et lentilles",
+        "url": "https://www.ameli.fr/assure/remboursements/rembourse/soins-protheses-dentaires-optique-audition/lunettes-lentilles",
+        "note": "Page de reference : elle change quand la reglementation ou les plafonds changent"
+      },
+      {
+        "name": "Ameli — aides auditives",
+        "url": "https://www.ameli.fr/assure/remboursements/rembourse/soins-protheses-dentaires-optique-audition/protheses-auditives",
+        "note": "Idem cote audition"
+      },
+      {
+        "name": "CRAMIF",
+        "url": "https://www.cramif.fr/actualites",
+        "note": "ATTENTION : la CRAMIF traite surtout la prevention des risques professionnels, pas le 100% Sante. Source faible pour notre sujet, conservee a titre secondaire. Les deux pages Ameli ci-dessus sont bien plus pertinentes"
+      }
     ]
   },
   "vie-boutique": {
