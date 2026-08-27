@@ -555,6 +555,18 @@ SHARED_CSS = """
     margin-top:40px;padding:18px 22px;background:var(--cream-2);border-radius:14px;
     font-size:12.5px;color:var(--charcoal-soft);border:1px solid var(--line);
   }
+  /* Bandeau de fraicheur (remis en place le 27/08/2026). Il avait ete demande
+     le 29/07/2026, mis en oeuvre dans scripts/lib_articles.py, puis perdu au
+     retour vers build.py : plus rien n'importait ce fichier. */
+  .article-freshness-notice{
+    display:flex;gap:12px;align-items:flex-start;margin:0 0 34px;padding:16px 20px;
+    background:var(--cream-2);border:1px solid var(--line);
+    border-left:3px solid var(--terracotta);border-radius:12px;
+    font-size:13.5px;line-height:1.55;color:var(--charcoal-soft);
+  }
+  .article-freshness-notice .icon{
+    color:var(--terracotta);font-size:15px;line-height:1.45;flex-shrink:0;
+  }
   .related-articles{background:var(--cream-2);}
 
   /* ====================================================================
@@ -917,6 +929,42 @@ SCRIPT_JS = """
       if (e.key === 'Escape' && articleOverlay.classList.contains('open')) closeArticleModal();
     });
   }
+
+  /* Bandeau "certaines informations peuvent avoir evolue".
+     Calcule a CHAQUE VISITE, pas au moment de la generation : un article reste
+     donc correctement signale comme ancien meme si le site n'est pas regenere
+     pendant des mois. Seuil en mois ci-dessous. */
+  (function () {
+    var SEUIL_MOIS = 6;
+    var section = document.querySelector('.article-prose[data-date-iso]');
+    if (!section) return;
+    var publie = new Date(section.getAttribute('data-date-iso'));
+    if (isNaN(publie.getTime())) return;
+    var mois = (Date.now() - publie.getTime()) / (1000 * 60 * 60 * 24 * 30.44);
+    if (mois < SEUIL_MOIS) return;
+    var age = mois >= 12 ? "plus d'un an" : 'plus de ' + SEUIL_MOIS + ' mois';
+    var bandeau = document.createElement('div');
+    bandeau.className = 'article-freshness-notice';
+    var icone = document.createElement('span');
+    icone.className = 'icon';
+    icone.setAttribute('aria-hidden', 'true');
+    icone.textContent = 'ⓘ';
+    var texte = document.createElement('span');
+    texte.textContent = 'Cet article a ete publie il y a ' + age +
+      " — certaines informations (reglementation, prix, produits) peuvent avoir " +
+      "evolue depuis. N'hesitez pas a verifier les details importants aupres de " +
+      'notre equipe en boutique.';
+    bandeau.appendChild(icone);
+    bandeau.appendChild(texte);
+    var cadre = section.querySelector('.arch-frame');
+    if (cadre && cadre.parentNode) {
+      cadre.parentNode.insertBefore(bandeau, cadre.nextSibling);
+    } else {
+      var etroit = section.querySelector('.container-narrow');
+      if (etroit) etroit.insertBefore(bandeau, etroit.firstChild);
+    }
+  })();
+
 """
 
 # Libelles utilises uniquement dans la nav du haut, quand ils different du
@@ -6143,7 +6191,7 @@ def render_article_page(article):
   </div>
 </section>
 
-<section class="article-prose story-block">
+<section class="article-prose story-block" data-date-iso="{article["date_iso"]}">
   <div class="container-narrow">
     <div class="arch-frame reveal" style="margin-bottom:40px;aspect-ratio:16/9;border-radius:24px;">
       <img src="{article["image"]}" alt="{article["image_alt"]}">
