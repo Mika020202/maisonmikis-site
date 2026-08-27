@@ -104,7 +104,7 @@ def slugify(value):
 # Appel API
 # ---------------------------------------------------------------------------
 def call_claude(system, user_message, use_web_search=True, max_tokens=12000,
-                max_recherches=6):
+                max_recherches=14):
     """Appel direct a l'API Messages d'Anthropic. Pas de SDK : une seule
     dependance, urllib, donc rien a installer sur le runner.
 
