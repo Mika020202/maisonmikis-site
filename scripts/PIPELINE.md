@@ -30,7 +30,7 @@ Le rattrapage ne consomme rien si le passage du matin a eu lieu : `veille.py` li
    article **si et seulement si** un fait franchit le seuil editorial. Il n'ecrit
    qu'un fichier de donnees : `scripts/articles_auto.json`. **Aucune page HTML.**
 3. **Generation** — `build.py` (racine du depot) est le **SEUL** generateur. Il
-   reecrit toutes les pages, la feuille de style et le sitemap a partir du modele
+   reecrit toutes les pages et la feuille de style a partir du modele
    unique. Un article automatique passe donc par exactement le meme gabarit, le
    meme maillage interne et le meme JSON-LD qu'un article ecrit a la main.
 4. **Enregistrement** — le workflow commit et pousse lui-meme. `veille.py` ne
@@ -115,6 +115,22 @@ Ces deux outils herites ont ete SUPPRIMES le 27/08/2026 :
   manuels sont ecrits en dur dans `build.py`. Il produisait donc un article vide.
 - `migrate_freshness_and_sort.py` etait une migration a usage unique, deja appliquee.
 
+## Le sitemap n'est complete que par AJOUT
+
+`sitemap.xml` n'est PAS regenere : `build.py` y ajoute les URL manquantes et ne
+retire jamais rien. Cela se lit dans le fichier : les dates `lastmod` des pages
+anciennes restent figees au 01-02/08/2026, et `mentions-legales.html` apparait au
+milieu des articles, dans l'ordre ou il a ete ajoute.
+
+Consequence : une page retiree du site **reste declaree a l'indexation** tant
+qu'on ne supprime pas son bloc a la main. C'est arrive le 27/08/2026 — l'article
+retire portait `noindex` tout en restant annonce dans le sitemap, soit deux signaux
+contradictoires envoyes aux moteurs. Verifie apres correction : `build.py` ne le
+reintroduit pas.
+
+Faire regenerer entierement ce fichier par `build.py` reste a faire. En attendant,
+toute suppression d'article impose de l'editer a la main.
+
 ## Declenchements manuels (onglet Actions → Run workflow)
 
 Quatre modes, utilisables depuis un telephone :
@@ -162,7 +178,9 @@ page ne peut pas etre effacee en ligne par le workflow. La marche a suivre :
 3. retirer l'entree correspondante de `publication_log` ;
 4. remplacer le fichier `actualites/<slug>.html` par une page `noindex` qui
    redirige vers `/actualites.html` (le miroir sait ecraser, pas supprimer) ;
-5. lancer « Remettre tout le site en ligne ».
+5. **retirer aussi le bloc `<url>` correspondant de `sitemap.xml`** (voir
+   ci-dessous : ce fichier n'est jamais nettoye tout seul) ;
+6. lancer « Remettre tout le site en ligne ».
 Le fichier subsiste sur l'hebergement avec ce contenu de remplacement. Pour un
 effacement physique, passer par le gestionnaire de fichiers IONOS.
 
