@@ -30,7 +30,8 @@
     "opticiens-ehpad-decret-2026-examens-vue",
     "eclipse-solaire-2026-proteger-ses-yeux",
     "fraude-audioprothese-rapport-igas-igf-100-sante",
-    "myday-misight-lentille-freination-myopie-enfant"
+    "myday-misight-lentille-freination-myopie-enfant",
+    "decret-aout-2026-ticket-moderateur-optique-audition"
   ],
   "last_seen_by_source": {
     "Acuité": "EssilorLuxottica publie résultats S1 2026, croissance +9,7%",
@@ -64,7 +65,8 @@
     "Acuité (acuite.fr) — article du 17 juin 2026 sur le décret n° 2026-507 du 12 juin 2026": "Les opticiens peuvent désormais intervenir en EHPAD : ce que change le décret de juin 2026",
     "ARS Hauts-de-France / info.gouv.fr — alertes officielles éclipse solaire 12 août 2026": "Éclipse du 12 août 2026 : comment protéger ses yeux sans se tromper",
     "Rapport IGF-IGAS sur la fraude aux prescriptions et aux facturations à l'Assurance maladie, publié le 29 juillet 2026 (relayé par Acuité, L'Ouïe Magazine, Le Moniteur des Pharmacies, Journal de l'Économie — août 2026)": "Fraude aux audioprothèses : ce que révèle le rapport officiel de juillet 2026",
-    "Acuité — article sur le lancement de MyDay MiSight 1 day (CooperVision)": "MyDay MiSight 1 day : nouvelle lentille contre la myopie"
+    "Acuité — article sur le lancement de MyDay MiSight 1 day (CooperVision)": "MyDay MiSight 1 day : nouvelle lentille contre la myopie",
+    "Décret n° 2026-810 du 21 août 2026, publié au Journal officiel du 22 août 2026 (relayé par Acuité, L'Ouïe Magazine, Audiologie Demain, Le Moniteur des Pharmacies)": "Lunettes et aides auditives : ce que change le décret d'août 2026"
   },
   "mode_lunettes_brand_rotation": {
     "brands_order": [
@@ -117,6 +119,12 @@
       "title": "MyDay MiSight 1 day : nouvelle lentille contre la myopie",
       "date": "2026-08-27",
       "source": "Acuité — article sur le lancement de MyDay MiSight 1 day (CooperVision)"
+    },
+    {
+      "slug": "decret-aout-2026-ticket-moderateur-optique-audition",
+      "title": "Lunettes et aides auditives : ce que change le décret d'août 2026",
+      "date": "2026-08-27",
+      "source": "Décret n° 2026-810 du 21 août 2026, publié au Journal officiel du 22 août 2026 (relayé par Acuité, L'Ouïe Magazine, Audiologie Demain, Le Moniteur des Pharmacies)"
     }
   ],
   "dernier_passage": "2026-08-27"
