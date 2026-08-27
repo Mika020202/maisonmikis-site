@@ -356,17 +356,22 @@ def run_weekly(sources, state, site):
     # state.json depuis l'origine, mais AUCUN code ne le lisait : trois articles
     # ont ainsi pu paraitre le meme jour. Il est desormais applique, et verifie
     # AVANT tout appel a l'API pour ne rien depenser inutilement.
+    # On raisonne en SEMAINE CALENDAIRE (lundi-dimanche), pas en sept jours
+    # glissants : "deux par semaine" doit se remettre a zero le lundi. Avec un
+    # comptage glissant, deux articles publies un jeudi bloqueraient le lundi
+    # suivant, ce qui n'est pas ce que le reglage veut dire.
     plafond = int(state.get("max_publications_per_week", 2) or 2)
+    semaine = today.isocalendar()[:2]
     recents = 0
     for p in state.get("publication_log", []):
         try:
-            if (today - date.fromisoformat(p.get("date", ""))).days < 7:
+            if date.fromisoformat(p.get("date", "")).isocalendar()[:2] == semaine:
                 recents += 1
         except ValueError:
             continue
     if recents >= plafond:
-        write_summary("Plafond atteint : %d article(s) déjà publié(s) sur les sept "
-                      "derniers jours, pour un maximum de %d "
+        write_summary("Plafond atteint : %d article(s) déjà publié(s) cette "
+                      "semaine, pour un maximum de %d "
                       "(`max_publications_per_week` dans `state.json`). "
                       "**Aucune veille lancée cette fois** — aucun crédit consommé."
                       % (recents, plafond))
