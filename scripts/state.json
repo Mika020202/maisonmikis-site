@@ -31,7 +31,8 @@
     "eclipse-solaire-2026-proteger-ses-yeux",
     "fraude-audioprothese-rapport-igas-igf-100-sante",
     "myday-misight-lentille-freination-myopie-enfant",
-    "decret-aout-2026-ticket-moderateur-optique-audition"
+    "decret-aout-2026-ticket-moderateur-optique-audition",
+    "lunettes-connectees-plainte-allemagne-vie-privee"
   ],
   "last_seen_by_source": {
     "Acuité": "EssilorLuxottica publie résultats S1 2026, croissance +9,7%",
@@ -66,7 +67,8 @@
     "ARS Hauts-de-France / info.gouv.fr — alertes officielles éclipse solaire 12 août 2026": "Éclipse du 12 août 2026 : comment protéger ses yeux sans se tromper",
     "Rapport IGF-IGAS sur la fraude aux prescriptions et aux facturations à l'Assurance maladie, publié le 29 juillet 2026 (relayé par Acuité, L'Ouïe Magazine, Le Moniteur des Pharmacies, Journal de l'Économie — août 2026)": "Fraude aux audioprothèses : ce que révèle le rapport officiel de juillet 2026",
     "Acuité — article sur le lancement de MyDay MiSight 1 day (CooperVision)": "MyDay MiSight 1 day : nouvelle lentille contre la myopie",
-    "Décret n° 2026-810 du 21 août 2026, publié au Journal officiel du 22 août 2026 (relayé par Acuité, L'Ouïe Magazine, Audiologie Demain, Le Moniteur des Pharmacies)": "Lunettes et aides auditives : ce que change le décret d'août 2026"
+    "Décret n° 2026-810 du 21 août 2026, publié au Journal officiel du 22 août 2026 (relayé par Acuité, L'Ouïe Magazine, Audiologie Demain, Le Moniteur des Pharmacies)": "Lunettes et aides auditives : ce que change le décret d'août 2026",
+    "Euronews / CNIL / Les Smartgrids / Telesatellite — plainte pénale de HateAid contre Meta et EssilorLuxottica (12 août 2026)": "Lunettes connectées : une plainte en Allemagne interroge la vie privée"
   },
   "mode_lunettes_brand_rotation": {
     "brands_order": [
@@ -125,6 +127,12 @@
       "title": "Lunettes et aides auditives : ce que change le décret d'août 2026",
       "date": "2026-08-27",
       "source": "Décret n° 2026-810 du 21 août 2026, publié au Journal officiel du 22 août 2026 (relayé par Acuité, L'Ouïe Magazine, Audiologie Demain, Le Moniteur des Pharmacies)"
+    },
+    {
+      "slug": "lunettes-connectees-plainte-allemagne-vie-privee",
+      "title": "Lunettes connectées : une plainte en Allemagne interroge la vie privée",
+      "date": "2026-08-27",
+      "source": "Euronews / CNIL / Les Smartgrids / Telesatellite — plainte pénale de HateAid contre Meta et EssilorLuxottica (12 août 2026)"
     }
   ],
   "dernier_passage": "2026-08-27"
