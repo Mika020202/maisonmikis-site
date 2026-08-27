@@ -388,27 +388,52 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
           "aujourd'hui." % (today.isoformat(), (today - timedelta(days=60)).isoformat())
     )
 
-    try:
-        result = extract_json(call_claude(system, user))
-    except Exception as exc:
-        write_summary("⚠️ Erreur pendant la veille : %s\n\nAucun article publié. "
-                      "Le site reste inchangé, nouvelle tentative la semaine "
-                      "prochaine." % exc)
-        return state, None
+    # Trois tentatives avant d'abandonner la semaine. Une reponse mal formee
+    # ou un article refuse au controle qualite ne doit pas coûter le passage
+    # entier : on redonne au modele la cause exacte de l'echec et on relance.
+    # Seul "aucune nouveaute" sort tout de suite : c'est une reponse valable.
+    article = None
+    result = {}
+    dernier_probleme = "cause inconnue"
+    consigne = ""
+
+    for tentative in range(3):
+        try:
+            result = extract_json(call_claude(system, user + consigne))
+        except Exception as exc:
+            dernier_probleme = "reponse illisible (%s)" % exc
+            consigne = (
+                "\n\nATTENTION : ta reponse precedente n'a pas pu etre lue (%s). "
+                "Renvoie du JSON strictement valide. N'insere JAMAIS un vrai saut "
+                "de ligne a l'interieur d'une chaine : ecris \\n." % exc)
+            continue
+
+        state["dernier_passage"] = today.isoformat()
+
+        if result.get("no_novelty"):
+            write_summary("Aucune nouveauté ne franchit le seuil éditorial cette "
+                          "semaine. **Aucun article publié** — c'est le comportement "
+                          "attendu, pas une erreur.")
+            return state, None
+
+        try:
+            article = validate(result, site, known_slugs, today)
+            break
+        except ValueError as exc:
+            dernier_probleme = "article refusé au contrôle qualité (%s)" % exc
+            consigne = (
+                "\n\nATTENTION : ton article precedent a ete refuse pour cette "
+                "raison precise : %s. Corrige uniquement ce point et renvoie "
+                "l'article complet, en JSON strictement valide." % exc)
 
     state["dernier_passage"] = today.isoformat()
 
-    if result.get("no_novelty"):
-        write_summary("Aucune nouveauté ne franchit le seuil éditorial cette "
-                      "semaine. **Aucun article publié** — c'est le comportement "
-                      "attendu, pas une erreur.")
-        return state, None
-
-    try:
-        article = validate(result, site, known_slugs, today)
-    except ValueError as exc:
-        write_summary("⚠️ Article refusé au contrôle qualité : %s\n\nAucune "
-                      "publication. Le site reste inchangé." % exc)
+    if article is None:
+        # La formule "Erreur pendant la veille" est le mot-cle que guette le
+        # workflow pour echouer bruyamment. Ne pas la retirer.
+        write_summary("⚠️ Erreur pendant la veille : trois tentatives, aucune "
+                      "exploitable. Dernière cause : %s\n\nAucun article publié. "
+                      "Le site reste inchangé." % dernier_probleme)
         return state, None
 
     auto = load(AUTO_PATH, default=[])
