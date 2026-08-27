@@ -88,3 +88,47 @@ jobs:
               sys.exit(1)
           print("Aucun doublon parmi %d articles." % len(slugs))
           PY
+
+      - name: Essai a blanc de la veille (sans appeler l'API)
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import sys
+          sys.path.insert(0, ".")
+          sys.path.insert(0, "scripts")
+
+          import build as site
+          import veille
+
+          # Aucun appel reseau : on substitue une reponse "rien de neuf". Le but
+          # n'est pas de tester le modele, mais de verifier que tout ce qui
+          # entoure l'appel tient debout — construction du prompt, catalogue
+          # d'images, substitutions de chaines, lecture des fichiers de donnees.
+          # Une erreur de formatage se voyait jusqu'ici seulement le lundi matin.
+          veille.call_claude = lambda *a, **k: '{"no_novelty": true}'
+
+          sources = veille.load(veille.SOURCES_PATH)
+          state = dict(veille.load(veille.STATE_PATH))
+
+          # On desactive le plafond : sinon la fonction sortirait AVANT de
+          # construire le prompt, et l'essai ne testerait rien.
+          state["max_publications_per_week"] = 10**6
+
+          etat, article = veille.run_weekly(sources, state, site)
+
+          assert article is None, "l'essai a blanc n'aurait pas du produire d'article"
+          assert not veille.ECHEC, "la veille s'est signalee en echec pendant l'essai"
+
+          catalogue = veille.catalogue_images(site)
+          assert catalogue, "aucune illustration disponible dans le catalogue"
+
+          noms = [s["name"] for s in veille.flatten_sources(sources)]
+          inconnues = [k for k in etat.get("last_seen_by_source", {}) if k not in noms]
+          if inconnues:
+              print("::error::Clefs de last_seen_by_source hors de sources.json : %s"
+                    % ", ".join(inconnues))
+              sys.exit(1)
+
+          print("Essai a blanc reussi : %d sources, %d illustrations."
+                % (len(noms), len(catalogue)))
+          PY
