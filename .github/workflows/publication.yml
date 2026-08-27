@@ -98,12 +98,18 @@ jobs:
 
     steps:
       - name: Recuperer le depot
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Installer Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+
+      - name: Verifier que les scripts compilent
+        run: |
+          set -euo pipefail
+          python3 -m compileall -q build.py scripts/
+          echo "Scripts compiles : rien de casse avant de commencer."
 
       - name: Installer les outils de transfert
         run: |
@@ -176,6 +182,10 @@ jobs:
             echo "⚠️ La cle ANTHROPIC_API_KEY n'est pas renseignee : aucune redaction cette semaine." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
+          # veille.py sort desormais en code d'erreur lorsqu'elle tombe : avec
+          # « set -e », l'etape s'arrete ici d'elle-meme. Le grep ci-dessous
+          # n'est plus le mecanisme de detection, seulement un second filet pour
+          # le cas ou un message d'erreur serait ecrit sans code de sortie.
           python3 scripts/veille.py
           if grep -q "Erreur pendant la veille" "$GITHUB_STEP_SUMMARY"; then
             echo "::error::Veille en panne : le message exact de l API figure dans le resume ci-dessus. Aucun article n a pu etre redige."
