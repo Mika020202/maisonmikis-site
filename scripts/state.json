@@ -1,7 +1,6 @@
 {
-  "_note": "Reconstruit le 28/07/2026 après incident de perte du 27/07/2026. Stocké dans le dépôt Git (persistant), plus jamais dans /home/claude/.",
+  "_note": "Nettoye le 27/08/2026. Trois corrections : (1) last_seen_by_source n'accepte plus que des noms de sources reels de sources.json — les clefs-poubelles faites de phrases entieres ont ete supprimees et le code ne peut plus en creer ; (2) l'article retire du site a ete sorti du journal de publication, mais son slug reste dans used_slugs pour qu'il ne puisse jamais etre reutilise ; (3) mode_lunettes_brand_rotation et queue_surplus_topics ont ete supprimes : aucun code ne les lisait. Stocke dans le depot Git, jamais dans une session ephemere.",
   "baseline_done": true,
-  "baseline_note": "La toute première exécution doit seulement enregistrer l'état actuel des sources sans publier, pour éviter de publier d'un coup tout l'historique existant.",
   "used_slugs": [
     "fatigue-oculaire-ecrans",
     "perte-auditive-signes-precoces",
@@ -42,8 +41,8 @@
     "SNOF": "Ralliement à la grève des médecins libéraux, janvier 2026",
     "FNOF": "Combat contre l'accès aux données médicales par les OCAM (loi anti-fraudes)",
     "Audiologie Demain": "Bernafon enrichit la gamme Encanta avec solutions non rechargeables",
-    "Audio Infos / L'Ouïe Magazine": "Loi anti-fraude change les règles du jeu (13/07/2026)",
-    "Audio Infos 365": "37e Congrès mondial d'audiologie (WCA 2026) à Séoul",
+    "L'Ouïe Magazine": "Loi anti-fraude change les règles du jeu (13/07/2026)",
+    "Audio Infos": "37e Congrès mondial d'audiologie (WCA 2026) à Séoul",
     "Thélios (LVMH)": "Sponsor officiel lunetterie de la Biennale Cinéma 2026 à Venise",
     "EssilorLuxottica": "Résultats S1 2026 : CA de 14,8 Mds€, +9,7% (28/07/2026)",
     "Kering Eyewear": "Résultats S1 2026 : Eyewear à 965 M€, +8% comparable (28/07/2026)",
@@ -56,46 +55,14 @@
     "Essilor": "Label RSE AFNOR niveau « exemplaire » obtenu (06/07/2026)",
     "Novacel": "Certification atelier de montage Lindberg obtenue ; anti-reflets Célène lancé",
     "CooperVision": "Expansion livraison J+1 Biofinity XR Toric aux États-Unis (16/06/2026)",
-    "Bausch & Lomb": "Publication résultats T2 2026 prévue le 29 juillet 2026",
+    "Bausch + Lomb": "Publication résultats T2 2026 prévue le 29 juillet 2026",
     "Ophtalmic Compagnie": "Nouveau catalogue Ophtalmic Intelligence System 2026 (12/05/2026)",
     "Alcon": "Résultats T1 2026 en croissance +6% portés par Unity et Tryptyr",
     "Johnson & Johnson Vision": "Vision Care Q2 : +5,6% à 1,45 Md$ ; invest. 1 Md$ à Jacksonville",
     "Menicon": "Célébration 75e anniversaire ; lancement projet \"Winds of Progress\" (fév. 2026)",
     "Laboratoire LCS": "Lancement AKS Freeform, lentille sclérale personnalisée nouvelle génération (16/01/2026)",
-    "CRAMIF": "Congé supplémentaire de naissance (CSN) effectif au 1er juillet 2026",
-    "Acuité (acuite.fr) — article du 17 juin 2026 sur le décret n° 2026-507 du 12 juin 2026": "Les opticiens peuvent désormais intervenir en EHPAD : ce que change le décret de juin 2026",
-    "ARS Hauts-de-France / info.gouv.fr — alertes officielles éclipse solaire 12 août 2026": "Éclipse du 12 août 2026 : comment protéger ses yeux sans se tromper",
-    "Rapport IGF-IGAS sur la fraude aux prescriptions et aux facturations à l'Assurance maladie, publié le 29 juillet 2026 (relayé par Acuité, L'Ouïe Magazine, Le Moniteur des Pharmacies, Journal de l'Économie — août 2026)": "Fraude aux audioprothèses : ce que révèle le rapport officiel de juillet 2026",
-    "Acuité — article sur le lancement de MyDay MiSight 1 day (CooperVision)": "MyDay MiSight 1 day : nouvelle lentille contre la myopie",
-    "Décret n° 2026-810 du 21 août 2026, publié au Journal officiel du 22 août 2026 (relayé par Acuité, L'Ouïe Magazine, Audiologie Demain, Le Moniteur des Pharmacies)": "Lunettes et aides auditives : ce que change le décret d'août 2026",
-    "Euronews / CNIL / Les Smartgrids / Telesatellite — plainte pénale de HateAid contre Meta et EssilorLuxottica (12 août 2026)": "Lunettes connectées : une plainte en Allemagne interroge la vie privée"
+    "CRAMIF": "Congé supplémentaire de naissance (CSN) effectif au 1er juillet 2026"
   },
-  "mode_lunettes_brand_rotation": {
-    "brands_order": [
-      "Ray-Ban",
-      "Fendi",
-      "Fred",
-      "Loewe",
-      "Celine",
-      "Marc Jacobs",
-      "Prada",
-      "Andy Brook",
-      "CHIMI",
-      "Miu Miu",
-      "LOOL",
-      "Ralph Lauren",
-      "Armani",
-      "Longchamp",
-      "Guess",
-      "Dior",
-      "Gucci",
-      "Saint Laurent",
-      "Givenchy"
-    ],
-    "next_index": 0,
-    "brands_per_week": 7
-  },
-  "queue_surplus_topics": [],
   "max_publications_per_week": 2,
   "publication_log": [
     {
@@ -127,12 +94,6 @@
       "title": "Lunettes et aides auditives : ce que change le décret d'août 2026",
       "date": "2026-08-27",
       "source": "Décret n° 2026-810 du 21 août 2026, publié au Journal officiel du 22 août 2026 (relayé par Acuité, L'Ouïe Magazine, Audiologie Demain, Le Moniteur des Pharmacies)"
-    },
-    {
-      "slug": "lunettes-connectees-plainte-allemagne-vie-privee",
-      "title": "Lunettes connectées : une plainte en Allemagne interroge la vie privée",
-      "date": "2026-08-27",
-      "source": "Euronews / CNIL / Les Smartgrids / Telesatellite — plainte pénale de HateAid contre Meta et EssilorLuxottica (12 août 2026)"
     }
   ],
   "dernier_passage": "2026-08-27"
