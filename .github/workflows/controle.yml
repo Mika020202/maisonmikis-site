@@ -1,0 +1,90 @@
+name: Controle du code
+
+# ---------------------------------------------------------------------------
+#  FILET DE SECURITE
+#
+#  Raison d'etre : les scripts de ce depot sont souvent modifies depuis une
+#  interface web, sans jamais passer par une machine de developpement. Rien ne
+#  garantissait donc qu'ils soient seulement syntaxiquement corrects avant leur
+#  execution reelle. Une faute de frappe restait invisible jusqu'au passage
+#  automatique du lundi matin, ou elle apparaissait en rouge.
+#
+#  Ce controle tourne a chaque modification et repond a deux questions :
+#     1. tous les scripts Python compilent-ils ?
+#     2. tous les fichiers de donnees sont-ils du JSON valide ?
+#
+#  Il ne publie rien et ne touche a rien. Il ne fait que dire non.
+# ---------------------------------------------------------------------------
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.py'
+      - 'scripts/*.json'
+      - '.github/workflows/*.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  controle:
+    name: Syntaxe et fichiers de donnees
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Recuperer le depot
+        uses: actions/checkout@v5
+
+      - name: Installer Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Compiler tous les scripts Python
+        run: |
+          set -euo pipefail
+          python3 -m compileall -q build.py scripts/
+          echo "Tous les scripts compilent."
+
+      - name: Verifier les fichiers de donnees
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, sys
+
+          fichiers = [
+              "scripts/articles.json",
+              "scripts/articles_auto.json",
+              "scripts/sources.json",
+              "scripts/state.json",
+          ]
+          for chemin in fichiers:
+              try:
+                  with open(chemin, encoding="utf-8") as f:
+                      json.load(f)
+              except Exception as exc:
+                  print("::error::%s est illisible : %s" % (chemin, exc))
+                  sys.exit(1)
+              print("OK : %s" % chemin)
+          PY
+
+      - name: Verifier qu'aucun slug n'est publie deux fois
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, sys
+          from collections import Counter
+
+          slugs = []
+          for chemin in ("scripts/articles.json", "scripts/articles_auto.json"):
+              with open(chemin, encoding="utf-8") as f:
+                  slugs += [a["slug"] for a in json.load(f)]
+
+          doublons = [s for s, n in Counter(slugs).items() if n > 1]
+          if doublons:
+              print("::error::Slug(s) presents deux fois : %s" % ", ".join(doublons))
+              sys.exit(1)
+          print("Aucun doublon parmi %d articles." % len(slugs))
+          PY
