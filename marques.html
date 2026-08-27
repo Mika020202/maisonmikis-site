@@ -88,7 +88,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;500;700;800&family=Archivo+Black&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Comfortaa:wght@600;700&family=Space+Grotesk:wght@700&family=Marcellus&family=Anton&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site.css?v=3fd510b9">
+<link rel="stylesheet" href="/site.css?v=1edb1f02">
 </head>
 <body>
 
@@ -648,6 +648,42 @@
       if (e.key === 'Escape' && articleOverlay.classList.contains('open')) closeArticleModal();
     });
   }
+
+  /* Bandeau "certaines informations peuvent avoir evolue".
+     Calcule a CHAQUE VISITE, pas au moment de la generation : un article reste
+     donc correctement signale comme ancien meme si le site n'est pas regenere
+     pendant des mois. Seuil en mois ci-dessous. */
+  (function () {
+    var SEUIL_MOIS = 6;
+    var section = document.querySelector('.article-prose[data-date-iso]');
+    if (!section) return;
+    var publie = new Date(section.getAttribute('data-date-iso'));
+    if (isNaN(publie.getTime())) return;
+    var mois = (Date.now() - publie.getTime()) / (1000 * 60 * 60 * 24 * 30.44);
+    if (mois < SEUIL_MOIS) return;
+    var age = mois >= 12 ? "plus d'un an" : 'plus de ' + SEUIL_MOIS + ' mois';
+    var bandeau = document.createElement('div');
+    bandeau.className = 'article-freshness-notice';
+    var icone = document.createElement('span');
+    icone.className = 'icon';
+    icone.setAttribute('aria-hidden', 'true');
+    icone.textContent = 'ⓘ';
+    var texte = document.createElement('span');
+    texte.textContent = 'Cet article a ete publie il y a ' + age +
+      " — certaines informations (reglementation, prix, produits) peuvent avoir " +
+      "evolue depuis. N'hesitez pas a verifier les details importants aupres de " +
+      'notre equipe en boutique.';
+    bandeau.appendChild(icone);
+    bandeau.appendChild(texte);
+    var cadre = section.querySelector('.arch-frame');
+    if (cadre && cadre.parentNode) {
+      cadre.parentNode.insertBefore(bandeau, cadre.nextSibling);
+    } else {
+      var etroit = section.querySelector('.container-narrow');
+      if (etroit) etroit.insertBefore(bandeau, etroit.firstChild);
+    }
+  })();
+
 
 </script>
 
