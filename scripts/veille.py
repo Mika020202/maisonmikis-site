@@ -79,6 +79,23 @@ def write_summary(text):
     print(text)
 
 
+ECHEC = False
+
+
+def signaler_echec(message):
+    """Ecrit la panne dans le resume ET marque l'execution comme echouee.
+
+    Le workflow n'a plus a deviner en cherchant une phrase dans le resume :
+    c'est le code de sortie de ce script qui fait foi. La formule "Erreur
+    pendant la veille" reste presente pour l'oeil humain, et le workflow la
+    surveille encore en second filet, mais elle n'est plus le mecanisme.
+    """
+    global ECHEC
+    ECHEC = True
+    write_summary("⚠️ Erreur pendant la veille : %s\n\nAucun article publié. "
+                  "Le site reste inchangé." % message)
+
+
 def date_fr(d):
     jour = d.day if d.day > 1 else "1er"
     return "%s %s %d" % (jour, MOIS[d.month - 1], d.year)
@@ -242,8 +259,7 @@ def run_baseline(sources, state):
     try:
         result = extract_json(call_claude(system, user, max_tokens=4000))
     except Exception as exc:
-        write_summary("⚠️ Échec de l'état des lieux : %s. Nouvelle tentative "
-                      "la semaine prochaine." % exc)
+        signaler_echec("état des lieux impossible (%s)" % exc)
         return state
     state.setdefault("last_seen_by_source", {}).update(result)
     state["baseline_done"] = True
@@ -449,11 +465,8 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
     state["dernier_passage"] = today.isoformat()
 
     if article is None:
-        # La formule "Erreur pendant la veille" est le mot-cle que guette le
-        # workflow pour echouer bruyamment. Ne pas la retirer.
-        write_summary("⚠️ Erreur pendant la veille : trois tentatives, aucune "
-                      "exploitable. Dernière cause : %s\n\nAucun article publié. "
-                      "Le site reste inchangé." % dernier_probleme)
+        signaler_echec("trois tentatives, aucune exploitable. "
+                       "Dernière cause : %s" % dernier_probleme)
         return state, None
 
     auto = load(AUTO_PATH, default=[])
@@ -647,6 +660,11 @@ def main():
         state, _ = run_weekly(sources, state, site)
 
     save(STATE_PATH, state)
+
+    # C'est ce code de sortie qui fait foi. Si la veille est tombee, le script
+    # echoue, le workflow s'arrete, et GitHub previent par courriel.
+    if ECHEC:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
