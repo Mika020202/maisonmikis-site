@@ -1,12 +1,12 @@
 {
-  "_note": "URL verifiees une par une le 27/08/2026. Avant cette date, 24 des 28 sources avaient url = null : la veille les cherchait a l'aveugle. Regle : ne jamais inscrire ici une URL non verifiee — une adresse inventee est pire qu'une absence d'adresse.",
+  "_note": "URL verifiees une par une le 27/08/2026, par consultation directe de chaque page (pas seulement par recherche). Avant cette date, 24 des 28 sources avaient url = null : la veille les cherchait a l'aveugle. Regle : ne jamais inscrire ici une URL non verifiee — une adresse inventee est pire qu'une absence d'adresse.",
   "sante-visuelle": {
     "label": "Sante visuelle",
     "sources": [
       {"name": "Acuite", "url": "https://www.acuite.fr/actualites", "note": "Presse professionnelle de reference, flux quotidien"},
       {"name": "Bien Vu", "url": "https://www.bienvu.ws/", "note": "Mensuel de l'optique, editeur Vision Plurielle. Domaine en .ws"},
       {"name": "France Optique", "url": "https://www.france-optique.com/actualites", "note": "Domaine france-optique.com avec tiret"},
-      {"name": "SFO", "url": "https://www.sfo-online.fr", "note": "Societe Francaise d'Ophtalmologie"},
+      {"name": "SFO", "url": "https://www.sfo-online.fr/actualites", "note": "Societe Francaise d'Ophtalmologie"},
       {"name": "SNOF", "url": "https://snof.org/actualites", "note": "Syndicat National des Ophtalmologistes de France"},
       {"name": "FNOF", "url": "https://fnof.org/actualite-federation-opticiens-juridique-social/", "note": "Federation Nationale des Opticiens de France"}
     ]
@@ -24,13 +24,13 @@
     "sources": [
       {"name": "Thelios (LVMH)", "url": "https://www.thelios.com/en-us/news", "note": "Fabrique Fendi, Fred, Loewe, Celine, Dior, Givenchy"},
       {"name": "EssilorLuxottica", "url": "https://www.essilorluxottica.com/en/newsroom/press-releases/", "note": "Fabrique Ray-Ban, Prada, Miu Miu, Ralph Lauren, Armani"},
-      {"name": "Kering Eyewear", "url": "https://www.keringeyewear.com/newsroom", "note": "Fabrique Gucci, Saint Laurent"},
+      {"name": "Kering Eyewear", "url": "https://www.keringeyewear.com/fr/newsroom", "note": "Fabrique Gucci, Saint Laurent"},
       {"name": "Safilo", "url": "https://www.safilogroup.com/en/investors/press-releases", "note": "Fabrique Marc Jacobs"},
       {"name": "Marcolin", "url": "https://www.marcolin.com/en/media/finance-and-press/", "note": "Fabrique Guess. Rachete par VSP Vision en decembre 2025, desormais sous la meme direction que Marchon"},
       {"name": "Marchon", "url": "https://www.marchon.com/news.html", "note": "Fabrique Longchamp. Meme groupe que Marcolin depuis decembre 2025"},
       {"name": "Andy Brook", "url": "https://andy-brook.com/fr/", "note": "Marque independante francaise, fondee en 2017"},
       {"name": "CHIMI", "url": "https://chimi-online.com/", "note": "Marque independante suedoise, fondee en 2016"},
-      {"name": "LOOL", "url": "https://looleyewear.com/", "note": "Marque independante espagnole, Barcelone, fondee en 2016"}
+      {"name": "LOOL", "url": "https://looleyewear.com/blogs/labs", "note": "Marque independante espagnole, Barcelone, fondee en 2016"}
     ],
     "rotation_note": "19 marques au total (voir marques.html) — 7 verifiees par semaine, cycle complet ~3 semaines. Une sortie de collection n'est pas un flux quotidien."
   },
