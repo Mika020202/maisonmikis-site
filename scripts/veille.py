@@ -348,6 +348,8 @@ def run_weekly(sources, state, site):
     known_slugs = sorted({a["slug"] for a in site.ARTICLES} | set(state.get("used_slugs", [])))
     categories = sorted(site.ARTICLE_CATEGORIES.keys())
     titres_existants = [a["title"] for a in site.ARTICLES]
+    images_dispo = "\n".join("    %s  (%s)" % (chemin, alt)
+                             for chemin, alt in catalogue_images(site))
     today = date.today()
 
     # Plafond hebdomadaire. Le reglage max_publications_per_week existait dans
@@ -410,6 +412,12 @@ CONTRAINTES TECHNIQUES
 - « category » : exactement une valeur de cette liste : %s
 - « slug » : minuscules, tirets, sans accent, 3 à 8 mots, descriptif.
   Il ne doit être AUCUN de ceux-ci : %s
+- « image_choisie » : le chemin EXACT de l'illustration la plus pertinente pour
+  ton sujet, choisi dans la liste ci-dessous et nulle part ailleurs. Le texte
+  entre parenthèses est le contenu réel de la photo : choisis en fonction de ce
+  qu'elle MONTRE, pas de la rubrique. N'écris jamais de texte alternatif, il est
+  repris automatiquement. Si aucune ne convient vraiment, laisse une chaîne vide.
+%s
 - Ne traite AUCUN sujet déjà couvert par les articles existants (liste ci-dessous).
 - « sources » : 2 à 4 entrées [nom, url]. Chaque url doit être une adresse https
   réelle rencontrée pendant ta recherche, jamais inventée, jamais un moteur de
@@ -421,6 +429,7 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
   "justification": "en une phrase, pourquoi cette nouveauté franchit le seuil",
   "category": "...",
   "slug": "...",
+  "image_choisie": "...",
   "title": "...",
   "meta_title": "... | Maison Mikis",
   "meta_description": "...",
@@ -429,7 +438,7 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
   "faq": [["question", "réponse"], ["question", "réponse"], ["question", "réponse"]],
   "sources": [["nom", "https://..."], ["nom", "https://..."]],
   "body_html": "<h2>...</h2><p>...</p>..."
-}""" % (categories, known_slugs)
+}""" % (categories, known_slugs, images_dispo)
 
     user = (
         "Sources à vérifier :\n"
@@ -635,7 +644,15 @@ def validate(r, site, known_slugs, today):
     if not sources:
         raise ValueError("aucune source exploitable")
 
-    image, image_alt = pick_image(site, cat)
+    # L'illustration retenue doit appartenir a la liste blanche. Tout choix
+    # hors liste, ou absent, retombe sur la rotation par rubrique : le modele ne
+    # peut donc jamais introduire une image inexistante.
+    catalogue = dict(catalogue_images(site))
+    choix = str(r.get("image_choisie", "")).strip()
+    if choix in catalogue:
+        image, image_alt = choix, catalogue[choix]
+    else:
+        image, image_alt = pick_image(site, cat)
 
     return {
         "slug": slug,
@@ -653,6 +670,18 @@ def validate(r, site, known_slugs, today):
         "date_iso": today.isoformat(),
         "body": body,
     }
+
+
+def catalogue_images(site):
+    """Illustrations deja presentes sur le site, avec leur texte alternatif
+    d'origine. Le modele ne peut choisir QUE la-dedans : une image manquante ou
+    un texte alternatif invente restent impossibles."""
+    vus, couples = set(), []
+    for a in site.ARTICLES:
+        if a["image"] not in vus:
+            vus.add(a["image"])
+            couples.append((a["image"], a["image_alt"]))
+    return couples
 
 
 def pick_image(site, category):
