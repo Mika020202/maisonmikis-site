@@ -103,17 +103,25 @@ def slugify(value):
 # ---------------------------------------------------------------------------
 # Appel API
 # ---------------------------------------------------------------------------
-def call_claude(system, user_message, use_web_search=True, max_tokens=16000):
+def call_claude(system, user_message, use_web_search=True, max_tokens=12000,
+                max_recherches=6):
     """Appel direct a l'API Messages d'Anthropic. Pas de SDK : une seule
     dependance, urllib, donc rien a installer sur le runner.
 
-    L'API interrompt d'elle-meme les tours de recherche web trop longs et
-    renvoie stop_reason = "pause_turn". La reponse ne contient alors AUCUN
-    texte final, seulement les recherches en cours : il faut lui renvoyer sa
-    propre reponse, inchangee, pour qu'elle reprenne la ou elle s'est arretee.
-    Sans cette boucle, la veille recevait une reponse vide et echouait sur
-    "Expecting value: line 1 column 1".
+    Trois pieges, rencontres l'un apres l'autre en conditions reelles :
+
+    1. l'API interrompt d'elle-meme les tours de recherche longs et renvoie
+       stop_reason = "pause_turn". La reponse ne contient alors AUCUN texte
+       final : il faut lui renvoyer sa propre reponse, inchangee, pour qu'elle
+       reprenne la ou elle s'est arretee ;
+    2. un appel non "streame" qui dure trop longtemps se fait couper par le
+       reseau ("Remote end closed connection without response"). On borne donc
+       le nombre de recherches par appel : chaque requete reste courte ;
+    3. une coupure reseau reste toujours possible. Elle est passagere : on
+       reessaie trois fois avant d'abandonner, plutot que de perdre la semaine.
     """
+    import time
+
     if not API_KEY:
         raise RuntimeError(
             "ANTHROPIC_API_KEY absent de l'environnement (secret du depot GitHub).")
@@ -130,7 +138,11 @@ def call_claude(system, user_message, use_web_search=True, max_tokens=16000):
             "messages": messages,
         }
         if use_web_search:
-            body["tools"] = [{"type": "web_search_20250305", "name": "web_search"}]
+            body["tools"] = [{
+                "type": "web_search_20250305",
+                "name": "web_search",
+                "max_uses": max_recherches,
+            }]
         req = urllib.request.Request(
             API_URL,
             data=json.dumps(body).encode("utf-8"),
@@ -141,13 +153,26 @@ def call_claude(system, user_message, use_web_search=True, max_tokens=16000):
             },
             method="POST",
         )
-        try:
-            with urllib.request.urlopen(req, timeout=900) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-        except urllib.error.HTTPError as exc:
-            detail = exc.read().decode("utf-8", "replace")
+
+        data = None
+        coupure = None
+        for essai in range(3):
+            try:
+                with urllib.request.urlopen(req, timeout=600) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                break
+            except urllib.error.HTTPError as exc:
+                detail = exc.read().decode("utf-8", "replace")
+                raise RuntimeError(
+                    "l'API a refuse la requete (HTTP %s) : %s"
+                    % (exc.code, detail[:600])) from None
+            except Exception as exc:
+                coupure = exc
+                time.sleep(5 * (essai + 1))
+
+        if data is None:
             raise RuntimeError(
-                "l'API a refuse la requete (HTTP %s) : %s" % (exc.code, detail[:600])) from None
+                "connexion a l'API interrompue malgre trois tentatives : %s" % coupure)
 
         contenu = data.get("content", [])
         textes = [b["text"] for b in contenu if b.get("type") == "text"]
