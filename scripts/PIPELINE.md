@@ -107,14 +107,14 @@ scinder la veille en deux appels (reperage, puis redaction).
 | `scripts/state.json` | memoire : slugs utilises, dernier passage, journal |
 | `scripts/articles.json` | articles ecrits a la main |
 | `scripts/articles_auto.json` | articles produits par la veille |
-| `scripts/lib_articles.py` | fonctions partagees |
-| `scripts/add_article.py` | ajout manuel — **non appele par le workflow** |
-| `scripts/migrate_freshness_and_sort.py` | migration ponctuelle du 29/07/2026, ne plus relancer |
+| `scripts/lib_articles.py` | **dormant** — n'est importe par aucun code actif. Voir la section sur le bandeau de fraicheur |
 
-`add_article.py` et `migrate_freshness_and_sort.py` sont des outils manuels herites.
-Ils ne participent a aucun passage automatique. A verifier avant tout usage : ils
-datent d'une epoque ou les pages HTML etaient ecrites directement, alors que
-`build.py` est desormais le seul generateur.
+Ces deux outils herites ont ete SUPPRIMES le 27/08/2026 :
+- `add_article.py` ecrivait lui-meme des pages HTML, la grille et le sitemap,
+  en concurrence directe de `build.py`. Pire : un article ajoute par lui aurait obtenu
+  une entree dans `articles.json` SANS corps nulle part, puisque les corps des articles
+  manuels sont ecrits en dur dans `build.py`. Il produisait donc un article vide.
+- `migrate_freshness_and_sort.py` etait une migration a usage unique, deja appliquee.
 
 ## Declenchements manuels (onglet Actions → Run workflow)
 
@@ -124,12 +124,43 @@ Quatre modes, utilisables depuis un telephone :
 - **Tester la connexion IONOS** — depose un fichier temoin.
 - **Supprimer le fichier de test** — le retire.
 
-## Tri par date et bandeau de fraicheur
+## Tri par date, et bandeau de fraicheur — ABSENT du site
 
-La grille est triee par `date_iso` decroissant. Chaque page article affiche, **cote
-navigateur**, un avertissement si l'article a plus de 6 mois (seuil
-`FRESHNESS_THRESHOLD_MONTHS` dans `lib_articles.py`). Calcule a la visite : aucune
-regeneration necessaire avec le temps.
+La grille est triee par `date_iso` decroissant : cela fonctionne.
+
+**En revanche, le bandeau d'avertissement pour les articles de plus de six mois
+n'existe plus en ligne.** Il avait ete demande le 29/07/2026 et mis en place dans
+`scripts/lib_articles.py` (`FRESHNESS_THRESHOLD_MONTHS`, `FRESHNESS_JS`), a une epoque ou
+`build.py` avait ete supprime — la premiere ligne de ce fichier le dit encore.
+Au retour vers `build.py`, la fonctionnalite est passee a la trappe : plus rien
+n'importe `lib_articles.py`, donc plus rien ne genere ce bandeau.
+
+Verifie le 27/08/2026 sur un article de janvier 2025, vieux de dix-neuf mois :
+aucun bandeau. Ce que le site affiche a la place est une mention statique
+« Mis a jour le ... » produite par `build.py`, qui ne previent de rien.
+
+`lib_articles.py` n'est donc conserve QUE pour cette raison : il contient la seule
+implementation connue de ce bandeau. Le porter dans `build.py` reste a faire. Une
+fois cela fait, ce fichier peut etre supprime a son tour.
+
+## Publier ou retirer un article a la main
+
+**Ajouter** : ajouter une entree dans `scripts/articles_auto.json`, qui porte le corps
+de l'article dans son champ `body` — c'est exactement ce que fait la veille. Puis
+lancer « Remettre tout le site en ligne ». Ne PAS ajouter a `articles.json` : ce
+fichier ne contient que des metadonnees, les corps des 24 articles d'origine
+etant ecrits en dur dans `build.py`.
+
+**Retirer** (procedure du 27/08/2026) : le miroir ne sachant pas supprimer, une
+page ne peut pas etre effacee en ligne par le workflow. La marche a suivre :
+1. retirer l'entree de `scripts/articles_auto.json` ;
+2. laisser son slug dans `state.json / used_slugs` pour qu'il ne resserve jamais ;
+3. retirer l'entree correspondante de `publication_log` ;
+4. remplacer le fichier `actualites/<slug>.html` par une page `noindex` qui
+   redirige vers `/actualites.html` (le miroir sait ecraser, pas supprimer) ;
+5. lancer « Remettre tout le site en ligne ».
+Le fichier subsiste sur l'hebergement avec ce contenu de remplacement. Pour un
+effacement physique, passer par le gestionnaire de fichiers IONOS.
 
 ## Incident du 27/07/2026 (pour memoire)
 
