@@ -107,7 +107,6 @@ scinder la veille en deux appels (reperage, puis redaction).
 | `scripts/state.json` | memoire : slugs utilises, dernier passage, journal |
 | `scripts/articles.json` | articles ecrits a la main |
 | `scripts/articles_auto.json` | articles produits par la veille |
-| `scripts/lib_articles.py` | **dormant** — n'est importe par aucun code actif. Voir la section sur le bandeau de fraicheur |
 
 Ces deux outils herites ont ete SUPPRIMES le 27/08/2026 :
 - `add_article.py` ecrivait lui-meme des pages HTML, la grille et le sitemap,
@@ -124,24 +123,29 @@ Quatre modes, utilisables depuis un telephone :
 - **Tester la connexion IONOS** — depose un fichier temoin.
 - **Supprimer le fichier de test** — le retire.
 
-## Tri par date, et bandeau de fraicheur — ABSENT du site
+## Tri par date et bandeau de fraicheur
 
-La grille est triee par `date_iso` decroissant : cela fonctionne.
+La grille est triee par `date_iso` decroissant.
 
-**En revanche, le bandeau d'avertissement pour les articles de plus de six mois
-n'existe plus en ligne.** Il avait ete demande le 29/07/2026 et mis en place dans
-`scripts/lib_articles.py` (`FRESHNESS_THRESHOLD_MONTHS`, `FRESHNESS_JS`), a une epoque ou
-`build.py` avait ete supprime — la premiere ligne de ce fichier le dit encore.
-Au retour vers `build.py`, la fonctionnalite est passee a la trappe : plus rien
-n'importe `lib_articles.py`, donc plus rien ne genere ce bandeau.
+Chaque page article porte `data-date-iso` sur sa section `.article-prose`, et un
+petit script commun (dans `SCRIPT_JS`, `build.py`) affiche un bandeau d'avertissement
+quand l'article depasse six mois : « certaines informations peuvent avoir
+evolue depuis ». Le calcul se fait **a chaque visite**, cote navigateur, et non
+au moment de la generation : un article reste donc correctement signale meme si
+le site n'est pas regenere pendant des mois. Seuil reglable via `SEUIL_MOIS`
+dans ce script ; style `.article-freshness-notice` dans `SHARED_CSS`.
 
-Verifie le 27/08/2026 sur un article de janvier 2025, vieux de dix-neuf mois :
-aucun bandeau. Ce que le site affiche a la place est une mention statique
-« Mis a jour le ... » produite par `build.py`, qui ne previent de rien.
+Historique utile : cette fonctionnalite avait ete demandee le 29/07/2026 et mise
+en oeuvre dans `scripts/lib_articles.py`, a une epoque ou `build.py` avait ete
+supprime. Au retour vers `build.py`, plus rien n'importait ce fichier : le bandeau
+a disparu du site sans que personne ne le remarque, pendant un mois. Il a ete
+reporte dans `build.py` le 27/08/2026, verifie en ligne sur un article de janvier
+2025 (bandeau present) et sur un article du jour (bandeau absent), puis
+`lib_articles.py` a ete supprime.
 
-`lib_articles.py` n'est donc conserve QUE pour cette raison : il contient la seule
-implementation connue de ce bandeau. Le porter dans `build.py` reste a faire. Une
-fois cela fait, ce fichier peut etre supprime a son tour.
+Lecon : une fonctionnalite qui vit dans un fichier que plus personne n'importe
+est deja morte. Le controle du code ne peut pas detecter cela — seule une
+verification sur le site en ligne le peut.
 
 ## Publier ou retirer un article a la main
 
