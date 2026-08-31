@@ -712,15 +712,18 @@ def main():
     sources = load(SOURCES_PATH)
     state = load(STATE_PATH)
 
-    # Creneau de rattrapage : il n'existe que pour le cas ou le passage du
-    # matin serait reste bloque dans la file d'attente de GitHub. Si ce
-    # passage a bien eu lieu aujourd'hui, on s'arrete ici : aucune veille
-    # relancee, aucun credit consomme pour rien.
+    # Quatre creneaux programmes se succedent chaque lundi et chaque jeudi
+    # (06h23, 09h47, 13h11 et 17h33 UTC), parce que la file d'attente de GitHub
+    # retarde et parfois abandonne purement et simplement un declenchement.
+    # Le premier qui part fait le travail ; les suivants s'arretent ici. Aucun
+    # credit n'est donc consomme deux fois dans la meme journee.
+    # CRON_RATTRAPAGE vaut 1 pour tout declenchement programme et 0 pour un
+    # lancement manuel : la main l'emporte toujours sur l'automatisme.
     if (os.environ.get("CRON_RATTRAPAGE") == "1"
             and state.get("dernier_passage") == date.today().isoformat()):
-        write_summary("Le passage du matin a bien eu lieu aujourd'hui. "
-                      "Rattrapage inutile : aucune veille relancee, aucun "
-                      "credit consomme.")
+        write_summary("La veille du jour a deja eu lieu. Ce creneau de repli "
+                      "n'a rien a faire : aucune veille relancee, aucun credit "
+                      "consomme.")
         return
     import build as site   # noqa: E402  (import tardif : build.py lit articles_auto.json)
 

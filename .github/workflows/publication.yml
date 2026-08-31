@@ -51,11 +51,35 @@ on:
     #     un slug deja utilise. Un second creneau de rattrapage est donc sans
     #     risque, et couvre le cas ou le premier serait avale par la file.
     #
-    # Lundi et jeudi a 06h23 UTC = 08h23 heure de Paris en ete (07h23 en hiver).
+    # HORAIRES REVUS LE 31/08/2026 : quitter la minute ronde n'a rien regle.
+    # Releve reel des declenchements programmes :
+    #     lundi   03/08 06h23 UTC -> parti a 16h08 UTC      (9h de retard)
+    #     jeudi   27/08 06h23 UTC -> parti le 28 a 21h30    (39h de retard)
+    #     jeudi   27/08 08h47 UTC -> parti le 28 a 21h48    (37h de retard)
+    #     lundi   31/08 06h23 UTC -> JAMAIS PARTI           (creneau perdu)
+    # La file d'attente de GitHub ne se contente pas de retarder : elle abandonne.
+    # Et un passage qui arrive avec deux jours de retard tombe dans la semaine
+    # suivante, ou le plafond hebdomadaire l'arrete sans rien publier : le
+    # creneau est consomme pour rien. Deux creneaux ne suffisaient donc pas.
+    #
+    # REGLE ADOPTEE : quatre tentatives en cascade le meme jour. La premiere qui
+    # part fait le travail ; les suivantes se terminent en quelques secondes,
+    # car veille.py s'arrete des qu'il voit que le passage du jour a deja eu
+    # lieu (voir CRON_RATTRAPAGE plus bas). Aucun credit API n'est depense deux
+    # fois. Pour perdre une journee, il faudrait desormais que GitHub avale
+    # QUATRE declenchements d'affilee.
+    #
+    # Les heures sont volontairement irregulieres et loin des minutes rondes,
+    # qui sont les plus encombrees.
+    #
+    # Lundi et jeudi, 06h23 UTC = 08h23 heure de Paris en ete (07h23 en hiver).
     - cron: '23 6 * * 1,4'
-    # Rattrapage le meme jour a 08h47 UTC = 10h47 heure de Paris en ete.
-    # Si le premier passage a publie, celui-ci se termine sans rien faire.
-    - cron: '47 8 * * 1,4'
+    # Repli 1 : 09h47 UTC = 11h47 a Paris en ete.
+    - cron: '47 9 * * 1,4'
+    # Repli 2 : 13h11 UTC = 15h11 a Paris en ete.
+    - cron: '11 13 * * 1,4'
+    # Repli 3 : 17h33 UTC = 19h33 a Paris en ete. Dernier filet de la journee.
+    - cron: '33 17 * * 1,4'
 
   workflow_dispatch:
     inputs:
@@ -172,9 +196,25 @@ jobs:
         if: ${{ contains(env.MODE, 'Publication hebdomadaire') }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          # Vaut 1 uniquement pour le second creneau (rattrapage). veille.py
-          # s'arrete alors sans rien depenser si le passage du matin a eu lieu.
-          CRON_RATTRAPAGE: ${{ github.event.schedule == '47 8 * * 1,4' && '1' || '0' }}
+          # Vaut 1 pour TOUT declenchement programme. veille.py compare alors
+          # dernier_passage a la date du jour : si le travail a deja ete fait,
+          # il s'arrete en quelques secondes sans depenser un credit.
+          #
+          # Cette formulation remplace celle du 06/08/2026, qui comparait la
+          # chaine du cron a '47 8 * * 1,4' codee en dur. Avec quatre creneaux,
+          # cette comparaison etait devenue un piege : chaque nouveau repli
+          # aurait relance une veille complete au lieu de constater que la
+          # journee etait deja faite. On ne compare donc plus AUCUNE chaine de
+          # cron : ajouter ou deplacer un creneau ne demande plus de toucher a
+          # cette ligne.
+          #
+          # Le premier passage de la journee n'est pas bloque pour autant :
+          # dernier_passage vaut encore la date d'un jour precedent, la
+          # condition est fausse, la veille se deroule normalement.
+          #
+          # Un lancement manuel garde 0 : il force une veille meme si un
+          # passage automatique a deja eu lieu le meme jour.
+          CRON_RATTRAPAGE: ${{ github.event_name == 'schedule' && '1' || '0' }}
         run: |
           set -euo pipefail
           if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
