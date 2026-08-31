@@ -31,7 +31,8 @@
     "fraude-audioprothese-rapport-igas-igf-100-sante",
     "myday-misight-lentille-freination-myopie-enfant",
     "decret-aout-2026-ticket-moderateur-optique-audition",
-    "lunettes-connectees-plainte-allemagne-vie-privee"
+    "lunettes-connectees-plainte-allemagne-vie-privee",
+    "oms-audition-declin-cognitif-lignes-directrices-2026"
   ],
   "last_seen_by_source": {
     "Acuité": "EssilorLuxottica publie résultats S1 2026, croissance +9,7%",
@@ -94,7 +95,13 @@
       "title": "Lunettes et aides auditives : ce que change le décret d'août 2026",
       "date": "2026-08-27",
       "source": "Décret n° 2026-810 du 21 août 2026, publié au Journal officiel du 22 août 2026 (relayé par Acuité, L'Ouïe Magazine, Audiologie Demain, Le Moniteur des Pharmacies)"
+    },
+    {
+      "slug": "oms-audition-declin-cognitif-lignes-directrices-2026",
+      "title": "Perte auditive et démence : ce que dit l'OMS depuis juillet 2026",
+      "date": "2026-08-31",
+      "source": "OMS — Nouvelles lignes directrices sur la réduction du risque de déclin cognitif et de démence (15 juillet 2026)"
     }
   ],
-  "dernier_passage": "2026-08-27"
+  "dernier_passage": "2026-08-31"
 }
