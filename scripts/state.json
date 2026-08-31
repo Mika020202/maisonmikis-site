@@ -32,7 +32,8 @@
     "myday-misight-lentille-freination-myopie-enfant",
     "decret-aout-2026-ticket-moderateur-optique-audition",
     "lunettes-connectees-plainte-allemagne-vie-privee",
-    "oms-audition-declin-cognitif-lignes-directrices-2026"
+    "oms-audition-declin-cognitif-lignes-directrices-2026",
+    "resound-sensia-aide-auditive-ia-france"
   ],
   "last_seen_by_source": {
     "Acuité": "EssilorLuxottica publie résultats S1 2026, croissance +9,7%",
@@ -42,7 +43,7 @@
     "SNOF": "Ralliement à la grève des médecins libéraux, janvier 2026",
     "FNOF": "Combat contre l'accès aux données médicales par les OCAM (loi anti-fraudes)",
     "Audiologie Demain": "Bernafon enrichit la gamme Encanta avec solutions non rechargeables",
-    "L'Ouïe Magazine": "Loi anti-fraude change les règles du jeu (13/07/2026)",
+    "L'Ouïe Magazine": "ReSound Sensia : la nouvelle aide auditive à IA arrive en France",
     "Audio Infos": "37e Congrès mondial d'audiologie (WCA 2026) à Séoul",
     "Thélios (LVMH)": "Sponsor officiel lunetterie de la Biennale Cinéma 2026 à Venise",
     "EssilorLuxottica": "Résultats S1 2026 : CA de 14,8 Mds€, +9,7% (28/07/2026)",
@@ -101,6 +102,12 @@
       "title": "Perte auditive et démence : ce que dit l'OMS depuis juillet 2026",
       "date": "2026-08-31",
       "source": "OMS — Nouvelles lignes directrices sur la réduction du risque de déclin cognitif et de démence (15 juillet 2026)"
+    },
+    {
+      "slug": "resound-sensia-aide-auditive-ia-france",
+      "title": "ReSound Sensia : la nouvelle aide auditive à IA arrive en France",
+      "date": "2026-08-31",
+      "source": "L'Ouïe Magazine — annonce de ReSound Sensia (GN) et calendrier de lancement en France"
     }
   ],
   "dernier_passage": "2026-08-31"
