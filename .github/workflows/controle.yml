@@ -114,7 +114,7 @@ jobs:
           # construire le prompt, et l'essai ne testerait rien.
           state["max_publications_per_week"] = 10**6
 
-          etat, article = veille.run_weekly(sources, state, site)
+          etat, article = veille.run_creneau(sources, state, site)
 
           assert article is None, "l'essai a blanc n'aurait pas du produire d'article"
           assert not veille.ECHEC, "la veille s'est signalee en echec pendant l'essai"
