@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Veille hebdomadaire Actualites — Maison Mikis.
+Veille editoriale Actualites — Maison Mikis.
 
-Lance chaque lundi par .github/workflows/publication.yml, sur les serveurs
-GitHub Actions : ni session Claude ouverte, ni ordinateur du client allume.
+Lance chaque lundi et chaque jeudi par .github/workflows/publication.yml, sur
+les serveurs GitHub Actions : ni session Claude ouverte, ni ordinateur du
+client allume.
 
 Ce que fait ce script :
   1. lit scripts/sources.json (les sources professionnelles a surveiller) et
@@ -25,7 +26,7 @@ Ce qu'il ne fait PAS, volontairement :
     les liens. Un lien casse devient ainsi impossible ;
   - il ne fait aucun commit : c'est le workflow qui commit et met en ligne.
 
-En cas de doute, il ne publie rien. Une semaine sans article est un
+En cas de doute, il ne publie rien. Un creneau sans article est un
 fonctionnement normal, pas une panne.
 """
 import json
@@ -135,7 +136,7 @@ def call_claude(system, user_message, use_web_search=True, max_tokens=12000,
        reseau ("Remote end closed connection without response"). On borne donc
        le nombre de recherches par appel : chaque requete reste courte ;
     3. une coupure reseau reste toujours possible. Elle est passagere : on
-       reessaie trois fois avant d'abandonner, plutot que de perdre la semaine.
+       reessaie trois fois avant d'abandonner, plutot que de perdre le creneau.
     """
     import time
 
@@ -264,7 +265,7 @@ def run_baseline(sources, state):
     state.setdefault("last_seen_by_source", {}).update(result)
     state["baseline_done"] = True
     write_summary("État des lieux enregistré pour %d sources. Aucun article publié "
-                  "cette semaine : c'est le comportement attendu." % len(result))
+                  "à ce passage : c'est le comportement attendu." % len(result))
     return state
 
 
@@ -340,10 +341,10 @@ médical, comparaison dénigrante d'un confrère, prix, promotion, urgence comme
 
 
 # ---------------------------------------------------------------------------
-# Passe hebdomadaire
+# Passe de publication — un creneau (lundi ou jeudi)
 # ---------------------------------------------------------------------------
-def run_weekly(sources, state, site):
-    write_summary("## Veille Actualités — exécution hebdomadaire\n")
+def run_creneau(sources, state, site):
+    write_summary("## Veille Actualités — exécution du créneau\n")
 
     known_slugs = sorted({a["slug"] for a in site.ARTICLES} | set(state.get("used_slugs", [])))
     categories = sorted(site.ARTICLE_CATEGORIES.keys())
@@ -396,7 +397,7 @@ def run_weekly(sources, state, site):
         return state, None
 
     system = """Tu es l'équipe éditoriale du site maisonmikis.fr, opticien et
-audioprothésiste indépendant à Paris 13e. Tu tiens une veille hebdomadaire : tu
+audioprothésiste indépendant à Paris 13e. Tu tiens une veille suivie : tu
 vérifies des sources professionnelles, et tu ne rédiges un article QUE si un fait
 réellement notable mérite d'être porté à la connaissance des clients de la
 boutique.
@@ -476,7 +477,7 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
           "aujourd'hui." % (today.isoformat(), (today - timedelta(days=60)).isoformat())
     )
 
-    # Trois tentatives avant d'abandonner la semaine. Une reponse mal formee
+    # Trois tentatives avant d'abandonner le creneau. Une reponse mal formee
     # ou un article refuse au controle qualite ne doit pas coûter le passage
     # entier : on redonne au modele la cause exacte de l'echec et on relance.
     # Seul "aucune nouveaute" sort tout de suite : c'est une reponse valable.
@@ -499,8 +500,8 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
         state["dernier_passage"] = today.isoformat()
 
         if result.get("no_novelty"):
-            write_summary("Aucune nouveauté ne franchit le seuil éditorial cette "
-                          "semaine. **Aucun article publié** — c'est le comportement "
+            write_summary("Aucune nouveauté ne franchit le seuil éditorial sur ce "
+                          "créneau. **Aucun article publié** — c'est le comportement "
                           "attendu, pas une erreur.")
             return state, None
 
@@ -748,7 +749,7 @@ def main():
     if not state.get("baseline_done"):
         state = run_baseline(sources, state)
     else:
-        state, _ = run_weekly(sources, state, site)
+        state, _ = run_creneau(sources, state, site)
 
     save(STATE_PATH, state)
 
