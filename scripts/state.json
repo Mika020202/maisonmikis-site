@@ -33,14 +33,15 @@
     "decret-aout-2026-ticket-moderateur-optique-audition",
     "lunettes-connectees-plainte-allemagne-vie-privee",
     "oms-audition-declin-cognitif-lignes-directrices-2026",
-    "resound-sensia-aide-auditive-ia-france"
+    "resound-sensia-aide-auditive-ia-france",
+    "teleexpertise-optique-alerte-snof-ophtalmologistes"
   ],
   "last_seen_by_source": {
     "Acuité": "EssilorLuxottica publie résultats S1 2026, croissance +9,7%",
     "Bien Vu": "Dossier sur la télémédecine et l'IA dans l'optique",
     "France Optique": "Collection LILY : élégance féminine contemporaine (22/07/2026)",
     "SFO": "Congrès 133e annoncé en avril 2027 ; replays du 132e disponibles",
-    "SNOF": "Ralliement à la grève des médecins libéraux, janvier 2026",
+    "SNOF": "Téléexpertise optique : ce que dénonce le syndicat des ophtalmologistes",
     "FNOF": "Combat contre l'accès aux données médicales par les OCAM (loi anti-fraudes)",
     "Audiologie Demain": "Bernafon enrichit la gamme Encanta avec solutions non rechargeables",
     "L'Ouïe Magazine": "ReSound Sensia : la nouvelle aide auditive à IA arrive en France",
@@ -108,7 +109,13 @@
       "title": "ReSound Sensia : la nouvelle aide auditive à IA arrive en France",
       "date": "2026-08-31",
       "source": "L'Ouïe Magazine — annonce de ReSound Sensia (GN) et calendrier de lancement en France"
+    },
+    {
+      "slug": "teleexpertise-optique-alerte-snof-ophtalmologistes",
+      "title": "Téléexpertise optique : ce que dénonce le syndicat des ophtalmologistes",
+      "date": "2026-09-07",
+      "source": "Communiqué du Snof du 3 septembre 2026 relayé par France Info, Boursorama et Opticien Lunetier"
     }
   ],
-  "dernier_passage": "2026-08-31"
+  "dernier_passage": "2026-09-07"
 }
