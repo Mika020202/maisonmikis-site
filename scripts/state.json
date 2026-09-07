@@ -65,7 +65,7 @@
     "Laboratoire LCS": "Lancement AKS Freeform, lentille sclérale personnalisée nouvelle génération (16/01/2026)",
     "CRAMIF": "Congé supplémentaire de naissance (CSN) effectif au 1er juillet 2026"
   },
-  "max_publications_per_week": 2,
+  "max_publications_per_slot": 1,
   "publication_log": [
     {
       "slug": "opticiens-ehpad-decret-2026-examens-vue",
