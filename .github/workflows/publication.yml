@@ -59,7 +59,7 @@ on:
     #     lundi   31/08 06h23 UTC -> JAMAIS PARTI           (creneau perdu)
     # La file d'attente de GitHub ne se contente pas de retarder : elle abandonne.
     # Et un passage qui arrive avec deux jours de retard tombe dans la semaine
-    # suivante, ou le plafond hebdomadaire l'arrete sans rien publier : le
+    # suivante, ou le plafond par creneau l'arrete sans rien publier : le
     # creneau est consomme pour rien. Deux creneaux ne suffisaient donc pas.
     #
     # REGLE ADOPTEE : quatre tentatives en cascade le meme jour. La premiere qui
@@ -89,7 +89,7 @@ on:
         default: "Remettre tout le site en ligne"
         options:
           - "Remettre tout le site en ligne"
-          - "Publication hebdomadaire (veille + mise en ligne)"
+          - "Publication du créneau (veille + mise en ligne)"
           - "Tester la connexion IONOS"
           - "Supprimer le fichier de test"
 
@@ -117,7 +117,7 @@ jobs:
         ${{ github.event_name == 'workflow_dispatch'
             && inputs.mode
             || (github.event_name == 'schedule'
-                && 'Publication hebdomadaire (veille + mise en ligne)'
+                && 'Publication du créneau (veille + mise en ligne)'
                 || 'Remettre tout le site en ligne') }}
 
     steps:
@@ -188,12 +188,12 @@ jobs:
           fi
 
       # -------------------------------------------------------------------
-      # 2. Veille hebdomadaire. Elle n'ecrit qu'un fichier de donnees
+      # 2. Veille du creneau. Elle n'ecrit qu'un fichier de donnees
       #    (scripts/articles_auto.json) : aucune page HTML n'est produite ici.
       #    Si rien de neuf n'est trouve, elle ne fait rien, et c'est normal.
       # -------------------------------------------------------------------
       - name: Veille et redaction de l'article
-        if: ${{ contains(env.MODE, 'Publication hebdomadaire') }}
+        if: ${{ contains(env.MODE, 'Publication du créneau') }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           # Vaut 1 pour TOUT declenchement programme. veille.py compare alors
