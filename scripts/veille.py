@@ -352,29 +352,47 @@ def run_weekly(sources, state, site):
                              for chemin, alt in catalogue_images(site))
     today = date.today()
 
-    # Plafond hebdomadaire. Le reglage max_publications_per_week existait dans
-    # state.json depuis l'origine, mais AUCUN code ne le lisait : trois articles
-    # ont ainsi pu paraitre le meme jour. Il est desormais applique, et verifie
-    # AVANT tout appel a l'API pour ne rien depenser inutilement.
-    # On raisonne en SEMAINE CALENDAIRE (lundi-dimanche), pas en sept jours
-    # glissants : "deux par semaine" doit se remettre a zero le lundi. Avec un
-    # comptage glissant, deux articles publies un jeudi bloqueraient le lundi
-    # suivant, ce qui n'est pas ce que le reglage veut dire.
-    plafond = int(state.get("max_publications_per_week", 2) or 2)
-    semaine = today.isocalendar()[:2]
-    recents = 0
+    # Plafond par CRENEAU de publication, et non par semaine calendaire.
+    # Historique : max_publications_per_week (= 2) existait dans state.json
+    # depuis l'origine sans qu'aucun code ne le lise ; il a ensuite ete
+    # applique en semaine calendaire, sans distinguer le lundi du jeudi.
+    # Consequence vecue le 31/08/2026 : les deux articles de la semaine sont
+    # sortis le meme lundi, et le jeudi suivant n'avait plus rien a publier.
+    # Le site publie sur DEUX creneaux : le plafond doit garantir la
+    # repartition, pas seulement un total. Chaque creneau porte donc son
+    # propre plafond (max_publications_per_slot, 1 par defaut).
+    # Le plafond hebdomadaire n'est PAS conserve en plus : deux creneaux a
+    # un article bornent deja la semaine a deux, et un reliquat hebdomadaire
+    # rebloquerait le jeudi dans le cas meme que cette regle corrige.
+    # Verification AVANT le moindre appel a l'API : aucun credit depense.
+    def creneau(d):
+        """Date du creneau de publication auquel se rattache le jour d.
+
+        Lundi et jeudi sont les deux creneaux. Les quatre declenchements de
+        repli restent dans la meme journee, mais un rattrapage manuel peut
+        tomber un autre jour : lundi a mercredi comptent pour le creneau du
+        lundi, jeudi a dimanche pour celui du jeudi."""
+        lundi = d - timedelta(days=d.weekday())
+        return lundi + timedelta(days=3) if d.weekday() >= 3 else lundi
+
+    plafond_creneau = int(state.get("max_publications_per_slot", 1) or 1)
+    creneau_courant = creneau(today)
+    sur_creneau = 0
     for p in state.get("publication_log", []):
         try:
-            if date.fromisoformat(p.get("date", "")).isocalendar()[:2] == semaine:
-                recents += 1
+            publie_le = date.fromisoformat(p.get("date", ""))
         except ValueError:
             continue
-    if recents >= plafond:
-        write_summary("Plafond atteint : %d article(s) déjà publié(s) cette "
-                      "semaine, pour un maximum de %d "
-                      "(`max_publications_per_week` dans `state.json`). "
+        if creneau(publie_le) == creneau_courant:
+            sur_creneau += 1
+    if sur_creneau >= plafond_creneau:
+        write_summary("Plafond atteint : %d article(s) déjà publié(s) sur le "
+                      "créneau du %s, pour un maximum de %d "
+                      "(`max_publications_per_slot` dans `state.json`). "
+                      "Le créneau suivant reste disponible. "
                       "**Aucune veille lancée cette fois** — aucun crédit consommé."
-                      % (recents, plafond))
+                      % (sur_creneau, creneau_courant.isoformat(),
+                         plafond_creneau))
         return state, None
 
     system = """Tu es l'équipe éditoriale du site maisonmikis.fr, opticien et
