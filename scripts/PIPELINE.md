@@ -66,7 +66,7 @@ Aucun identifiant ne figure dans un fichier du depot. Le depot est public.
 ## Une semaine sans article n'est pas une panne
 
 Le seuil editorial est volontairement severe (voir `CHARTE` et le prompt de
-`run_weekly()` dans `veille.py`). Un passage peut se terminer sans rien publier :
+`run_creneau()` dans `veille.py`). Un passage peut se terminer sans rien publier :
 c'est le comportement attendu. Ne relachez le seuil que si vous assumez des
 articles moins solides.
 
