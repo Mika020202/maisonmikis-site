@@ -135,7 +135,7 @@ toute suppression d'article impose de l'editer a la main.
 
 Quatre modes, utilisables depuis un telephone :
 - **Remettre tout le site en ligne** — regenere et renvoie tout, sans veille.
-- **Publication hebdomadaire (veille + mise en ligne)** — le passage complet.
+- **Publication du créneau (veille + mise en ligne)** — le passage complet.
 - **Tester la connexion IONOS** — depose un fichier temoin.
 - **Supprimer le fichier de test** — le retire.
 
