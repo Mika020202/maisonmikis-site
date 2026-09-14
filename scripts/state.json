@@ -34,10 +34,11 @@
     "lunettes-connectees-plainte-allemagne-vie-privee",
     "oms-audition-declin-cognitif-lignes-directrices-2026",
     "resound-sensia-aide-auditive-ia-france",
-    "teleexpertise-optique-alerte-snof-ophtalmologistes"
+    "teleexpertise-optique-alerte-snof-ophtalmologistes",
+    "projet-arrete-interdiction-publicite-optique-audition"
   ],
   "last_seen_by_source": {
-    "Acuité": "EssilorLuxottica publie résultats S1 2026, croissance +9,7%",
+    "Acuité": "Vers la fin de la publicité pour les lunettes et prothèses auditives ?",
     "Bien Vu": "Dossier sur la télémédecine et l'IA dans l'optique",
     "France Optique": "Collection LILY : élégance féminine contemporaine (22/07/2026)",
     "SFO": "Congrès 133e annoncé en avril 2027 ; replays du 132e disponibles",
@@ -115,7 +116,13 @@
       "title": "Téléexpertise optique : ce que dénonce le syndicat des ophtalmologistes",
       "date": "2026-09-07",
       "source": "Communiqué du Snof du 3 septembre 2026 relayé par France Info, Boursorama et Opticien Lunetier"
+    },
+    {
+      "slug": "projet-arrete-interdiction-publicite-optique-audition",
+      "title": "Vers la fin de la publicité pour les lunettes et prothèses auditives ?",
+      "date": "2026-09-14",
+      "source": "Audiologie Demain, FréquenceOptic, Acuité et La Revue du Digital (Krys Group) — projet d'arrêté du ministère de la Santé sur la publicité en optique et audioprothèse (septembre 2026)"
     }
   ],
-  "dernier_passage": "2026-09-10"
+  "dernier_passage": "2026-09-14"
 }
