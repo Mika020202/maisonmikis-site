@@ -35,10 +35,11 @@
     "oms-audition-declin-cognitif-lignes-directrices-2026",
     "resound-sensia-aide-auditive-ia-france",
     "teleexpertise-optique-alerte-snof-ophtalmologistes",
-    "projet-arrete-interdiction-publicite-optique-audition"
+    "projet-arrete-interdiction-publicite-optique-audition",
+    "nuance-audio-plus-lunettes-auditives-essilorluxottica"
   ],
   "last_seen_by_source": {
-    "Acuité": "Vers la fin de la publicité pour les lunettes et prothèses auditives ?",
+    "Acuité": "Nuance Audio Plus : la nouvelle génération de lunettes auditives",
     "Bien Vu": "Dossier sur la télémédecine et l'IA dans l'optique",
     "France Optique": "Collection LILY : élégance féminine contemporaine (22/07/2026)",
     "SFO": "Congrès 133e annoncé en avril 2027 ; replays du 132e disponibles",
@@ -122,7 +123,13 @@
       "title": "Vers la fin de la publicité pour les lunettes et prothèses auditives ?",
       "date": "2026-09-14",
       "source": "Audiologie Demain, FréquenceOptic, Acuité et La Revue du Digital (Krys Group) — projet d'arrêté du ministère de la Santé sur la publicité en optique et audioprothèse (septembre 2026)"
+    },
+    {
+      "slug": "nuance-audio-plus-lunettes-auditives-essilorluxottica",
+      "title": "Nuance Audio Plus : la nouvelle génération de lunettes auditives",
+      "date": "2026-09-17",
+      "source": "Acuité / EssilorLuxottica"
     }
   ],
-  "dernier_passage": "2026-09-14"
+  "dernier_passage": "2026-09-17"
 }
