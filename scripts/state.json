@@ -36,10 +36,11 @@
     "resound-sensia-aide-auditive-ia-france",
     "teleexpertise-optique-alerte-snof-ophtalmologistes",
     "projet-arrete-interdiction-publicite-optique-audition",
-    "nuance-audio-plus-lunettes-auditives-essilorluxottica"
+    "nuance-audio-plus-lunettes-auditives-essilorluxottica",
+    "teleconsultation-primo-prescription-aides-auditives"
   ],
   "last_seen_by_source": {
-    "Acuité": "Nuance Audio Plus : la nouvelle génération de lunettes auditives",
+    "Acuité": "Aides auditives et téléconsultation : quel remboursement ?",
     "Bien Vu": "Dossier sur la télémédecine et l'IA dans l'optique",
     "France Optique": "Collection LILY : élégance féminine contemporaine (22/07/2026)",
     "SFO": "Congrès 133e annoncé en avril 2027 ; replays du 132e disponibles",
@@ -129,7 +130,13 @@
       "title": "Nuance Audio Plus : la nouvelle génération de lunettes auditives",
       "date": "2026-09-17",
       "source": "Acuité / EssilorLuxottica"
+    },
+    {
+      "slug": "teleconsultation-primo-prescription-aides-auditives",
+      "title": "Aides auditives et téléconsultation : quel remboursement ?",
+      "date": "2026-09-21",
+      "source": "Acuité / Audiologie Demain / L'Ouïe Magazine — confirmation de la Cnam (CPN Audioprothèse du 21 juillet 2026)"
     }
   ],
-  "dernier_passage": "2026-09-17"
+  "dernier_passage": "2026-09-21"
 }
