@@ -37,7 +37,8 @@
     "teleexpertise-optique-alerte-snof-ophtalmologistes",
     "projet-arrete-interdiction-publicite-optique-audition",
     "nuance-audio-plus-lunettes-auditives-essilorluxottica",
-    "teleconsultation-primo-prescription-aides-auditives"
+    "teleconsultation-primo-prescription-aides-auditives",
+    "meta-lunettes-connectees-fonction-aide-auditive-fda"
   ],
   "last_seen_by_source": {
     "Acuité": "Aides auditives et téléconsultation : quel remboursement ?",
@@ -50,7 +51,7 @@
     "L'Ouïe Magazine": "ReSound Sensia : la nouvelle aide auditive à IA arrive en France",
     "Audio Infos": "37e Congrès mondial d'audiologie (WCA 2026) à Séoul",
     "Thélios (LVMH)": "Sponsor officiel lunetterie de la Biennale Cinéma 2026 à Venise",
-    "EssilorLuxottica": "Résultats S1 2026 : CA de 14,8 Mds€, +9,7% (28/07/2026)",
+    "EssilorLuxottica": "Meta transforme certaines lunettes connectées en aide auditive homologuée",
     "Kering Eyewear": "Résultats S1 2026 : Eyewear à 965 M€, +8% comparable (28/07/2026)",
     "Safilo": "Acquisition de SPY+ et Serengeti finalisée (01/07/2026)",
     "Marcolin": "Lancement capsule Timberland Eyewear Iconic 2026 (22/07/2026)",
@@ -136,7 +137,13 @@
       "title": "Aides auditives et téléconsultation : quel remboursement ?",
       "date": "2026-09-21",
       "source": "Acuité / Audiologie Demain / L'Ouïe Magazine — confirmation de la Cnam (CPN Audioprothèse du 21 juillet 2026)"
+    },
+    {
+      "slug": "meta-lunettes-connectees-fonction-aide-auditive-fda",
+      "title": "Meta transforme certaines lunettes connectées en aide auditive homologuée",
+      "date": "2026-09-24",
+      "source": "EssilorLuxottica / Meta — communiqué officiel « EssilorLuxottica et Meta continuent de développer la catégorie des lunettes IA » et blog officiel Meta Connect 2026 (23-24 septembre 2026)"
     }
   ],
-  "dernier_passage": "2026-09-21"
+  "dernier_passage": "2026-09-24"
 }
