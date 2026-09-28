@@ -1067,6 +1067,8 @@ FOOTER = """<footer>
             <li><a href="/espace-audition.html">Espace Audition</a></li>
             <li><a href="/actualites.html">Actualités</a></li>
             <li><a href="/opticien-paris-13.html">Opticien à Paris 13e</a></li>
+            <li><a href="/examen-de-vue-paris-13.html">Examen de vue à Paris 13e</a></li>
+            <li><a href="/audioprothesiste-paris-13.html">Audioprothésiste à Paris 13e</a></li>
           </ul>
         </div>
         <div>
@@ -5897,6 +5899,18 @@ def related_articles(article, count=3):
 
 # --- Bloc "Nos articles sur le sujet" sur les pages de service -------------
 PAGE_ARTICLES = {
+    "examen-de-vue-paris-13.html": (
+        "Aller plus loin",
+        ["renouveler-lunettes-sans-nouvelle-ordonnance-opticien",
+         "presbytie-comprendre-ce-trouble-de-la-vision",
+         "comprendre-devis-normalise-lunettes-aides-auditives"],
+    ),
+    "audioprothesiste-paris-13.html": (
+        "Aller plus loin",
+        ["perte-auditive-signes-precoces",
+         "teleconsultation-primo-prescription-aides-auditives",
+         "comprendre-devis-normalise-lunettes-aides-auditives"],
+    ),
     "espace-sante.html": (
         "Comprendre sa vue",
         ["presbytie-comprendre-ce-trouble-de-la-vision",
@@ -6375,7 +6389,7 @@ BODY_OPTICIEN_PARIS_13 = """
         <span class="eyebrow">Sans rendez-vous</span>
         <h2>Passer nous voir</h2>
         <p>Vous n'avez pas besoin de prévenir pour essayer des montures, faire ajuster une paire, remplacer des plaquettes, commander des lentilles ou poser une question. Ces gestes-là ne se planifient pas et nous les faisons volontiers, même si vos lunettes viennent d'ailleurs.</p>
-        <p>Le rendez-vous devient utile dès qu'il faut du temps : une vingtaine de minutes pour un <a href="/espace-sante.html">examen de vue</a>, une quarantaine pour un <a href="/espace-audition.html">bilan auditif</a>. Un appel au <a href="tel:0182280018">01 82 28 00 18</a> suffit, souvent pour un créneau dans la même semaine.</p>
+        <p>Le rendez-vous devient utile dès qu'il faut du temps : une vingtaine de minutes pour un <a href="/examen-de-vue-paris-13.html">examen de vue</a>, une quarantaine pour un <a href="/audioprothesiste-paris-13.html">bilan auditif</a>. Un appel au <a href="tel:0182280018">01 82 28 00 18</a> suffit, souvent pour un créneau dans la même semaine.</p>
       </div>
       <div class="split-text reveal">
         <span class="eyebrow">Nos horaires</span>
@@ -6441,6 +6455,304 @@ BODY_OPTICIEN_PARIS_13 = """
 """
 
 
+# ============================================================================
+# PAGES "EXAMEN DE VUE PARIS 13" et "AUDIOPROTHESISTE PARIS 13" (28/09/2026)
+# ----------------------------------------------------------------------------
+# Raison d'etre : audit Search Console + SERP du 28/09/2026.
+#  - "examen de vue paris 13" : 126 impressions / 3 mois, position 34,5.
+#    Espace Sante est une page pedagogique generale (defauts visuels,
+#    maladies de l'oeil) : elle ne repond pas a l'intention locale.
+#  - "audioprothesiste paris 13" : site absent des resultats web et de la
+#    carte. Espace Audition est une page pedagogique, pas une page locale.
+# Ces deux pages sont des pages de SERVICE LOCAL (deroule, duree, ordonnance,
+# prise en charge, acces) ; elles renvoient vers les Espaces pour la
+# pedagogie, sans en recopier le contenu. Examen de vue GRATUIT : confirme
+# par le client le 28/09/2026. Aucun nom de personne (regle site).
+# Comme opticien-paris-13.html, a ajouter A LA MAIN au sitemap.
+# ============================================================================
+BODY_EXAMEN_VUE_PARIS_13 = """
+<section class="page-hero page-hero--compact">
+  <div class="container">
+    <div class="breadcrumb"><a href="/index.html">La Boutique</a> / Examen de vue à Paris 13e</div>
+    <span class="eyebrow">Galerie Oslo — Olympiades · 44 avenue d'Ivry</span>
+    <h1>Examen de vue à Paris 13e</h1>
+    <p>Un contrôle de votre vue gratuit, en salle dédiée, une vingtaine de minutes, pour renouveler ou adapter vos lunettes à partir de votre ordonnance en cours de validité — sans attendre un nouveau rendez-vous chez l'ophtalmologiste.</p>
+    <div class="hero-actions">
+      <a href="tel:0182280018" class="btn btn-primary">Réserver au 01 82 28 00 18</a>
+      <a href="/contact.html" class="btn btn-ghost">Nous écrire</a>
+    </div>
+  </div>
+</section>
+
+<section class="story-block">
+  <div class="container-narrow">
+    <div class="answer-lead">
+      <p>Chez Maison Mikis, opticien au 44 avenue d'Ivry (Paris 13e, métro Olympiades), l'examen de vue est gratuit. Il se fait sur rendez-vous, du mardi au samedi, dans une salle dédiée, et dure une vingtaine de minutes. Si votre ordonnance est encore valable et que vous avez 16 ans ou plus, nous pouvons adapter la correction de vos verres sans nouvelle consultation médicale.</p>
+    </div>
+    <p>Dans le 13e, obtenir un rendez-vous chez l'ophtalmologiste prend souvent plusieurs semaines, parfois davantage. Or beaucoup de personnes n'ont pas besoin d'une nouvelle ordonnance : elles ont une prescription encore valable, et ce qu'il leur faut, c'est vérifier que leur correction est toujours la bonne avant de refaire une paire. C'est exactement ce que permet l'examen de vue chez l'opticien.</p>
+    <p>Précisons tout de suite ce qu'il n'est pas : ce n'est pas une consultation médicale. Nous mesurons votre acuité et la correction qui vous donne la vision la plus nette et la plus confortable. Nous ne mesurons pas la tension de l'œil et n'examinons pas le fond d'œil — cela reste le travail de l'ophtalmologiste, et le suivi médical régulier garde toute son importance.</p>
+  </div>
+</section>
+
+<section class="dark-section">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Déroulé</span>
+      <h2>Comment se passe l'examen</h2>
+    </div>
+    <div class="card-grid-3">
+      <div class="dark-card reveal">
+        <div class="badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBF6EF" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
+        <h3>1. L'ordonnance et vos habitudes</h3>
+        <p>Nous commençons par lire votre ordonnance : sa date, la correction, et l'éventuelle mention par laquelle le médecin s'oppose à toute adaptation. Puis nous parlons de votre quotidien — écrans, conduite de nuit, lecture, sport — parce qu'une même correction ne se porte pas de la même façon selon l'usage.</p>
+      </div>
+      <div class="dark-card reveal">
+        <div class="badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBF6EF" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>2. La mesure, de loin et de près</h3>
+        <p>L'acuité est contrôlée de loin, sur l'échelle de Monoyer, et de près, sur l'échelle de Parinaud. Au réfracteur, nous affinons ensuite la correction œil par œil, puis les deux yeux ensemble, jusqu'à trouver l'équilibre le plus confortable.</p>
+      </div>
+      <div class="dark-card reveal">
+        <div class="badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBF6EF" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg></div>
+        <h3>3. Ce que nous vous disons</h3>
+        <p>Nous comparons le résultat à votre correction actuelle et vous l'expliquons simplement. Si l'écart reste dans ce que nous pouvons adapter, l'équipement peut être choisi dans la foulée. Si quelque chose nous paraît sortir de ce cadre, nous vous orientons vers un ophtalmologiste, sans chercher à conclure une vente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="split story-block">
+  <div class="container">
+    <div class="split-grid">
+      <div class="split-text reveal">
+        <span class="eyebrow">Ordonnance</span>
+        <h2>Votre ordonnance est-elle encore valable ?</h2>
+        <p>Tout dépend de votre âge au moment où elle a été rédigée. C'est ce calendrier qui détermine ce que l'opticien a le droit de faire sans nouvelle consultation.</p>
+        <ul class="check-list">
+          <li><span class="check">✓</span> Moins de 16 ans : 1 an, renouvellement à l'identique uniquement</li>
+          <li><span class="check">✓</span> De 16 à 42 ans : 5 ans, renouvellement et adaptation possibles</li>
+          <li><span class="check">✓</span> Plus de 42 ans : 3 ans, renouvellement et adaptation possibles</li>
+        </ul>
+        <p>Toute adaptation est consignée et transmise au médecin prescripteur. Le détail des règles, y compris le cas particulier de la presbytie, est expliqué dans notre article <a href="/actualites/renouveler-lunettes-sans-nouvelle-ordonnance-opticien.html">changer de lunettes sans nouvelle ordonnance</a>.</p>
+      </div>
+      <div class="split-text reveal">
+        <span class="eyebrow">Quand consulter un médecin</span>
+        <h2>Les situations qui ne peuvent pas attendre</h2>
+        <p>Certains signes ne relèvent pas d'un simple changement de verres. Dans ces cas, nous vous orientons vers un ophtalmologiste plutôt que de refaire une paire :</p>
+        <ul class="check-list">
+          <li><span class="check">✓</span> Baisse de vision rapide ou soudaine</li>
+          <li><span class="check">✓</span> Douleur, rougeur persistante, vision double</li>
+          <li><span class="check">✓</span> Éclairs lumineux ou taches dans le champ visuel</li>
+          <li><span class="check">✓</span> Première difficulté de lecture de près après 40 ans</li>
+        </ul>
+        <p>Pour comprendre les troubles de la vue et le rythme de contrôle conseillé à chaque âge, consultez notre <a href="/espace-sante.html">Espace Santé</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="split alt story-block">
+  <div class="container">
+    <div class="split-grid reverse">
+      <div class="split-text reveal">
+        <span class="eyebrow">Prise en charge</span>
+        <h2>Et le remboursement ?</h2>
+        <p>La validité de l'ordonnance et le remboursement suivent deux calendriers différents. À partir de 16 ans, l'Assurance Maladie et votre complémentaire prennent en charge une paire tous les deux ans ; avant 16 ans, tous les ans. Un renouvellement anticipé est possible en cas d'évolution de la vue justifiée.</p>
+        <p>Nous pratiquons le tiers payant avec les mutuelles et présentons systématiquement l'offre 100 % Santé, sans reste à charge, à côté des autres équipements. Le devis vous est remis avant toute commande.</p>
+      </div>
+      <div class="split-text reveal">
+        <span class="eyebrow">Pratique</span>
+        <h2>Prendre rendez-vous</h2>
+        <p>Un appel au <a href="tel:0182280018">01 82 28 00 18</a> suffit ; le créneau se trouve souvent dans la même semaine. Pensez à apporter votre ordonnance, vos lunettes actuelles et, si vous en portez, vos lentilles ou leur boîte.</p>
+        <ul class="check-list-grid">
+          <li><span class="check">✓</span> Du mardi au samedi, 10h – 19h30</li>
+          <li><span class="check">✓</span> Gratuit, environ 20 minutes</li>
+          <li><span class="check">✓</span> Métro 14 — Olympiades, à 100 m</li>
+          <li><span class="check">✓</span> Boutique de plain-pied</li>
+        </ul>
+        <p>Toutes les informations d'accès sont sur la page <a href="/opticien-paris-13.html">opticien à Paris 13e</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story-block">
+  <div class="container-narrow">
+    <div class="section-head center">
+      <span class="eyebrow">Questions fréquentes</span>
+      <h2>Examen de vue : ce qu'on nous demande</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary>L'examen de vue est-il payant ?<span class="plus">+</span></summary>
+        <p>Non, l'examen de vue est gratuit. Il suffit de prendre rendez-vous au 01 82 28 00 18.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Peut-on faire un examen de vue sans ordonnance ?<span class="plus">+</span></summary>
+        <p>Nous pouvons contrôler votre vue, mais pour réaliser des lunettes correctrices, une ordonnance reste nécessaire. Si la vôtre a expiré, l'examen en boutique vous dira si votre correction a évolué ; il faudra ensuite une nouvelle prescription médicale pour l'équipement.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Faites-vous l'examen de vue des enfants ?<span class="plus">+</span></summary>
+        <p>Avant 16 ans, l'opticien ne peut que renouveler à l'identique une ordonnance de moins d'un an : la vue évolue trop vite à cet âge pour qu'il l'adapte lui-même. Le suivi de la vue des enfants passe par l'ophtalmologiste ; nous prenons le relais pour l'équipement.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>L'examen de vue remplace-t-il l'ophtalmologiste ?<span class="plus">+</span></summary>
+        <p>Non. Il permet de refaire des lunettes sans attendre quand l'ordonnance est valable, mais il ne dépiste pas les maladies de l'œil comme le glaucome ou la DMLA. Un suivi médical régulier reste indispensable, surtout après 40 ans.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Et pour les lentilles de contact ?<span class="plus">+</span></summary>
+        <p>Les lentilles obéissent à des règles qui leur sont propres. Apportez votre ordonnance de lentilles : nous vous dirons ce qu'il est possible de faire en boutique et ce qui demande un avis de votre ophtalmologiste.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>Réservez votre examen de vue</h2>
+    <p>Maison Mikis — Galerie Oslo, 44 avenue d'Ivry, 75013 Paris. Du mardi au samedi, 10h – 19h30. Métro 14, Olympiades.</p>
+    <a href="tel:0182280018" class="btn btn-primary">01 82 28 00 18</a>
+  </div>
+</section>
+"""
+
+
+BODY_AUDIOPROTHESISTE_PARIS_13 = """
+<section class="page-hero page-hero--compact">
+  <div class="container">
+    <div class="breadcrumb"><a href="/index.html">La Boutique</a> / Audioprothésiste à Paris 13e</div>
+    <span class="eyebrow">Galerie Oslo — Olympiades · 44 avenue d'Ivry</span>
+    <h1>Audioprothésiste à Paris 13e</h1>
+    <p>Bilan auditif gratuit et sans engagement, essai d'au moins trente jours chez vous, réglages et suivi inclus : un audioprothésiste diplômé vous reçoit en cabine dédiée, au pied des Olympiades.</p>
+    <div class="hero-actions">
+      <a href="tel:0182280018" class="btn btn-primary">Réserver un bilan auditif</a>
+      <a href="/contact.html" class="btn btn-ghost">Nous écrire</a>
+    </div>
+  </div>
+</section>
+
+<section class="story-block">
+  <div class="container-narrow">
+    <div class="answer-lead">
+      <p>Maison Mikis réunit un opticien et un audioprothésiste au 44 avenue d'Ivry, Paris 13e, à 100 mètres du métro Olympiades. Le bilan auditif est gratuit, sans engagement, et dure une quarantaine de minutes. Tout appareillage passe par un essai d'au moins trente jours avant achat, et le 100 % Santé donne accès à des appareils sans reste à charge.</p>
+    </div>
+    <p>Les centres auditifs ne manquent pas dans le 13e, surtout autour de la place d'Italie et de l'avenue d'Italie. Ce qui change chez nous, c'est la taille : une boutique de quartier où vous retrouvez le même interlocuteur à chaque visite, pendant toutes les années que dure un appareil. Pour une aide auditive, cette continuité compte plus que n'importe quelle fiche technique.</p>
+    <p>C'est aussi l'un des rares endroits du 13e où l'optique et l'audition sont réunies sous le même toit. Beaucoup de nos clients en profitent pour faire le point sur les deux lors d'une même visite.</p>
+  </div>
+</section>
+
+<section class="dark-section">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Le parcours</span>
+      <h2>Du premier rendez-vous au suivi</h2>
+    </div>
+    <div class="card-grid-3">
+      <div class="dark-card reveal">
+        <div class="badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBF6EF" stroke-width="2"><path d="M6 18a6 6 0 1 1 12-6c0 4-3 4-3 7a2 2 0 0 1-4 0"/><circle cx="12" cy="12" r="1.5"/></svg></div>
+        <h3>Le bilan auditif</h3>
+        <p>Une quarantaine de minutes en cabine : d'abord une conversation sur les situations qui vous gênent, puis les tests. C'est un dépistage, pas un diagnostic médical. Vous repartez avec le résultat, libre d'y réfléchir et d'en parler à votre médecin.</p>
+      </div>
+      <div class="dark-card reveal">
+        <div class="badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBF6EF" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></div>
+        <h3>L'essai chez vous</h3>
+        <p>Au moins trente jours avec l'appareil, dans votre vie réelle : cuisine, métro, restaurant, téléphone. C'est un droit, pas une option. Les réglages évoluent au fil de l'essai pour que votre cerveau se réhabitue progressivement aux sons.</p>
+      </div>
+      <div class="dark-card reveal">
+        <div class="badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBF6EF" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></div>
+        <h3>Le suivi, inclus</h3>
+        <p>Contrôles au 3e, 6e et 12e mois, puis deux fois par an, pendant toute la vie de l'appareil : réglages, nettoyage, changement d'embouts. Ce suivi est compris dans le prix. Comptez environ trois mois pour que tout soit parfaitement calé.</p>
+      </div>
+    </div>
+    <div class="block-more-center"><a href="/espace-audition.html" class="block-more">Tout comprendre sur l'audition →</a></div>
+  </div>
+</section>
+
+<section class="split story-block">
+  <div class="container">
+    <div class="split-grid">
+      <div class="split-text reveal">
+        <span class="eyebrow">Ordonnance</span>
+        <h2>Faut-il une prescription ?</h2>
+        <p>Le bilan en boutique, non : vous pouvez venir sans ordonnance. Pour être appareillé et remboursé, en revanche, une prescription médicale est obligatoire.</p>
+        <p>Pour un premier appareillage, elle doit venir d'un ORL ou d'un médecin généraliste formé en otologie, qui réalise lui-même les examens lors d'une consultation en présentiel : l'Assurance Maladie ne rembourse pas un premier appareil prescrit en téléconsultation (voir <a href="/actualites/teleconsultation-primo-prescription-aides-auditives.html">notre article sur le sujet</a>). Si vous n'avez pas d'ORL, nous pouvons vous en indiquer un.</p>
+      </div>
+      <div class="split-text reveal">
+        <span class="eyebrow">Prise en charge</span>
+        <h2>100 % Santé : ce que vous payez</h2>
+        <p>Deux classes d'appareils coexistent. En classe 1, le prix est plafonné à 950 € par appareil en 2026, réglages et suivi compris : avec une prescription, la Sécurité sociale et une mutuelle responsable, il ne vous reste rien à payer. La classe 2, à prix libre, apporte des fonctions plus avancées — rechargeable, connectivité, réduction de bruit plus fine — avec un remboursement partiel selon votre contrat.</p>
+        <p>Le devis normalisé est gratuit et vous est remis avant toute décision, pour comparer les deux en toute clarté.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="split alt story-block">
+  <div class="container">
+    <div class="split-grid reverse">
+      <div class="split-text reveal">
+        <span class="eyebrow">Les signes</span>
+        <h2>Quand prendre rendez-vous ?</h2>
+        <p>La perte auditive s'installe lentement, et c'est souvent l'entourage qui la remarque en premier. Un bilan se justifie dès que l'un de ces signes devient habituel :</p>
+        <ul class="check-list">
+          <li><span class="check">✓</span> Vous montez le son de la télévision</li>
+          <li><span class="check">✓</span> Vous faites souvent répéter</li>
+          <li><span class="check">✓</span> Les conversations dans le bruit vous fatiguent</li>
+          <li><span class="check">✓</span> Un sifflement ou bourdonnement persiste</li>
+        </ul>
+      </div>
+      <div class="split-text reveal">
+        <span class="eyebrow">Pratique</span>
+        <h2>Venir nous voir</h2>
+        <p>Le bilan se fait sur rendez-vous, au <a href="tel:0182280018">01 82 28 00 18</a>. La boutique est de plain-pied, accessible en fauteuil roulant, au cœur de la Galerie Oslo.</p>
+        <ul class="check-list-grid">
+          <li><span class="check">✓</span> Du mardi au samedi, 10h – 19h30</li>
+          <li><span class="check">✓</span> Bilan d'environ 40 minutes</li>
+          <li><span class="check">✓</span> Métro 14 — Olympiades, à 100 m</li>
+          <li><span class="check">✓</span> Métro 7 — Tolbiac et Porte d'Ivry</li>
+        </ul>
+        <p>Nous recevons des patients de tout le 13e — Tolbiac, place d'Italie, Jeanne d'Arc, avenue de France — ainsi que d'Ivry-sur-Seine et du Kremlin-Bicêtre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story-block">
+  <div class="container-narrow">
+    <div class="section-head center">
+      <span class="eyebrow">Questions fréquentes</span>
+      <h2>Audition : ce qu'on nous demande</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary>Le bilan auditif est-il vraiment gratuit ?<span class="plus">+</span></summary>
+        <p>Oui, et il ne vous engage à rien. Vous repartez avec le résultat et revenez quand vous le souhaitez : le dossier vous attend.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Mon médecin traitant peut-il me prescrire des appareils ?<span class="plus">+</span></summary>
+        <p>Pour un premier appareillage, seulement s'il a suivi la formation en otologie médicale requise ; sinon, il faut passer par un ORL. Pour un renouvellement, les règles sont plus souples : demandez-nous, nous vous dirons ce qui s'applique à votre situation.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Mes appareils ont été achetés ailleurs, pouvez-vous les suivre ?<span class="plus">+</span></summary>
+        <p>Posez-nous la question en boutique avec vos appareils : selon le modèle et le fabricant, nous vous dirons ce que nous pouvons prendre en charge — nettoyage, entretien, réglages.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Les appareils se voient-ils ?<span class="plus">+</span></summary>
+        <p>De moins en moins. Un intra-auriculaire sur mesure est presque invisible, un micro-contour à écouteur déporté reste très discret. Nous vous montrons les différentes formes pendant l'essai avant tout choix.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>Prenez rendez-vous pour un bilan auditif</h2>
+    <p>Maison Mikis — Galerie Oslo, 44 avenue d'Ivry, 75013 Paris. Du mardi au samedi, 10h – 19h30. Métro 14, Olympiades.</p>
+    <a href="tel:0182280018" class="btn btn-primary">01 82 28 00 18</a>
+  </div>
+</section>
+"""
+
+
 if __name__ == "__main__":
     css_path = os.path.join(OUT_DIR, "site.css")
     with open(css_path, "w", encoding="utf-8") as f:
@@ -6467,7 +6779,7 @@ if __name__ == "__main__":
     )
     render_page(
         "sante",
-        "Espace Santé — Examen de vue à Paris 13e | Maison Mikis",
+        "Espace Santé — Comprendre et protéger sa vue | Maison Mikis",
         "L'Espace Santé de Maison Mikis à Paris 13e : examen de vue, défauts visuels, myopie de l'enfant, maladies de l'œil et conseils pour prendre soin de votre vue.",
         "espace-sante.html",
         BODY_SANTE,
@@ -6522,6 +6834,31 @@ if __name__ == "__main__":
         breadcrumb_override=[
             ("La Boutique", f"{BASE_URL}/"),
             ("Opticien à Paris 13e", f"{BASE_URL}/opticien-paris-13.html"),
+        ],
+    )
+
+    render_page(
+        "sante",
+        "Examen de vue à Paris 13e — Olympiades | Maison Mikis",
+        "Examen de vue gratuit sur rendez-vous à Paris 13e, métro Olympiades : environ 20 minutes pour renouveler ou adapter vos lunettes avec une ordonnance valable.",
+        "examen-de-vue-paris-13.html",
+        BODY_EXAMEN_VUE_PARIS_13,
+        hero_img="/images/sante/hero-sante-large.jpg",
+        breadcrumb_override=[
+            ("La Boutique", f"{BASE_URL}/"),
+            ("Examen de vue à Paris 13e", f"{BASE_URL}/examen-de-vue-paris-13.html"),
+        ],
+    )
+    render_page(
+        "audition",
+        "Audioprothésiste à Paris 13e — Olympiades | Maison Mikis",
+        "Audioprothésiste à Paris 13e, métro Olympiades : bilan auditif gratuit, essai de 30 jours minimum, suivi inclus et appareils 100 % Santé sans reste à charge.",
+        "audioprothesiste-paris-13.html",
+        BODY_AUDIOPROTHESISTE_PARIS_13,
+        hero_img="/images/audition/hero-audition-large.jpg",
+        breadcrumb_override=[
+            ("La Boutique", f"{BASE_URL}/"),
+            ("Audioprothésiste à Paris 13e", f"{BASE_URL}/audioprothesiste-paris-13.html"),
         ],
     )
 
