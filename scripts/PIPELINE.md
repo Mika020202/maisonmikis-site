@@ -37,6 +37,23 @@ Le rattrapage ne consomme rien si le passage du matin a eu lieu : `veille.py` li
    commit jamais, pour rester testable isolement.
 5. **Mise en ligne** — miroir SFTP (repli FTPS) vers `/public` chez IONOS.
 
+## Lundi : actualite — jeudi : guide pratique (depuis le 28/09/2026)
+
+Audit Search Console du 28/09/2026 : les articles d'actualite nationale apportent
+des impressions mais quasi aucun client local. Depuis, les deux creneaux n'ont plus
+le meme role :
+
+- **Lundi** : veille d'actualite, seuil d'importance inchange (peut ne rien publier).
+- **Jeudi** : **guide pratique** sur un sujet impose, pris dans l'ordre dans
+  `scripts/guides.json` (premier `id` absent de `state.json > guides_traites`).
+  Pas d'option « aucune nouveaute » : le guide est redige. La rubrique est imposee
+  par le fichier, pas par le modele. Le dernier paragraphe ne peut citer que les
+  services de `SERVICES_CONFIRMES` (`veille.py`) : a mettre a jour si l'offre de la
+  boutique change.
+- Plus de sujet en reserve : le jeudi repasse automatiquement en actualite.
+- Ajouter des sujets EN FIN de `guides.json`, sans reutiliser un `id`, et sans
+  doublonner une page du site ni un article existant.
+
 ## Garde-fous a ne jamais retirer
 
 - **Le miroir se fait SANS `--delete`.** Le workflow sait ajouter et remplacer des
@@ -104,6 +121,7 @@ scinder la veille en deux appels (reperage, puis redaction).
 | `build.py` (racine) | generateur unique du site |
 | `scripts/veille.py` | veille + redaction, ecrit `articles_auto.json` |
 | `scripts/sources.json` | sources professionnelles surveillees |
+| `scripts/guides.json` | sujets des guides pratiques du jeudi |
 | `scripts/state.json` | memoire : slugs utilises, dernier passage, journal |
 | `scripts/articles.json` | articles ecrits a la main |
 | `scripts/articles_auto.json` | articles produits par la veille |

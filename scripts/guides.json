@@ -1,0 +1,77 @@
+{
+  "_note": "Sujets des guides pratiques publies le JEUDI (le lundi reste reserve a l'actualite). Cree le 28/09/2026 apres l'audit Search Console : les articles d'actualite nationale apportent des impressions mais presque aucun client local. Les guides repondent a des questions concretes que se posent les clients au moment d'agir. veille.py traite le premier sujet de la liste absent de state.json > guides_traites. Ajouter des sujets EN FIN de liste ; ne jamais reutiliser un id. Un sujet ne doit pas doublonner une page du site (espace-sante, espace-audition, examen-de-vue-paris-13, audioprothesiste-paris-13, opticien-paris-13) ni un article existant.",
+  "guides": [
+    {
+      "id": "verres-progressifs-adaptation",
+      "category": "tech-verres",
+      "question": "Verres progressifs : combien de temps pour s'habituer, et que faire si l'on n'y arrive pas ?",
+      "angle": "Les premiers jours (sensations, escaliers, écrans), les gestes qui aident, les causes fréquentes d'inconfort (centrage, hauteur de montage, correction, monture), et quand revenir voir l'opticien. Pas de marque mise en avant."
+    },
+    {
+      "id": "lunettes-enfant-premier-equipement",
+      "category": "enfant",
+      "question": "Premières lunettes d'un enfant : comment bien choisir et ce qui est remboursé",
+      "angle": "Ordonnance obligatoire, choix de la monture (taille, solidité, matériaux, branches), verres adaptés, rythme de prise en charge avant 6 ans et de 6 à 16 ans, 100 % Santé, conseils pour que l'enfant les porte."
+    },
+    {
+      "id": "tiers-payant-opticien",
+      "category": "remboursements",
+      "question": "Tiers payant chez l'opticien : comment ça marche et que faut-il apporter ?",
+      "angle": "Ce que couvre la Sécurité sociale et la complémentaire, les documents à apporter (carte Vitale, attestation de mutuelle, ordonnance), la prise en charge et le devis normalisé, ce qui reste éventuellement à payer. Ne donne aucun prix."
+    },
+    {
+      "id": "lunettes-cassees-reparer-remplacer",
+      "category": "remboursements",
+      "question": "Lunettes cassées ou perdues : réparer, refaire, et que prend en charge la mutuelle ?",
+      "angle": "Ce qui se répare (vis, plaquettes, charnières, branches), quand il faut refaire, renouvellement anticipé et règles de prise en charge, rôle de l'ordonnance, garanties casse éventuelles des contrats."
+    },
+    {
+      "id": "lentilles-duree-port-erreurs",
+      "category": "tech-lentilles",
+      "question": "Lentilles de contact : combien d'heures par jour, et les erreurs qui abîment les yeux",
+      "angle": "Durée de port selon le type, respect du rythme de renouvellement, eau et douche, sommeil, produits d'entretien, étui, signes qui imposent de retirer ses lentilles et de consulter."
+    },
+    {
+      "id": "aides-auditives-entretien-quotidien",
+      "category": "sante-auditive",
+      "question": "Aides auditives : comment les entretenir au quotidien pour qu'elles durent",
+      "angle": "Nettoyage quotidien, cérumen et filtres, humidité, piles ou recharge, rangement la nuit, pannes courantes et gestes simples avant de revenir en boutique, rôle du suivi inclus."
+    },
+    {
+      "id": "lunettes-conduite-permis-vision",
+      "category": "sante-visuelle",
+      "question": "Vue et permis de conduire : quelles obligations, et comment bien voir la nuit ?",
+      "angle": "Mention de correction sur le permis, normes d'acuité, conduite de nuit et éblouissement, verres antireflet et teintes à éviter la nuit, paire de secours, contrôle régulier."
+    },
+    {
+      "id": "lunettes-soleil-correctrices-choisir",
+      "category": "mode-lunettes",
+      "question": "Lunettes de soleil à la vue : comment choisir teinte, catégorie et verres",
+      "angle": "Catégories de filtre 0 à 4 et usage, polarisant, photochromique, teintes et perception des couleurs, marquage CE, conduite, prise en charge."
+    },
+    {
+      "id": "lunettes-travail-ecran-verres",
+      "category": "tech-verres",
+      "question": "Travail sur écran : quels verres choisir quand on passe la journée devant un ordinateur ?",
+      "angle": "Distances de travail, verres dégressifs ou d'intérieur, unifocaux adaptés, réglage du poste, ce qui est démontré et ce qui ne l'est pas sur la lumière bleue. Ne pas répéter l'article existant sur la fatigue oculaire."
+    },
+    {
+      "id": "mutuelle-optique-audition-comparer",
+      "category": "remboursements",
+      "question": "Choisir sa mutuelle : ce qu'il faut regarder pour l'optique et l'audition",
+      "angle": "Contrat responsable, lecture des garanties (en euros ou en pourcentage), plafonds, périodicité, 100 % Santé, audition sur 4 ans, questions à poser avant de signer. Aucun assureur cité ou recommandé."
+    },
+    {
+      "id": "monture-enfant-solidite-taille",
+      "category": "enfant",
+      "question": "Monture pour enfant : taille, solidité et matériaux, comment s'y retrouver",
+      "angle": "Largeur, pont, branches flexibles ou enveloppantes, matériaux, cordons, ajustage à la croissance, fréquence de contrôle de l'ajustage. Ne pas répéter le guide sur les premières lunettes."
+    },
+    {
+      "id": "baisse-audition-parler-proche",
+      "category": "sante-auditive",
+      "question": "Un proche entend moins bien : comment en parler et l'accompagner vers un bilan",
+      "angle": "Signes que l'entourage remarque, pourquoi le déni est fréquent, comment aborder le sujet, rôle du médecin et de l'ORL, bilan auditif, place de l'entourage pendant l'essai."
+    }
+  ]
+}

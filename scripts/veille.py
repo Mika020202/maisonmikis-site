@@ -45,6 +45,7 @@ sys.path.insert(0, ROOT)
 STATE_PATH = os.path.join(SCRIPTS_DIR, "state.json")
 SOURCES_PATH = os.path.join(SCRIPTS_DIR, "sources.json")
 AUTO_PATH = os.path.join(SCRIPTS_DIR, "articles_auto.json")
+GUIDES_PATH = os.path.join(SCRIPTS_DIR, "guides.json")
 
 API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 API_URL = "https://api.anthropic.com/v1/messages"
@@ -341,6 +342,120 @@ médical, comparaison dénigrante d'un confrère, prix, promotion, urgence comme
 
 
 # ---------------------------------------------------------------------------
+# Contraintes techniques et format de reponse, communs a l'actualite (lundi)
+# et aux guides pratiques (jeudi).
+# ---------------------------------------------------------------------------
+def contraintes_techniques(categories, known_slugs, images_dispo):
+    return """
+
+CONTRAINTES TECHNIQUES
+- « category » : exactement une valeur de cette liste : %s
+- « slug » : minuscules, tirets, sans accent, 3 à 8 mots, descriptif.
+  Il ne doit être AUCUN de ceux-ci : %s
+- « image_choisie » : le chemin EXACT de l'illustration la plus pertinente pour
+  ton sujet, choisi dans la liste ci-dessous et nulle part ailleurs. Le texte
+  entre parenthèses est le contenu réel de la photo : choisis en fonction de ce
+  qu'elle MONTRE, pas de la rubrique. N'écris jamais de texte alternatif, il est
+  repris automatiquement. Si aucune ne convient vraiment, laisse une chaîne vide.
+%s
+- Ne traite AUCUN sujet déjà couvert par les articles existants (liste ci-dessous).
+- « sources » : 2 à 4 entrées [nom, url]. Chaque url doit être une adresse https
+  réelle rencontrée pendant ta recherche, jamais inventée, jamais un moteur de
+  recherche.
+
+FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markdown :
+{
+  "source_used": "nom exact de la source qui a déclenché l'article",
+  "justification": "en une phrase, pourquoi cette nouveauté franchit le seuil",
+  "category": "...",
+  "slug": "...",
+  "image_choisie": "...",
+  "title": "...",
+  "meta_title": "... | Maison Mikis",
+  "meta_description": "...",
+  "excerpt": "...",
+  "answer": "...",
+  "faq": [["question", "réponse"], ["question", "réponse"], ["question", "réponse"]],
+  "sources": [["nom", "https://..."], ["nom", "https://..."]],
+  "body_html": "<h2>...</h2><p>...</p>..."
+}""" % (categories, known_slugs, images_dispo)
+
+
+# ---------------------------------------------------------------------------
+# Guides pratiques du jeudi (ajoutes le 28/09/2026)
+# ---------------------------------------------------------------------------
+# Audit Search Console du 28/09/2026 : les articles d'actualite nationale
+# (Varilux Immersia, lunettes Meta...) rapportent des impressions mais quasi
+# aucun client local. Le jeudi publie donc un GUIDE PRATIQUE, repondant a une
+# question concrete que se pose un client au moment d'agir. Le lundi reste
+# consacre a l'actualite, avec son seuil d'importance inchange.
+# Les sujets sont choisis par l'humain dans scripts/guides.json, jamais par le
+# modele : pas de derive vers des sujets creux ou en doublon.
+
+# Seuls services que le dernier paragraphe d'un guide peut evoquer : tous sont
+# confirmes par le client et deja affiches sur le site. Rien d'autre.
+SERVICES_CONFIRMES = """- examen de vue GRATUIT sur rendez-vous, environ 20 minutes, en salle dédiée ;
+- renouvellement et adaptation de la correction sur ordonnance en cours de validité (16 ans et plus) ;
+- ajustage et petites réparations sans rendez-vous, y compris sur des lunettes achetées ailleurs ;
+- lentilles : essais avant commande, apprentissage de la pose et du retrait ;
+- audioprothésiste sur place, en cabine dédiée : bilan auditif gratuit et sans engagement (environ 40 minutes),
+  essai d'au moins 30 jours, suivi inclus pendant toute la vie de l'appareil ;
+- tiers payant avec les mutuelles, offre 100 % Santé présentée systématiquement, devis normalisé remis avant commande ;
+- boutique ouverte du mardi au samedi, 10h-19h30, métro 14 Olympiades."""
+
+
+def choisir_guide(state):
+    """Premier sujet de guides.json pas encore traite, ou None."""
+    data = load(GUIDES_PATH, default={}) or {}
+    faits = set(state.get("guides_traites", []))
+    for g in data.get("guides", []):
+        if g.get("id") and g["id"] not in faits:
+            return g
+    return None
+
+
+def prompt_guide(guide, categories, known_slugs, images_dispo):
+    system = """Tu es l'équipe éditoriale du site maisonmikis.fr, opticien et
+audioprothésiste indépendant à Paris 13e. Aujourd'hui, tu ne fais PAS de veille
+d'actualité : tu rédiges un GUIDE PRATIQUE sur un sujet imposé, qui répond
+concrètement à une question que se posent nos clients au moment d'agir.
+
+MÉTHODE.
+- Tu fais des recherches web pour vérifier chaque fait réglementaire ou chiffré
+  (durées, règles de remboursement, obligations légales) auprès de sources de
+  premier rang : Ameli, Service-Public, Légifrance, Haute Autorité de santé,
+  organismes professionnels reconnus. Les règles changent : vérifie qu'elles
+  sont en vigueur aujourd'hui.
+- Le titre reprend la question du client sous une forme naturelle. La réponse
+  directe (« answer ») y répond sans détour.
+- Le guide est utile même pour quelqu'un qui n'achètera jamais chez nous.
+- La catégorie est imposée : « %s ».
+
+DERNIER PARAGRAPHE. Il ramène au concret. S'il évoque ce que nous faisons en
+boutique, il ne peut citer QUE des éléments de cette liste, confirmés par la
+boutique — n'invente aucun autre service, aucune garantie, aucun prix :
+%s
+
+Il n'y a pas d'option « aucune nouveauté » : tu dois livrer le guide.
+
+""" % (guide["category"], SERVICES_CONFIRMES)
+    system = system + CHARTE + contraintes_techniques(categories, known_slugs, images_dispo)
+    return system
+
+
+def message_guide(guide, titres_existants, today):
+    return (
+        "Sujet imposé : %s\n\nAngle attendu : %s\n\n"
+        "Titres déjà publiés sur le site (ne redis pas la même chose, et ne "
+        "reprends pas le contenu des pages Espace Santé, Espace Audition, Examen "
+        "de vue à Paris 13e et Audioprothésiste à Paris 13e) :\n%s\n\n"
+        "Nous sommes le %s."
+        % (guide["question"], guide["angle"],
+           "\n".join("- " + t for t in titres_existants), today.isoformat())
+    )
+
+
+# ---------------------------------------------------------------------------
 # Passe de publication — un creneau (lundi ou jeudi)
 # ---------------------------------------------------------------------------
 def run_creneau(sources, state, site):
@@ -430,39 +545,7 @@ renonce que si ce balayage ne donne rien.
 
 Si rien ne franchit ce seuil, réponds EXACTEMENT : {"no_novelty": true}
 
-""" + CHARTE + """
-
-CONTRAINTES TECHNIQUES
-- « category » : exactement une valeur de cette liste : %s
-- « slug » : minuscules, tirets, sans accent, 3 à 8 mots, descriptif.
-  Il ne doit être AUCUN de ceux-ci : %s
-- « image_choisie » : le chemin EXACT de l'illustration la plus pertinente pour
-  ton sujet, choisi dans la liste ci-dessous et nulle part ailleurs. Le texte
-  entre parenthèses est le contenu réel de la photo : choisis en fonction de ce
-  qu'elle MONTRE, pas de la rubrique. N'écris jamais de texte alternatif, il est
-  repris automatiquement. Si aucune ne convient vraiment, laisse une chaîne vide.
-%s
-- Ne traite AUCUN sujet déjà couvert par les articles existants (liste ci-dessous).
-- « sources » : 2 à 4 entrées [nom, url]. Chaque url doit être une adresse https
-  réelle rencontrée pendant ta recherche, jamais inventée, jamais un moteur de
-  recherche.
-
-FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markdown :
-{
-  "source_used": "nom exact de la source qui a déclenché l'article",
-  "justification": "en une phrase, pourquoi cette nouveauté franchit le seuil",
-  "category": "...",
-  "slug": "...",
-  "image_choisie": "...",
-  "title": "...",
-  "meta_title": "... | Maison Mikis",
-  "meta_description": "...",
-  "excerpt": "...",
-  "answer": "...",
-  "faq": [["question", "réponse"], ["question", "réponse"], ["question", "réponse"]],
-  "sources": [["nom", "https://..."], ["nom", "https://..."]],
-  "body_html": "<h2>...</h2><p>...</p>..."
-}""" % (categories, known_slugs, images_dispo)
+""" + CHARTE + contraintes_techniques(categories, known_slugs, images_dispo)
 
     user = (
         "Sources à vérifier :\n"
@@ -476,6 +559,18 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
         + "\n\nNous sommes le %s. Ta fenêtre de recherche va donc du %s à "
           "aujourd'hui." % (today.isoformat(), (today - timedelta(days=60)).isoformat())
     )
+
+    # Jeudi = guide pratique (voir guides.json). Le mode se decide sur le
+    # CRENEAU et non sur le jour : un rattrapage le vendredi reste un jeudi.
+    # S'il n'y a plus de sujet en reserve, le jeudi repasse en actualite.
+    guide = choisir_guide(state) if creneau_courant.weekday() == 3 else None
+    if guide:
+        write_summary("Créneau du jeudi : **guide pratique** — %s\n" % guide["question"])
+        system = prompt_guide(guide, categories, known_slugs, images_dispo)
+        user = message_guide(guide, titres_existants, today)
+    elif creneau_courant.weekday() == 3:
+        write_summary("_Plus aucun sujet de guide en réserve dans guides.json : "
+                      "ce jeudi repasse en veille d'actualité._\n")
 
     # Trois tentatives avant d'abandonner le creneau. Une reponse mal formee
     # ou un article refuse au controle qualite ne doit pas coûter le passage
@@ -499,6 +594,12 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
 
         state["dernier_passage"] = today.isoformat()
 
+        if result.get("no_novelty") and guide:
+            dernier_probleme = "le modele a repondu « aucune nouveaute » sur un guide"
+            consigne = ("\n\nATTENTION : il s'agit d'un guide sur un sujet impose, "
+                        "pas d'une veille. Redige le guide demande.")
+            continue
+
         if result.get("no_novelty"):
             write_summary("Aucune nouveauté ne franchit le seuil éditorial sur ce "
                           "créneau. **Aucun article publié** — c'est le comportement "
@@ -506,6 +607,8 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
             return state, None
 
         try:
+            if guide:
+                result["category"] = guide["category"]
             article = validate(result, site, known_slugs, today)
             break
         except ValueError as exc:
@@ -527,6 +630,8 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
     save(AUTO_PATH, auto)
 
     state.setdefault("used_slugs", []).append(article["slug"])
+    if guide:
+        state.setdefault("guides_traites", []).append(guide["id"])
 
     # La memoire des sources est indexee sur les noms REELS de sources.json,
     # jamais sur le texte libre renvoye par le modele. Sans ce garde-fou, chaque
@@ -550,6 +655,7 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
         "title": article["title"],
         "date": article["date_iso"],
         "source": source_name,
+        "type": "guide" if guide else "actualite",
     })
 
     write_summary(
