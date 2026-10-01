@@ -39,7 +39,8 @@
     "nuance-audio-plus-lunettes-auditives-essilorluxottica",
     "teleconsultation-primo-prescription-aides-auditives",
     "meta-lunettes-connectees-fonction-aide-auditive-fda",
-    "stellest-2-0-resultats-essai-clinique-myopie-enfant"
+    "stellest-2-0-resultats-essai-clinique-myopie-enfant",
+    "verres-progressifs-delai-adaptation-inconfort"
   ],
   "last_seen_by_source": {
     "Acuité": "Aides auditives et téléconsultation : quel remboursement ?",
@@ -151,7 +152,17 @@
       "date": "2026-09-28",
       "source": "EssilorLuxottica — communiqué de presse du 22 septembre 2026",
       "type": "actualite"
+    },
+    {
+      "slug": "verres-progressifs-delai-adaptation-inconfort",
+      "title": "Verres progressifs : quel délai d'adaptation, et si ça ne va pas ?",
+      "date": "2026-10-01",
+      "source": "Synthèse de sources professionnelles (centres ophtalmologiques, opticiens, fabricants) sur l'adaptation aux verres progressifs",
+      "type": "guide"
     }
   ],
-  "dernier_passage": "2026-09-28"
+  "dernier_passage": "2026-10-01",
+  "guides_traites": [
+    "verres-progressifs-adaptation"
+  ]
 }
