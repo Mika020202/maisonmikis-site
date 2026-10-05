@@ -40,10 +40,11 @@
     "teleconsultation-primo-prescription-aides-auditives",
     "meta-lunettes-connectees-fonction-aide-auditive-fda",
     "stellest-2-0-resultats-essai-clinique-myopie-enfant",
-    "verres-progressifs-delai-adaptation-inconfort"
+    "verres-progressifs-delai-adaptation-inconfort",
+    "publicite-optique-audition-projet-retire"
   ],
   "last_seen_by_source": {
-    "Acuité": "Aides auditives et téléconsultation : quel remboursement ?",
+    "Acuité": "Publicité en optique et audition : le projet d'interdiction abandonné",
     "Bien Vu": "Dossier sur la télémédecine et l'IA dans l'optique",
     "France Optique": "Collection LILY : élégance féminine contemporaine (22/07/2026)",
     "SFO": "Congrès 133e annoncé en avril 2027 ; replays du 132e disponibles",
@@ -159,9 +160,16 @@
       "date": "2026-10-01",
       "source": "Synthèse de sources professionnelles (centres ophtalmologiques, opticiens, fabricants) sur l'adaptation aux verres progressifs",
       "type": "guide"
+    },
+    {
+      "slug": "publicite-optique-audition-projet-retire",
+      "title": "Publicité en optique et audition : le projet d'interdiction abandonné",
+      "date": "2026-10-05",
+      "source": "Audiologie Demain / Acuité / L'Ouïe Magazine — abandon du projet d'arrêté sur la publicité en optique et audioprothèse (24 septembre 2026)",
+      "type": "actualite"
     }
   ],
-  "dernier_passage": "2026-10-01",
+  "dernier_passage": "2026-10-05",
   "guides_traites": [
     "verres-progressifs-adaptation"
   ]
