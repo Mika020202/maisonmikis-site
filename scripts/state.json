@@ -41,7 +41,8 @@
     "meta-lunettes-connectees-fonction-aide-auditive-fda",
     "stellest-2-0-resultats-essai-clinique-myopie-enfant",
     "verres-progressifs-delai-adaptation-inconfort",
-    "publicite-optique-audition-projet-retire"
+    "publicite-optique-audition-projet-retire",
+    "premieres-lunettes-enfant-choisir-monture-remboursement"
   ],
   "last_seen_by_source": {
     "Acuité": "Publicité en optique et audition : le projet d'interdiction abandonné",
@@ -167,10 +168,18 @@
       "date": "2026-10-05",
       "source": "Audiologie Demain / Acuité / L'Ouïe Magazine — abandon du projet d'arrêté sur la publicité en optique et audioprothèse (24 septembre 2026)",
       "type": "actualite"
+    },
+    {
+      "slug": "premieres-lunettes-enfant-choisir-monture-remboursement",
+      "title": "Premières lunettes d'enfant : comment choisir et ce qui est remboursé",
+      "date": "2026-10-08",
+      "source": "Ameli.fr (page officielle « Lunettes et lentilles : quelle prise en charge ? ») et sante.gouv.fr (réforme 100% Santé optique)",
+      "type": "guide"
     }
   ],
-  "dernier_passage": "2026-10-05",
+  "dernier_passage": "2026-10-08",
   "guides_traites": [
-    "verres-progressifs-adaptation"
+    "verres-progressifs-adaptation",
+    "lunettes-enfant-premier-equipement"
   ]
 }
