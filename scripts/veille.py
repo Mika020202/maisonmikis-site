@@ -397,37 +397,60 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
 # Paragraphe « Ancrage local » de la CHARTE, tel quel : la veille le garde.
 ANCRAGE_VEILLE = CHARTE[CHARTE.index("Ancrage local."):CHARTE.index("Structure imposée.")]
 
-# Seuls faits que le modele peut affirmer sur la boutique : tous sont confirmes
-# par Mikhael et deja affiches sur le site. A mettre a jour si un service, un
-# horaire ou une adresse change.
+# Seuls faits que le modele peut affirmer sur la boutique : releves le
+# 12/10/2026 sur le site en ligne (accueil, opticien-paris-13, examen-de-vue-
+# paris-13, marques, audioprothesiste-paris-13), rien d'autre. A mettre a jour
+# si le site change. Volontairement absents : la modalite de l'examen de vue
+# (l'accueil dit « sans rendez-vous », les pages Opticien et Examen de vue
+# disent « sur rendez-vous »), toute offre enfants, la Complementaire sante
+# solidaire, le suivi d'appareils auditifs achetes ailleurs.
 ANCRAGE_GUIDE = """Ancrage local (GUIDE LOCAL — remplace la règle habituelle). Cet article répond
 à une recherche faite par un habitant du 13e arrondissement de Paris ou des
-alentours (Olympiades, Tolbiac, Maison-Blanche, Triangle de Choisy, Ivry-sur-Seine,
-Le Kremlin-Bicêtre). Le repère « Paris 13e » figure UNE fois dans le titre, UNE
-fois dans le meta_title et UNE fois dans la meta description, de façon naturelle.
-Dans le corps, la boutique et son quartier apparaissent 2 à 4 fois au maximum, là
-où c'est utile au lecteur : jamais de répétition artificielle de mots-clés, jamais
-de liste de quartiers ou de villes plaquée. L'essentiel du texte reste un vrai
-guide pratique, utile même hors du 13e.
+alentours (Olympiades, Triangle de Choisy, Tolbiac, Maison-Blanche, place d'Italie,
+Ivry-sur-Seine, Le Kremlin-Bicêtre). Le repère « Paris 13e » figure UNE fois dans
+le titre, UNE fois dans le meta_title et UNE fois dans la meta description, de
+façon naturelle. Dans le corps, la boutique et son quartier apparaissent 2 à 4
+fois au maximum, là où c'est utile au lecteur : jamais de répétition artificielle
+de mots-clés, jamais de liste de quartiers ou de villes plaquée. L'essentiel du
+texte reste un vrai guide pratique, utile même hors du 13e.
 
 FAITS SUR LA BOUTIQUE — les SEULS que tu peux affirmer. N'invente aucun autre
 service, équipement, horaire, prix, délai, marque ou partenariat.
-- Maison Mikis, opticien et audioprothésiste indépendant, Galerie Oslo, 44 avenue
-  d'Ivry, 75013 Paris, sur l'esplanade des Olympiades.
-- Accès : métro ligne 14, station Olympiades.
-- Ouvert du mardi au samedi, 10h00 – 19h30 ; fermé le dimanche et le lundi.
-- Examen de vue GRATUIT sur rendez-vous, environ 20 minutes, en salle dédiée ;
-  renouvellement et adaptation de la correction sur ordonnance en cours de
-  validité (16 ans et plus) — il ne remplace pas une consultation médicale.
-- Ajustage et petites réparations sans rendez-vous, y compris sur des lunettes
-  achetées ailleurs.
-- Lentilles : essais avant commande, apprentissage de la pose et du retrait.
-- Audioprothésiste sur place, en cabine dédiée : bilan auditif gratuit et sans
-  engagement (environ 40 minutes), essai d'au moins 30 jours, suivi inclus
-  pendant toute la vie de l'appareil. N'affirme PAS que nous assurons le suivi
-  d'appareils auditifs achetés ailleurs : ce n'est pas confirmé.
-- Tiers payant avec les mutuelles, offre 100 % Santé présentée systématiquement,
-  devis normalisé remis avant commande.
+- Maison Mikis, opticien et audioprothésiste indépendant, Galerie Oslo –
+  Olympiades, 44 avenue d'Ivry, 75013 Paris, au pied de la dalle des Olympiades.
+  Téléphone : 01 82 28 00 18. Boutique et galerie de plain-pied, accessibles en
+  fauteuil roulant et avec une poussette.
+- Accès : métro 14 Olympiades à environ 100 m ; métro 7 Tolbiac et Porte d'Ivry à
+  une dizaine de minutes à pied ; tramway T3a Porte d'Ivry et Porte de Choisy ;
+  bus 27, 62, 83 et 183 ; parkings souterrains autour de la dalle.
+- Ouvert du mardi au samedi, de 10h à 19h30, sans interruption ; fermé le
+  dimanche et le lundi. Le samedi après-midi est le moment le plus fréquenté.
+- Examen de vue gratuit, environ 20 minutes, en salle dédiée : à partir de 16 ans
+  et avec une ordonnance encore valable, il permet d'adapter la correction sans
+  repasser par le médecin ; ce n'est pas une consultation médicale. N'indique PAS
+  s'il se fait avec ou sans rendez-vous.
+- Sans rendez-vous : essayer des montures, faire ajuster une paire, remplacer des
+  plaquettes, commander des lentilles, poser une question. Ajustage et
+  réparation (plaquettes, vis, charnières, réglages) généralement en quelques
+  minutes, y compris pour des lunettes achetées ailleurs.
+- Optique : lunettes de vue et solaires, verres unifocaux et progressifs,
+  traitements antireflet, photochromiques et polarisants.
+- Lentilles : journalières, bimensuelles, mensuelles, souples et rigides,
+  toriques et multifocales ; essais avant commande, apprentissage de la pose et
+  du retrait, renouvellement et produits d'entretien.
+- Tiers payant appliqué dès que la mutuelle le permet ; devis normalisé gratuit
+  avant tout engagement ; offre 100 % Santé présentée à côté des autres offres,
+  possibilité de combiner équipement libre et 100 % Santé.
+- Dix-neuf marques de montures : Andy Brook, Armani, CHIMI, Celine, Dior, Fendi,
+  Fred, Givenchy, Gucci, Guess, LOOL, Loewe, Longchamp, Marc Jacobs, Miu Miu,
+  Prada, Ralph Lauren, Ray-Ban, Saint Laurent.
+- Audition : audioprothésiste diplômé en cabine dédiée ; bilan auditif gratuit et
+  sans engagement, sur rendez-vous, environ 40 minutes ; essai d'au moins
+  30 jours avant décision ; réglages, entretien et suivi inclus pendant toute la
+  durée de vie de l'appareil ; une classe d'appareils prise en charge
+  intégralement au titre du 100 % Santé. N'affirme PAS que nous suivons des
+  appareils achetés ailleurs.
+- Rendez-vous par téléphone.
 
 """
 

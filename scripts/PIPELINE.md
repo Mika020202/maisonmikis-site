@@ -228,6 +228,14 @@ répondre à une recherche locale. Même correctif que sur ACTU EYES (commit 86f
 - Forcer un mode lors d'un test : variable d'environnement `VEILLE_MODE=guide` ou
   `VEILLE_MODE=veille`.
 - Les seuls faits sur la boutique que le modèle peut affirmer sont dans
-  `ANCRAGE_GUIDE` (veille.py). À mettre à jour si les horaires, services ou adresse
-  changent. Le suivi d'appareils auditifs achetés ailleurs n'y figure pas (non confirmé).
+  `ANCRAGE_GUIDE` (veille.py). Ils ont été relevés le 12/10/2026 **uniquement sur le
+  site en ligne** (accueil, Opticien Paris 13, Examen de vue, Nos Marques,
+  Audioprothésiste). À mettre à jour si le site change.
+- Volontairement absents de cette liste : la modalité de l'examen de vue (l'accueil
+  dit « sans rendez-vous », les pages Opticien et Examen de vue disent « sur
+  rendez-vous » — à trancher), toute offre enfants, la Complémentaire santé
+  solidaire, le suivi d'appareils auditifs achetés ailleurs.
+- Sujets écartés de la file pour la même raison ou pour éviter un doublon : « opticien
+  paris 13 » (page dédiée), « examen de vue sans rendez-vous », lunettes enfant,
+  myopie de l'enfant, Complémentaire santé solidaire.
 - `guides.json` n'est plus lu ; ses sujets restants ont été repris dans la file locale.
