@@ -45,7 +45,7 @@ sys.path.insert(0, ROOT)
 STATE_PATH = os.path.join(SCRIPTS_DIR, "state.json")
 SOURCES_PATH = os.path.join(SCRIPTS_DIR, "sources.json")
 AUTO_PATH = os.path.join(SCRIPTS_DIR, "articles_auto.json")
-GUIDES_PATH = os.path.join(SCRIPTS_DIR, "guides.json")
+LOCAUX_PATH = os.path.join(SCRIPTS_DIR, "sujets_locaux.json")
 
 API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 API_URL = "https://api.anthropic.com/v1/messages"
@@ -342,8 +342,8 @@ médical, comparaison dénigrante d'un confrère, prix, promotion, urgence comme
 
 
 # ---------------------------------------------------------------------------
-# Contraintes techniques et format de reponse, communs a l'actualite (lundi)
-# et aux guides pratiques (jeudi).
+# Contraintes techniques et format de reponse, communs aux guides locaux
+# (lundi) et a l'actualite (jeudi).
 # ---------------------------------------------------------------------------
 def contraintes_techniques(categories, known_slugs, images_dispo):
     return """
@@ -382,43 +382,114 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
 
 
 # ---------------------------------------------------------------------------
-# Guides pratiques du jeudi (ajoutes le 28/09/2026)
+# Guides locaux du lundi (12/10/2026 — remplacent les guides pratiques du jeudi
+# introduits le 28/09/2026, sur le modele d'ACTU EYES, commit 86f831f).
 # ---------------------------------------------------------------------------
-# Audit Search Console du 28/09/2026 : les articles d'actualite nationale
-# (Varilux Immersia, lunettes Meta...) rapportent des impressions mais quasi
-# aucun client local. Le jeudi publie donc un GUIDE PRATIQUE, repondant a une
-# question concrete que se pose un client au moment d'agir. Le lundi reste
-# consacre a l'actualite, avec son seuil d'importance inchange.
-# Les sujets sont choisis par l'humain dans scripts/guides.json, jamais par le
-# modele : pas de derive vers des sujets creux ou en doublon.
+# Constat : la veille vise l'actualite nationale, ou le site ne peut pas se
+# classer face aux grands medias et ou les lecteurs ne sont pas dans la zone de
+# chalandise. Les guides du jeudi corrigeaient le sujet mais heritaient de la
+# regle « jamais le quartier dans le titre ni la meta » : aucun ne pouvait
+# repondre a une recherche du type « opticien tiers payant paris 13 ».
+# Le lundi publie donc un GUIDE LOCAL tire de scripts/sujets_locaux.json, dans
+# l'ordre ; le jeudi revient a la veille d'actualite. Les sujets sont choisis
+# par l'humain, jamais par le modele.
 
-# Seuls services que le dernier paragraphe d'un guide peut evoquer : tous sont
-# confirmes par le client et deja affiches sur le site. Rien d'autre.
-SERVICES_CONFIRMES = """- examen de vue GRATUIT sur rendez-vous, environ 20 minutes, en salle dédiée ;
-- renouvellement et adaptation de la correction sur ordonnance en cours de validité (16 ans et plus) ;
-- ajustage et petites réparations sans rendez-vous, y compris sur des lunettes achetées ailleurs ;
-- lentilles : essais avant commande, apprentissage de la pose et du retrait ;
-- audioprothésiste sur place, en cabine dédiée : bilan auditif gratuit et sans engagement (environ 40 minutes),
-  essai d'au moins 30 jours, suivi inclus pendant toute la vie de l'appareil ;
-- tiers payant avec les mutuelles, offre 100 % Santé présentée systématiquement, devis normalisé remis avant commande ;
-- boutique ouverte du mardi au samedi, 10h-19h30, métro 14 Olympiades."""
+# Paragraphe « Ancrage local » de la CHARTE, tel quel : la veille le garde.
+ANCRAGE_VEILLE = CHARTE[CHARTE.index("Ancrage local."):CHARTE.index("Structure imposée.")]
+
+# Seuls faits que le modele peut affirmer sur la boutique : releves le
+# 12/10/2026 sur le site en ligne (accueil, opticien-paris-13, examen-de-vue-
+# paris-13, marques, audioprothesiste-paris-13), rien d'autre. A mettre a jour
+# si le site change. Volontairement absents : la modalite de l'examen de vue
+# (l'accueil dit « sans rendez-vous », les pages Opticien et Examen de vue
+# disent « sur rendez-vous »), toute offre enfants, la Complementaire sante
+# solidaire, le suivi d'appareils auditifs achetes ailleurs.
+ANCRAGE_GUIDE = """Ancrage local (GUIDE LOCAL — remplace la règle habituelle). Cet article répond
+à une recherche faite par un habitant du 13e arrondissement de Paris ou des
+alentours (Olympiades, Triangle de Choisy, Tolbiac, Maison-Blanche, place d'Italie,
+Ivry-sur-Seine, Le Kremlin-Bicêtre). Le repère « Paris 13e » figure UNE fois dans
+le titre, UNE fois dans le meta_title et UNE fois dans la meta description, de
+façon naturelle. Dans le corps, la boutique et son quartier apparaissent 2 à 4
+fois au maximum, là où c'est utile au lecteur : jamais de répétition artificielle
+de mots-clés, jamais de liste de quartiers ou de villes plaquée. L'essentiel du
+texte reste un vrai guide pratique, utile même hors du 13e.
+
+FAITS SUR LA BOUTIQUE — les SEULS que tu peux affirmer. N'invente aucun autre
+service, équipement, horaire, prix, délai, marque ou partenariat.
+- Maison Mikis, opticien et audioprothésiste indépendant, Galerie Oslo –
+  Olympiades, 44 avenue d'Ivry, 75013 Paris, au pied de la dalle des Olympiades.
+  Téléphone : 01 82 28 00 18. Boutique et galerie de plain-pied, accessibles en
+  fauteuil roulant et avec une poussette.
+- Accès : métro 14 Olympiades à environ 100 m ; métro 7 Tolbiac et Porte d'Ivry à
+  une dizaine de minutes à pied ; tramway T3a Porte d'Ivry et Porte de Choisy ;
+  bus 27, 62, 83 et 183 ; parkings souterrains autour de la dalle.
+- Ouvert du mardi au samedi, de 10h à 19h30, sans interruption ; fermé le
+  dimanche et le lundi. Le samedi après-midi est le moment le plus fréquenté.
+- Examen de vue gratuit, environ 20 minutes, en salle dédiée : à partir de 16 ans
+  et avec une ordonnance encore valable, il permet d'adapter la correction sans
+  repasser par le médecin ; ce n'est pas une consultation médicale. N'indique PAS
+  s'il se fait avec ou sans rendez-vous.
+- Sans rendez-vous : essayer des montures, faire ajuster une paire, remplacer des
+  plaquettes, commander des lentilles, poser une question. Ajustage et
+  réparation (plaquettes, vis, charnières, réglages) généralement en quelques
+  minutes, y compris pour des lunettes achetées ailleurs.
+- Optique : lunettes de vue et solaires, verres unifocaux et progressifs,
+  traitements antireflet, photochromiques et polarisants.
+- Lentilles : journalières, bimensuelles, mensuelles, souples et rigides,
+  toriques et multifocales ; essais avant commande, apprentissage de la pose et
+  du retrait, renouvellement et produits d'entretien.
+- Tiers payant appliqué dès que la mutuelle le permet ; devis normalisé gratuit
+  avant tout engagement ; offre 100 % Santé présentée à côté des autres offres,
+  possibilité de combiner équipement libre et 100 % Santé.
+- Dix-neuf marques de montures : Andy Brook, Armani, CHIMI, Celine, Dior, Fendi,
+  Fred, Givenchy, Gucci, Guess, LOOL, Loewe, Longchamp, Marc Jacobs, Miu Miu,
+  Prada, Ralph Lauren, Ray-Ban, Saint Laurent.
+- Audition : audioprothésiste diplômé en cabine dédiée ; bilan auditif gratuit et
+  sans engagement, sur rendez-vous, environ 40 minutes ; essai d'au moins
+  30 jours avant décision ; réglages, entretien et suivi inclus pendant toute la
+  durée de vie de l'appareil ; une classe d'appareils prise en charge
+  intégralement au titre du 100 % Santé. N'affirme PAS que nous suivons des
+  appareils achetés ailleurs.
+- Rendez-vous par téléphone.
+
+"""
+
+CHARTE_GUIDE = CHARTE.replace(ANCRAGE_VEILLE, ANCRAGE_GUIDE)
 
 
-def choisir_guide(state):
-    """Premier sujet de guides.json pas encore traite, ou None."""
-    data = load(GUIDES_PATH, default={}) or {}
-    faits = set(state.get("guides_traites", []))
-    for g in data.get("guides", []):
-        if g.get("id") and g["id"] not in faits:
-            return g
+def prochain_sujet_local(state):
+    """Premier sujet de la file qui n'a pas encore ete publie, ou None."""
+    data = load(LOCAUX_PATH, default={}) or {}
+    faits = set(state.get("sujets_locaux_faits", []))
+    for sujet in data.get("sujets", []):
+        if sujet.get("id") and sujet["id"] not in faits:
+            return sujet
     return None
 
 
-def prompt_guide(guide, categories, known_slugs, images_dispo):
+def choisir_mode(state, creneau_courant):
+    """'guide' sur le creneau du lundi, 'veille' sur celui du jeudi.
+    Le mode se decide sur le CRENEAU, pas sur le jour : un rattrapage le mardi
+    reste un lundi. VEILLE_MODE=guide ou VEILLE_MODE=veille force le mode
+    (tests manuels). File vide : retour a la veille."""
+    force = os.environ.get("VEILLE_MODE", "").strip().lower()
+    if force in ("guide", "veille"):
+        mode = force
+    else:
+        mode = "guide" if creneau_courant.weekday() == 0 else "veille"
+    if mode == "guide" and prochain_sujet_local(state) is None:
+        write_summary("_File des guides locaux épuisée : retour à la veille. "
+                      "Ajoutez des sujets dans scripts/sujets_locaux.json._\n")
+        mode = "veille"
+    return mode
+
+
+def prompt_guide(sujet, categories, known_slugs, images_dispo):
     system = """Tu es l'équipe éditoriale du site maisonmikis.fr, opticien et
 audioprothésiste indépendant à Paris 13e. Aujourd'hui, tu ne fais PAS de veille
-d'actualité : tu rédiges un GUIDE PRATIQUE sur un sujet imposé, qui répond
-concrètement à une question que se posent nos clients au moment d'agir.
+d'actualité : tu rédiges un GUIDE PRATIQUE LOCAL, un article durable qui répond
+précisément à la recherche Google indiquée, telle que la taperait un habitant du
+13e arrondissement ou des environs.
 
 MÉTHODE.
 - Tu fais des recherches web pour vérifier chaque fait réglementaire ou chiffré
@@ -426,31 +497,32 @@ MÉTHODE.
   premier rang : Ameli, Service-Public, Légifrance, Haute Autorité de santé,
   organismes professionnels reconnus. Les règles changent : vérifie qu'elles
   sont en vigueur aujourd'hui.
-- Le titre reprend la question du client sous une forme naturelle. La réponse
-  directe (« answer ») y répond sans détour.
-- Le guide est utile même pour quelqu'un qui n'achètera jamais chez nous.
+- Le titre reprend l'intention de la recherche, formulé comme une vraie question
+  ou une promesse d'information, avec « Paris 13e ». La réponse directe
+  (« answer ») y répond sans détour.
+- Ce qui concerne la boutique vient UNIQUEMENT de la liste « Faits sur la
+  boutique » ci-dessous.
 - La catégorie est imposée : « %s ».
+- « source_used » vaut exactement : guide local.
+- « justification » : en une phrase, à quelle question locale l'article répond.
 
-DERNIER PARAGRAPHE. Il ramène au concret. S'il évoque ce que nous faisons en
-boutique, il ne peut citer QUE des éléments de cette liste, confirmés par la
-boutique — n'invente aucun autre service, aucune garantie, aucun prix :
-%s
+Il n'y a pas d'option « aucune nouveauté » : ne réponds JAMAIS
+{"no_novelty": true}, un guide est toujours attendu.
 
-Il n'y a pas d'option « aucune nouveauté » : tu dois livrer le guide.
-
-""" % (guide["category"], SERVICES_CONFIRMES)
-    system = system + CHARTE + contraintes_techniques(categories, known_slugs, images_dispo)
-    return system
+""" % sujet["category"]
+    return system + CHARTE_GUIDE + contraintes_techniques(categories, known_slugs, images_dispo)
 
 
-def message_guide(guide, titres_existants, today):
+def message_guide(sujet, titres_existants, today):
     return (
-        "Sujet imposé : %s\n\nAngle attendu : %s\n\n"
+        "Recherche Google visée : « %s »\n\nAngle à traiter : %s\n\n"
+        "Rubrique imposée : %s\n\n"
         "Titres déjà publiés sur le site (ne redis pas la même chose, et ne "
-        "reprends pas le contenu des pages Espace Santé, Espace Audition, Examen "
-        "de vue à Paris 13e et Audioprothésiste à Paris 13e) :\n%s\n\n"
+        "reprends pas le contenu des pages Opticien à Paris 13e, Examen de vue à "
+        "Paris 13e, Audioprothésiste à Paris 13e, Espace Santé et Espace "
+        "Audition) :\n%s\n\n"
         "Nous sommes le %s."
-        % (guide["question"], guide["angle"],
+        % (sujet["requete"], sujet["angle"], sujet["category"],
            "\n".join("- " + t for t in titres_existants), today.isoformat())
     )
 
@@ -560,17 +632,15 @@ Si rien ne franchit ce seuil, réponds EXACTEMENT : {"no_novelty": true}
           "aujourd'hui." % (today.isoformat(), (today - timedelta(days=60)).isoformat())
     )
 
-    # Jeudi = guide pratique (voir guides.json). Le mode se decide sur le
-    # CRENEAU et non sur le jour : un rattrapage le vendredi reste un jeudi.
-    # S'il n'y a plus de sujet en reserve, le jeudi repasse en actualite.
-    guide = choisir_guide(state) if creneau_courant.weekday() == 3 else None
+    # Lundi = guide local (voir sujets_locaux.json), jeudi = veille.
+    mode = choisir_mode(state, creneau_courant)
+    guide = prochain_sujet_local(state) if mode == "guide" else None
     if guide:
-        write_summary("Créneau du jeudi : **guide pratique** — %s\n" % guide["question"])
+        write_summary("Mode : **guide local** — « %s »\n" % guide["requete"])
         system = prompt_guide(guide, categories, known_slugs, images_dispo)
         user = message_guide(guide, titres_existants, today)
-    elif creneau_courant.weekday() == 3:
-        write_summary("_Plus aucun sujet de guide en réserve dans guides.json : "
-                      "ce jeudi repasse en veille d'actualité._\n")
+    else:
+        write_summary("Mode : **veille d'actualité**\n")
 
     # Trois tentatives avant d'abandonner le creneau. Une reponse mal formee
     # ou un article refuse au controle qualite ne doit pas coûter le passage
@@ -596,8 +666,8 @@ Si rien ne franchit ce seuil, réponds EXACTEMENT : {"no_novelty": true}
 
         if result.get("no_novelty") and guide:
             dernier_probleme = "le modele a repondu « aucune nouveaute » sur un guide"
-            consigne = ("\n\nATTENTION : il s'agit d'un guide sur un sujet impose, "
-                        "pas d'une veille. Redige le guide demande.")
+            consigne = ("\n\nATTENTION : un guide local est TOUJOURS attendu, "
+                        "ce n'est pas une veille. Redige l'article complet en JSON.")
             continue
 
         if result.get("no_novelty"):
@@ -631,7 +701,7 @@ Si rien ne franchit ce seuil, réponds EXACTEMENT : {"no_novelty": true}
 
     state.setdefault("used_slugs", []).append(article["slug"])
     if guide:
-        state.setdefault("guides_traites", []).append(guide["id"])
+        state.setdefault("sujets_locaux_faits", []).append(guide["id"])
 
     # La memoire des sources est indexee sur les noms REELS de sources.json,
     # jamais sur le texte libre renvoye par le modele. Sans ce garde-fou, chaque
@@ -643,7 +713,9 @@ Si rien ne franchit ce seuil, réponds EXACTEMENT : {"no_novelty": true}
     cle = next((n for n in noms_reels if n == source_name), None)
     if cle is None:
         cle = next((n for n in noms_reels if n.lower() in source_name.lower()), None)
-    if cle:
+    if guide:
+        source_name = "guide local : %s" % guide["id"]
+    elif cle:
         state.setdefault("last_seen_by_source", {})[cle] = article["title"]
     else:
         # Sujet venu d'ailleurs (Journal officiel, rapport public...). On ne cree
@@ -655,7 +727,7 @@ Si rien ne franchit ce seuil, réponds EXACTEMENT : {"no_novelty": true}
         "title": article["title"],
         "date": article["date_iso"],
         "source": source_name,
-        "type": "guide" if guide else "actualite",
+        "type": "guide local" if guide else "actualite",
     })
 
     write_summary(
