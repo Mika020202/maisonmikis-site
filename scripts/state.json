@@ -42,10 +42,11 @@
     "stellest-2-0-resultats-essai-clinique-myopie-enfant",
     "verres-progressifs-delai-adaptation-inconfort",
     "publicite-optique-audition-projet-retire",
-    "premieres-lunettes-enfant-choisir-monture-remboursement"
+    "premieres-lunettes-enfant-choisir-monture-remboursement",
+    "ordonnance-ophtalmologiste-non-conventionne-remboursement-2027"
   ],
   "last_seen_by_source": {
-    "Acuité": "Publicité en optique et audition : le projet d'interdiction abandonné",
+    "Acuité": "Ordonnance d'ophtalmologiste non conventionné : remboursement en 2027",
     "Bien Vu": "Dossier sur la télémédecine et l'IA dans l'optique",
     "France Optique": "Collection LILY : élégance féminine contemporaine (22/07/2026)",
     "SFO": "Congrès 133e annoncé en avril 2027 ; replays du 132e disponibles",
@@ -175,9 +176,16 @@
       "date": "2026-10-08",
       "source": "Ameli.fr (page officielle « Lunettes et lentilles : quelle prise en charge ? ») et sante.gouv.fr (réforme 100% Santé optique)",
       "type": "guide"
+    },
+    {
+      "slug": "ordonnance-ophtalmologiste-non-conventionne-remboursement-2027",
+      "title": "Ordonnance d'ophtalmologiste non conventionné : remboursement en 2027",
+      "date": "2026-10-12",
+      "source": "Acuité (Prescriptions optiques : le déremboursement des médecins hors convention confirmé, 06/10/2026) et le Conseil d'État (décision du 1er octobre 2026)",
+      "type": "actualite"
     }
   ],
-  "dernier_passage": "2026-10-08",
+  "dernier_passage": "2026-10-12",
   "guides_traites": [
     "verres-progressifs-adaptation",
     "lunettes-enfant-premier-equipement"
