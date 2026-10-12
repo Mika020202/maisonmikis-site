@@ -231,11 +231,12 @@ répondre à une recherche locale. Même correctif que sur ACTU EYES (commit 86f
   `ANCRAGE_GUIDE` (veille.py). Ils ont été relevés le 12/10/2026 **uniquement sur le
   site en ligne** (accueil, Opticien Paris 13, Examen de vue, Nos Marques,
   Audioprothésiste). À mettre à jour si le site change.
-- Volontairement absents de cette liste : la modalité de l'examen de vue (l'accueil
-  dit « sans rendez-vous », les pages Opticien et Examen de vue disent « sur
-  rendez-vous » — à trancher), toute offre enfants, la Complémentaire santé
-  solidaire, le suivi d'appareils auditifs achetés ailleurs.
+- Examen de vue : sans rendez-vous, rendez-vous possible si le client préfère
+  (confirmé par Mikhael le 12/10/2026 ; pages Contact, Opticien Paris 13 et Examen de
+  vue harmonisées le même jour).
+- Volontairement absents de cette liste : toute offre enfants, la Complémentaire
+  santé solidaire, le suivi d'appareils auditifs achetés ailleurs.
 - Sujets écartés de la file pour la même raison ou pour éviter un doublon : « opticien
-  paris 13 » (page dédiée), « examen de vue sans rendez-vous », lunettes enfant,
+  paris 13 » (page dédiée), « examen de vue sans rendez-vous » (page dédiée), lunettes enfant,
   myopie de l'enfant, Complémentaire santé solidaire.
 - `guides.json` n'est plus lu ; ses sujets restants ont été repris dans la file locale.

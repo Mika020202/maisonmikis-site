@@ -400,9 +400,9 @@ ANCRAGE_VEILLE = CHARTE[CHARTE.index("Ancrage local."):CHARTE.index("Structure i
 # Seuls faits que le modele peut affirmer sur la boutique : releves le
 # 12/10/2026 sur le site en ligne (accueil, opticien-paris-13, examen-de-vue-
 # paris-13, marques, audioprothesiste-paris-13), rien d'autre. A mettre a jour
-# si le site change. Volontairement absents : la modalite de l'examen de vue
-# (l'accueil dit « sans rendez-vous », les pages Opticien et Examen de vue
-# disent « sur rendez-vous »), toute offre enfants, la Complementaire sante
+# si le site change. Examen de vue sans rendez-vous, rendez-vous possible :
+# confirme par Mikhael le 12/10/2026 (le site a ete harmonise le meme jour).
+# Volontairement absents : toute offre enfants, la Complementaire sante
 # solidaire, le suivi d'appareils auditifs achetes ailleurs.
 ANCRAGE_GUIDE = """Ancrage local (GUIDE LOCAL — remplace la règle habituelle). Cet article répond
 à une recherche faite par un habitant du 13e arrondissement de Paris ou des
@@ -427,9 +427,10 @@ service, équipement, horaire, prix, délai, marque ou partenariat.
   dimanche et le lundi. Le samedi après-midi est le moment le plus fréquenté.
 - Examen de vue gratuit, environ 20 minutes, en salle dédiée : à partir de 16 ans
   et avec une ordonnance encore valable, il permet d'adapter la correction sans
-  repasser par le médecin ; ce n'est pas une consultation médicale. N'indique PAS
-  s'il se fait avec ou sans rendez-vous.
-- Sans rendez-vous : essayer des montures, faire ajuster une paire, remplacer des
+  repasser par le médecin ; ce n'est pas une consultation médicale. Il se fait
+  SANS rendez-vous ; le client qui préfère une heure précise peut aussi réserver
+  un créneau par téléphone.
+- Sans rendez-vous : examen de vue, essayer des montures, faire ajuster une paire, remplacer des
   plaquettes, commander des lentilles, poser une question. Ajustage et
   réparation (plaquettes, vis, charnières, réglages) généralement en quelques
   minutes, y compris pour des lunettes achetées ailleurs.
