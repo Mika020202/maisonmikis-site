@@ -2633,7 +2633,7 @@ BODY_CONTACT = """
         <span class="eyebrow">Sans rendez-vous</span>
         <h2>Faut-il prendre rendez-vous ?</h2>
         <p>Dans la grande majorité des cas, non. Vous pouvez pousser la porte quand vous voulez pendant nos horaires d'ouverture pour essayer des montures, faire ajuster une paire, remplacer des plaquettes, resserrer une charnière, commander des lentilles ou simplement poser une question. Ces gestes-là ne se planifient pas, et nous les faisons volontiers, y compris si vos lunettes n'ont pas été achetées chez nous.</p>
-        <p>Un rendez-vous devient utile dès qu'il faut du temps et du calme. C'est le cas pour un <a href="/espace-sante.html">examen de vue</a>, qui demande une vingtaine de minutes en salle dédiée, et plus encore pour un <a href="/espace-audition.html">bilan auditif</a>, qui en demande une quarantaine dans notre espace confidentiel. Un simple appel au <a href="tel:0182280018">01 82 28 00 18</a> suffit pour caler un créneau, souvent dans la même semaine.</p>
+        <p>L'<a href="/espace-sante.html">examen de vue</a> se fait lui aussi sans rendez-vous : il demande une vingtaine de minutes en salle dédiée, et vous pouvez le faire en passant. Si vous préférez venir à une heure précise, un simple appel au <a href="tel:0182280018">01 82 28 00 18</a> suffit pour réserver un créneau. Le <a href="/espace-audition.html">bilan auditif</a>, lui, se fait sur rendez-vous : il demande une quarantaine de minutes dans notre espace confidentiel, et le créneau se trouve souvent dans la même semaine.</p>
         <p>Enfin, si vous cherchez une référence précise, appelez-nous avant de vous déplacer : nous vérifions en direct qu'elle est bien en boutique dans le coloris et la taille qui vous intéressent, plutôt que de vous faire faire le trajet pour rien.</p>
       </div>
       <div class="split-text reveal">
@@ -6389,7 +6389,7 @@ BODY_OPTICIEN_PARIS_13 = """
         <span class="eyebrow">Sans rendez-vous</span>
         <h2>Passer nous voir</h2>
         <p>Vous n'avez pas besoin de prévenir pour essayer des montures, faire ajuster une paire, remplacer des plaquettes, commander des lentilles ou poser une question. Ces gestes-là ne se planifient pas et nous les faisons volontiers, même si vos lunettes viennent d'ailleurs.</p>
-        <p>Le rendez-vous devient utile dès qu'il faut du temps : une vingtaine de minutes pour un <a href="/examen-de-vue-paris-13.html">examen de vue</a>, une quarantaine pour un <a href="/audioprothesiste-paris-13.html">bilan auditif</a>. Un appel au <a href="tel:0182280018">01 82 28 00 18</a> suffit, souvent pour un créneau dans la même semaine.</p>
+        <p>L'<a href="/examen-de-vue-paris-13.html">examen de vue</a> se fait aussi sans rendez-vous, en une vingtaine de minutes ; si vous préférez une heure précise, vous pouvez réserver un créneau par téléphone. Le <a href="/audioprothesiste-paris-13.html">bilan auditif</a>, qui demande une quarantaine de minutes, se fait sur rendez-vous : un appel au <a href="tel:0182280018">01 82 28 00 18</a> suffit, souvent pour un créneau dans la même semaine.</p>
       </div>
       <div class="split-text reveal">
         <span class="eyebrow">Nos horaires</span>
@@ -6487,7 +6487,7 @@ BODY_EXAMEN_VUE_PARIS_13 = """
 <section class="story-block">
   <div class="container-narrow">
     <div class="answer-lead">
-      <p>Chez Maison Mikis, opticien au 44 avenue d'Ivry (Paris 13e, métro Olympiades), l'examen de vue est gratuit. Il se fait sur rendez-vous, du mardi au samedi, dans une salle dédiée, et dure une vingtaine de minutes. Si votre ordonnance est encore valable et que vous avez 16 ans ou plus, nous pouvons adapter la correction de vos verres sans nouvelle consultation médicale.</p>
+      <p>Chez Maison Mikis, opticien au 44 avenue d'Ivry (Paris 13e, métro Olympiades), l'examen de vue est gratuit et se fait sans rendez-vous, du mardi au samedi, dans une salle dédiée ; il dure une vingtaine de minutes. Si vous préférez venir à une heure précise, vous pouvez aussi réserver un créneau. Si votre ordonnance est encore valable et que vous avez 16 ans ou plus, nous pouvons adapter la correction de vos verres sans nouvelle consultation médicale.</p>
     </div>
     <p>Dans le 13e, obtenir un rendez-vous chez l'ophtalmologiste prend souvent plusieurs semaines, parfois davantage. Or beaucoup de personnes n'ont pas besoin d'une nouvelle ordonnance : elles ont une prescription encore valable, et ce qu'il leur faut, c'est vérifier que leur correction est toujours la bonne avant de refaire une paire. C'est exactement ce que permet l'examen de vue chez l'opticien.</p>
     <p>Précisons tout de suite ce qu'il n'est pas : ce n'est pas une consultation médicale. Nous mesurons votre acuité et la correction qui vous donne la vision la plus nette et la plus confortable. Nous ne mesurons pas la tension de l'œil et n'examinons pas le fond d'œil — cela reste le travail de l'ophtalmologiste, et le suivi médical régulier garde toute son importance.</p>
@@ -6561,11 +6561,12 @@ BODY_EXAMEN_VUE_PARIS_13 = """
       </div>
       <div class="split-text reveal">
         <span class="eyebrow">Pratique</span>
-        <h2>Prendre rendez-vous</h2>
-        <p>Un appel au <a href="tel:0182280018">01 82 28 00 18</a> suffit ; le créneau se trouve souvent dans la même semaine. Pensez à apporter votre ordonnance, vos lunettes actuelles et, si vous en portez, vos lentilles ou leur boîte.</p>
+        <h2>Venir faire l'examen</h2>
+        <p>Passez quand vous voulez pendant nos horaires d'ouverture : l'examen se fait sans rendez-vous. Si vous préférez être reçu à une heure précise, un appel au <a href="tel:0182280018">01 82 28 00 18</a> suffit pour réserver un créneau. Pensez à apporter votre ordonnance, vos lunettes actuelles et, si vous en portez, vos lentilles ou leur boîte.</p>
         <ul class="check-list-grid">
           <li><span class="check">✓</span> Du mardi au samedi, 10h – 19h30</li>
           <li><span class="check">✓</span> Gratuit, environ 20 minutes</li>
+          <li><span class="check">✓</span> Sans rendez-vous, ou sur rendez-vous si vous préférez</li>
           <li><span class="check">✓</span> Métro 14 — Olympiades, à 100 m</li>
           <li><span class="check">✓</span> Boutique de plain-pied</li>
         </ul>
@@ -6584,7 +6585,7 @@ BODY_EXAMEN_VUE_PARIS_13 = """
     <div class="faq-list">
       <details class="faq-item reveal">
         <summary>L'examen de vue est-il payant ?<span class="plus">+</span></summary>
-        <p>Non, l'examen de vue est gratuit. Il suffit de prendre rendez-vous au 01 82 28 00 18.</p>
+        <p>Non, l'examen de vue est gratuit, et il se fait sans rendez-vous. Si cela vous arrange, vous pouvez aussi réserver un créneau au 01 82 28 00 18.</p>
       </details>
       <details class="faq-item reveal">
         <summary>Peut-on faire un examen de vue sans ordonnance ?<span class="plus">+</span></summary>
@@ -6840,7 +6841,7 @@ if __name__ == "__main__":
     render_page(
         "sante",
         "Examen de vue à Paris 13e — Olympiades | Maison Mikis",
-        "Examen de vue gratuit sur rendez-vous à Paris 13e, métro Olympiades : environ 20 minutes pour renouveler ou adapter vos lunettes avec une ordonnance valable.",
+        "Examen de vue gratuit et sans rendez-vous à Paris 13e, métro Olympiades : environ 20 minutes pour adapter vos lunettes à partir d'une ordonnance valable.",
         "examen-de-vue-paris-13.html",
         BODY_EXAMEN_VUE_PARIS_13,
         hero_img="/images/sante/hero-sante-large.jpg",
