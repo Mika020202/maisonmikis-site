@@ -207,3 +207,27 @@ effacement physique, passer par le gestionnaire de fichiers IONOS.
 Le pipeline d'origine vivait dans une session cloud ephemere et a ete perdu.
 Lecon retenue, toujours valable : **tout ce qui doit survivre d'une semaine a
 l'autre vit dans ce depot**, jamais uniquement dans une session.
+
+## Guides locaux du lundi (ajout du 12/10/2026)
+
+Remplace la ligne éditoriale du 28/09/2026 (guides pratiques du jeudi tirés de
+`guides.json`). Ces guides traitaient de bons sujets, mais héritaient de la règle
+« jamais le quartier dans le titre ni la meta description » : aucun ne pouvait
+répondre à une recherche locale. Même correctif que sur ACTU EYES (commit 86f831f).
+
+- **Lundi** : le passage publie un *guide local* tiré de `scripts/sujets_locaux.json`,
+  dans l'ordre. Chaque guide vise une recherche Google locale (« opticien tiers payant
+  paris 13 », etc.), avec « Paris 13e » une fois dans le titre, le meta_title et la
+  meta description, et 2 à 4 mentions au plus dans le corps.
+- **Jeudi** : veille d'actualité, inchangée (le quartier reste interdit dans le titre).
+- Le mode se décide sur le **créneau** : un rattrapage le mardi ou le mercredi reste
+  un lundi, donc un guide.
+- Les sujets publiés sont notés dans `state.json` → `sujets_locaux_faits`
+  (`guides_traites` reste comme historique). File vide : le lundi repasse en veille.
+- Un guide ne peut pas répondre « aucune nouveauté » : le modèle est relancé.
+- Forcer un mode lors d'un test : variable d'environnement `VEILLE_MODE=guide` ou
+  `VEILLE_MODE=veille`.
+- Les seuls faits sur la boutique que le modèle peut affirmer sont dans
+  `ANCRAGE_GUIDE` (veille.py). À mettre à jour si les horaires, services ou adresse
+  changent. Le suivi d'appareils auditifs achetés ailleurs n'y figure pas (non confirmé).
+- `guides.json` n'est plus lu ; ses sujets restants ont été repris dans la file locale.

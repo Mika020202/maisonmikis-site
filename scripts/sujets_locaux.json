@@ -1,0 +1,71 @@
+{
+  "_note": "File des GUIDES LOCAUX publies le LUNDI (ajoutee le 12/10/2026, sur le modele d'ACTU EYES, commit 86f831f). Le jeudi reste consacre a la veille d'actualite. Chaque sujet repond a une recherche Google locale (« ... paris 13 ») : « Paris 13e » figure dans le titre, le meta_title et la meta description. veille.py traite le premier sujet absent de state.json > sujets_locaux_faits. Ajouter des sujets EN FIN de liste ; ne jamais reutiliser un id. Un sujet ne doit pas doublonner une page du site (opticien-paris-13, examen-de-vue-paris-13, audioprothesiste-paris-13, espace-sante, espace-audition) ni un article existant. Les sujets encore en reserve dans guides.json ont ete repris ici sous forme locale ; guides.json n'est plus lu.",
+  "sujets": [
+    {
+      "id": "tiers-payant-opticien-paris-13",
+      "requete": "opticien tiers payant paris 13",
+      "category": "remboursements",
+      "angle": "Comment fonctionne le tiers payant chez l'opticien : part Sécurité sociale, part complémentaire, documents à apporter (carte Vitale, attestation de mutuelle, ordonnance), prise en charge demandée par l'opticien, devis normalisé, 100 % Santé, ce qui peut rester à payer. Aucun prix, aucun assureur cité."
+    },
+    {
+      "id": "opticien-enfant-paris-13",
+      "requete": "opticien enfant paris 13",
+      "category": "enfant",
+      "angle": "Monture pour enfant : taille, pont, branches flexibles ou enveloppantes, matériaux, cordons, ajustage au fil de la croissance et fréquence des contrôles. Ne pas répéter l'article déjà publié sur les premières lunettes d'enfant (choix et remboursement) : ici, l'accent est mis sur la solidité, le confort et l'ajustage dans la durée."
+    },
+    {
+      "id": "reparation-lunettes-paris-13",
+      "requete": "réparation lunettes paris 13",
+      "category": "remboursements",
+      "angle": "Lunettes cassées ou perdues : ce qui se répare (vis, plaquettes, charnières, branches), quand il faut refaire, renouvellement anticipé et règles de prise en charge, rôle de l'ordonnance, garanties casse éventuelles des contrats. Mentionner que l'ajustage et les petites réparations se font sans rendez-vous, y compris sur des lunettes achetées ailleurs."
+    },
+    {
+      "id": "lentilles-contact-opticien-paris-13",
+      "requete": "opticien lentilles de contact paris 13",
+      "category": "tech-lentilles",
+      "angle": "Passer aux lentilles ou en changer : ordonnance et adaptation, essais avant commande, apprentissage de la pose et du retrait, durée de port quotidienne selon le type, rythme de renouvellement, eau, sommeil, entretien et étui, signes qui imposent de retirer ses lentilles et de consulter."
+    },
+    {
+      "id": "opticien-sans-rendez-vous-paris-13",
+      "requete": "opticien sans rendez-vous paris 13",
+      "category": "vie-boutique",
+      "angle": "Ce qui peut se faire sans rendez-vous chez l'opticien (ajustage, petites réparations, conseil, choix de monture) et ce qui gagne à être programmé (examen de vue, adaptation de lentilles, bilan auditif), pourquoi, et comment bien préparer sa visite (ordonnance, anciennes lunettes, attestation de mutuelle)."
+    },
+    {
+      "id": "entretien-aides-auditives-paris-13",
+      "requete": "entretien appareil auditif paris 13",
+      "category": "sante-auditive",
+      "angle": "Entretien quotidien des aides auditives : nettoyage, cérumen et filtres, humidité, piles ou recharge, rangement la nuit, pannes courantes et gestes simples avant de revenir voir l'audioprothésiste, rôle du suivi inclus. Ne jamais affirmer que la boutique suit des appareils achetés ailleurs."
+    },
+    {
+      "id": "lunettes-ordinateur-paris-13",
+      "requete": "lunettes pour ordinateur paris 13",
+      "category": "tech-verres",
+      "angle": "Travail sur écran toute la journée : distances de travail, verres unifocaux adaptés, dégressifs ou d'intérieur, réglage du poste, ce qui est démontré et ce qui ne l'est pas sur la lumière bleue. Ne pas répéter l'article existant sur la fatigue oculaire liée aux écrans."
+    },
+    {
+      "id": "lunettes-soleil-vue-paris-13",
+      "requete": "lunettes de soleil à la vue paris 13",
+      "category": "mode-lunettes",
+      "angle": "Choisir des lunettes de soleil correctrices : catégories de filtre 0 à 4 et usages, polarisant, photochromique, teintes et perception des couleurs, marquage CE, conduite, prise en charge. Ne pas répéter l'article existant sur la protection contre les UV."
+    },
+    {
+      "id": "lunettes-conduite-nuit-paris-13",
+      "requete": "lunettes pour conduire la nuit paris 13",
+      "category": "sante-visuelle",
+      "angle": "Vue et conduite : mention de correction sur le permis, normes d'acuité, conduite de nuit et éblouissement, traitement antireflet, teintes à éviter la nuit, paire de secours, contrôle régulier de la vue."
+    },
+    {
+      "id": "remboursement-lunettes-mutuelle-paris-13",
+      "requete": "remboursement lunettes mutuelle opticien paris 13",
+      "category": "remboursements",
+      "angle": "Lire ses garanties optique et audition avant de passer chez l'opticien : contrat responsable, garanties en euros ou en pourcentage, plafonds, périodicité de renouvellement, 100 % Santé, audition tous les 4 ans, questions à poser à sa complémentaire. Aucun assureur cité ou recommandé. Ne pas répéter l'article existant sur le devis normalisé."
+    },
+    {
+      "id": "proche-entend-moins-bien-paris-13",
+      "requete": "parent malentendant bilan auditif paris 13",
+      "category": "sante-auditive",
+      "angle": "Un proche entend moins bien : signes que l'entourage remarque, pourquoi le déni est fréquent, comment aborder le sujet, rôle du médecin traitant et de l'ORL, déroulement d'un bilan auditif, place de l'entourage pendant l'essai. Ne pas reprendre le contenu de la page Audioprothésiste à Paris 13e."
+    }
+  ]
+}
