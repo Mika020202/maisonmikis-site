@@ -43,10 +43,11 @@
     "verres-progressifs-delai-adaptation-inconfort",
     "publicite-optique-audition-projet-retire",
     "premieres-lunettes-enfant-choisir-monture-remboursement",
-    "ordonnance-ophtalmologiste-non-conventionne-remboursement-2027"
+    "ordonnance-ophtalmologiste-non-conventionne-remboursement-2027",
+    "plfss-2027-contrat-sante-plafonne-lunettes"
   ],
   "last_seen_by_source": {
-    "Acuité": "Ordonnance d'ophtalmologiste non conventionné : remboursement en 2027",
+    "Acuité": "PLFSS 2027 : quel impact sur le remboursement des lunettes ?",
     "Bien Vu": "Dossier sur la télémédecine et l'IA dans l'optique",
     "France Optique": "Collection LILY : élégance féminine contemporaine (22/07/2026)",
     "SFO": "Congrès 133e annoncé en avril 2027 ; replays du 132e disponibles",
@@ -183,9 +184,16 @@
       "date": "2026-10-12",
       "source": "Acuité (Prescriptions optiques : le déremboursement des médecins hors convention confirmé, 06/10/2026) et le Conseil d'État (décision du 1er octobre 2026)",
       "type": "actualite"
+    },
+    {
+      "slug": "plfss-2027-contrat-sante-plafonne-lunettes",
+      "title": "PLFSS 2027 : quel impact sur le remboursement des lunettes ?",
+      "date": "2026-10-15",
+      "source": "Acuité — PLFSS 2027 : un projet de « contrat santé à prix plafonné »",
+      "type": "actualite"
     }
   ],
-  "dernier_passage": "2026-10-12",
+  "dernier_passage": "2026-10-15",
   "guides_traites": [
     "verres-progressifs-adaptation",
     "lunettes-enfant-premier-equipement"
