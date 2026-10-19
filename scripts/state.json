@@ -44,7 +44,8 @@
     "publicite-optique-audition-projet-retire",
     "premieres-lunettes-enfant-choisir-monture-remboursement",
     "ordonnance-ophtalmologiste-non-conventionne-remboursement-2027",
-    "plfss-2027-contrat-sante-plafonne-lunettes"
+    "plfss-2027-contrat-sante-plafonne-lunettes",
+    "comment-marche-tiers-payant-opticien"
   ],
   "last_seen_by_source": {
     "Acuité": "PLFSS 2027 : quel impact sur le remboursement des lunettes ?",
@@ -191,11 +192,21 @@
       "date": "2026-10-15",
       "source": "Acuité — PLFSS 2027 : un projet de « contrat santé à prix plafonné »",
       "type": "actualite"
+    },
+    {
+      "slug": "comment-marche-tiers-payant-opticien",
+      "title": "Comment fonctionne le tiers payant chez l'opticien à Paris 13e ?",
+      "date": "2026-10-19",
+      "source": "guide local : tiers-payant-opticien-paris-13",
+      "type": "guide local"
     }
   ],
-  "dernier_passage": "2026-10-15",
+  "dernier_passage": "2026-10-19",
   "guides_traites": [
     "verres-progressifs-adaptation",
     "lunettes-enfant-premier-equipement"
+  ],
+  "sujets_locaux_faits": [
+    "tiers-payant-opticien-paris-13"
   ]
 }
