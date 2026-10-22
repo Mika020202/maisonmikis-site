@@ -45,7 +45,8 @@
     "premieres-lunettes-enfant-choisir-monture-remboursement",
     "ordonnance-ophtalmologiste-non-conventionne-remboursement-2027",
     "plfss-2027-contrat-sante-plafonne-lunettes",
-    "comment-marche-tiers-payant-opticien"
+    "comment-marche-tiers-payant-opticien",
+    "rapport-hubert-transfert-remboursement-mutuelles"
   ],
   "last_seen_by_source": {
     "Acuité": "PLFSS 2027 : quel impact sur le remboursement des lunettes ?",
@@ -199,9 +200,16 @@
       "date": "2026-10-19",
       "source": "guide local : tiers-payant-opticien-paris-13",
       "type": "guide local"
+    },
+    {
+      "slug": "rapport-hubert-transfert-remboursement-mutuelles",
+      "title": "Lunettes et aides auditives : vers un remboursement confié aux mutuelles ?",
+      "date": "2026-10-22",
+      "source": "Rapport « Refonder l'articulation entre assurance maladie obligatoire et complémentaires santé » (Hubert, Bouzou, Junique, Von Lennep), chiffrage IGF-IGAS",
+      "type": "actualite"
     }
   ],
-  "dernier_passage": "2026-10-19",
+  "dernier_passage": "2026-10-22",
   "guides_traites": [
     "verres-progressifs-adaptation",
     "lunettes-enfant-premier-equipement"
