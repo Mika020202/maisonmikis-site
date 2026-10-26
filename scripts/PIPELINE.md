@@ -240,3 +240,15 @@ répondre à une recherche locale. Même correctif que sur ACTU EYES (commit 86f
   paris 13 » (page dédiée), « examen de vue sans rendez-vous » (page dédiée), lunettes enfant,
   myopie de l'enfant, Complémentaire santé solidaire.
 - `guides.json` n'est plus lu ; ses sujets restants ont été repris dans la file locale.
+
+## 26/10/2026 — Longueurs SEO et pilotage commun avec ACTU EYES
+
+- **Correction de ce document** : depuis le 12/10/2026, le lundi publie un *guide
+  local* (file `scripts/sujets_locaux.json`) et le jeudi la *veille d'actualite*.
+  La section « Lundi : actualite — jeudi : guide pratique » ci-dessus decrit
+  l'organisation precedente ; `choisir_mode()` dans `veille.py` fait foi.
+- **Titres ≤ 60 caracteres, descriptions ≤ 155** : `titre_seo()` et
+  `raccourcir()` dans `veille.py` ; filet `longueurs_seo()` dans `build.py`
+  pour toutes les pages. Le suffixe « | Maison Mikis » saute en premier.
+- Le depot est desormais pilote avec celui d'ACTU EYES depuis le projet Claude
+  « REFERENCEMENT BOUTIQUES » : toute evolution du moteur est appliquee aux deux.
