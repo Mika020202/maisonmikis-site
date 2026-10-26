@@ -46,7 +46,8 @@
     "ordonnance-ophtalmologiste-non-conventionne-remboursement-2027",
     "plfss-2027-contrat-sante-plafonne-lunettes",
     "comment-marche-tiers-payant-opticien",
-    "rapport-hubert-transfert-remboursement-mutuelles"
+    "rapport-hubert-transfert-remboursement-mutuelles",
+    "reparer-ajuster-lunettes-sans-rendez-vous"
   ],
   "last_seen_by_source": {
     "Acuité": "PLFSS 2027 : quel impact sur le remboursement des lunettes ?",
@@ -207,14 +208,22 @@
       "date": "2026-10-22",
       "source": "Rapport « Refonder l'articulation entre assurance maladie obligatoire et complémentaires santé » (Hubert, Bouzou, Junique, Von Lennep), chiffrage IGF-IGAS",
       "type": "actualite"
+    },
+    {
+      "slug": "reparer-ajuster-lunettes-sans-rendez-vous",
+      "title": "Lunettes tordues, cassées ou qui glissent : où les réparer à Paris 13e ?",
+      "date": "2026-10-26",
+      "source": "guide local : reparer-ajuster-lunettes-paris-13",
+      "type": "guide local"
     }
   ],
-  "dernier_passage": "2026-10-22",
+  "dernier_passage": "2026-10-26",
   "guides_traites": [
     "verres-progressifs-adaptation",
     "lunettes-enfant-premier-equipement"
   ],
   "sujets_locaux_faits": [
-    "tiers-payant-opticien-paris-13"
+    "tiers-payant-opticien-paris-13",
+    "reparer-ajuster-lunettes-paris-13"
   ]
 }
