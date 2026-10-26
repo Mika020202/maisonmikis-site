@@ -328,8 +328,8 @@ Structure imposée.
 Titre et métadonnées.
 - « title » : phrase claire, 55-75 caractères, sans nom de marque du site.
 - « meta_title » : se termine par « | Maison Mikis », 60 caractères maximum
-  avant ce suffixe.
-- « meta_description » : 145 à 160 caractères, JAMAIS plus de 170 : compte-les
+  suffixe compris (au-delà, le suffixe est retiré automatiquement).
+- « meta_description » : 140 à 155 caractères, JAMAIS plus de 155 : compte-les
   avant de repondre. Utile, sans superlatif creux.
 - « excerpt » : une seule phrase, 90 à 160 caractères, pour la carte de la grille.
 
@@ -750,10 +750,21 @@ Si rien ne franchit ce seuil, réponds EXACTEMENT : {"no_novelty": true}
 FORBIDDEN_TAGS = ("<a ", "<a>", "<h1", "<img", "<script", "<style", "<iframe", "style=")
 
 
+LIAISONS = {
+    "a", "à", "au", "aux", "de", "du", "des", "d'", "la", "le", "les", "l'",
+    "un", "une", "et", "ou", "en", "pour", "par", "sur", "sans", "avec",
+    "contre", "dans", "chez", "vers", "comme", "que", "qui", "dont", "ce",
+    "cette", "ces", "son", "sa", "ses", "votre", "vos", "notre", "nos",
+    "leur", "leurs", "plus", "moins", "très", "si", "ne", "se",
+    ":", "-", "–", "—", ",",
+}
+
+
 def raccourcir(texte, limite):
     """Coupe proprement a la limite : sur une fin de phrase si possible, sinon
-    sur un mot entier. Un simple depassement de longueur ne doit jamais faire
-    perdre un article entier."""
+    sur un mot entier qui n'est pas un mot de liaison, suivi de « … ». Un
+    simple depassement de longueur ne doit jamais faire perdre un article
+    entier, ni produire une phrase qui s'arrete sur « le. » ou « pour. »."""
     texte = " ".join(str(texte).split())
     if len(texte) <= limite:
         return texte
@@ -762,8 +773,27 @@ def raccourcir(texte, limite):
         pos = coupe.rfind(sep)
         if pos > limite * 0.6:
             return coupe[:pos + 1].strip()
-    pos = coupe.rfind(" ")
-    return (coupe[:pos] if pos > 0 else coupe).rstrip(" ,;:-") + "."
+    mots = coupe[:limite - 1].split(" ")
+    if len(mots) > 1:
+        mots.pop()  # dernier mot potentiellement coupe en deux
+    while len(mots) > 3 and mots[-1].lower().strip(",;:") in LIAISONS:
+        mots.pop()
+    return " ".join(mots).rstrip(" ,;:–—-") + "…"
+
+
+def titre_seo(meta_title, marque, limite=60):
+    """Titre affiche par Google : 60 caracteres maximum, suffixe de marque
+    retire en premier si necessaire, jamais de fin sur un mot de liaison."""
+    meta_title = " ".join(str(meta_title).split())
+    suffixe = "| " + marque
+    if not meta_title.endswith(suffixe):
+        meta_title = "%s %s" % (meta_title.rstrip(" |"), suffixe)
+    if len(meta_title) <= limite:
+        return meta_title
+    base = meta_title[: -len(suffixe)].rstrip(" |")
+    if len(base) <= limite:
+        return base
+    return raccourcir(base, limite).rstrip("…. ")
 
 
 def nettoyer_html(html):
@@ -811,7 +841,7 @@ def validate(r, site, known_slugs, today):
         raise ValueError("bloc réponse hors norme : %d mots (attendu 40-60)"
                          % word_count(answer))
 
-    meta = raccourcir(r["meta_description"], 175)
+    meta = raccourcir(r["meta_description"], 155)
     if len(meta) < 120:
         raise ValueError("meta description trop courte : %d caractères" % len(meta))
 
@@ -819,13 +849,7 @@ def validate(r, site, known_slugs, today):
     if len(titre) < 30:
         raise ValueError("titre trop court : %d caractères" % len(titre))
 
-    meta_title = r["meta_title"].strip()
-    if not meta_title.endswith("| Maison Mikis"):
-        meta_title = "%s | Maison Mikis" % meta_title.rstrip(" |")
-    if len(meta_title) > 90:
-        base, _, suffixe = meta_title.rpartition("|")
-        meta_title = "%s | %s" % (
-            raccourcir(base, 86 - len(suffixe)).rstrip("."), suffixe.strip())
+    meta_title = titre_seo(r["meta_title"], "Maison Mikis")
 
     faq = [(str(q).strip(), str(a).strip()) for q, a in r["faq"]]
     faq = faq[:5]

@@ -986,9 +986,35 @@ FOOTER_ICON_SVGS = {
 }
 
 
+# ---------------------------------------------------------------------------
+#  Longueurs SEO : filet de securite applique a TOUTES les pages.
+#  Google tronque au-dela de ~60 caracteres (titre) et ~155 (description).
+#  Le suffixe de marque saute en premier : Google affiche deja le nom du site.
+#  La regle principale est dans scripts/veille.py (titre_seo) ; ceci rattrape
+#  les articles deja publies et les pages ecrites a la main.
+# ---------------------------------------------------------------------------
+SUFFIXE_MARQUE = " | Maison Mikis"
+TITRE_MAX = 60
+DESCRIPTION_MAX = 155
+
+
+def longueurs_seo(title, description):
+    if len(title) > TITRE_MAX and title.endswith(SUFFIXE_MARQUE):
+        title = title[: -len(SUFFIXE_MARQUE)].rstrip()
+    if len(description) > DESCRIPTION_MAX + 5:
+        coupe = description[:DESCRIPTION_MAX]
+        pos = max(coupe.rfind(". "), coupe.rfind("! "), coupe.rfind("? "))
+        if pos > DESCRIPTION_MAX * 0.6:
+            description = coupe[: pos + 1]
+        else:
+            description = coupe[: coupe.rfind(" ")].rstrip(" ,;:–—-") + "…"
+    return title, description
+
+
 def render_head(title, description, path, og_image="og-image.jpg", extra_jsonld=None):
     canonical = f"{BASE_URL}/{path}" if path != "index.html" else f"{BASE_URL}/"
     jsonld = extra_jsonld or ""
+    title, description = longueurs_seo(title, description)
     return f"""<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="RFV22sLGR_g4pfYghQAlKFtBIV64vG5hz6ztsw15mFY" />
@@ -2209,15 +2235,24 @@ MARQUEE_ORDER = [
 ]
 
 
+MARQUEE_ALT = "Montures de créateurs exposées chez Maison Mikis, opticien à Paris 13e"
+
+
 def render_marquee_track():
+    # Premiere serie : texte alternatif descriptif (Google Images).
+    # Seconde serie : simple copie pour la boucle visuelle, laissee vide
+    # (alt="") pour ne pas repeter 2 fois la meme description.
     imgs = [
-        '<img src="/images/marquee/marquee-{:02d}.jpg" alt="" loading="{}">'.format(
-            i, "eager" if pos < 4 else "lazy"
+        '<img src="/images/marquee/marquee-{:02d}.jpg" alt="{}" loading="{}">'.format(
+            i, MARQUEE_ALT, "eager" if pos < 4 else "lazy"
         )
         for pos, i in enumerate(MARQUEE_ORDER)
     ]
-    # duplicate the full set once so the track can loop seamlessly via translateX(-50%)
-    all_imgs = imgs + imgs
+    copies = [
+        '<img src="/images/marquee/marquee-{:02d}.jpg" alt="" loading="lazy">'.format(i)
+        for i in MARQUEE_ORDER
+    ]
+    all_imgs = imgs + copies
     return "\n".join("      " + tag for tag in all_imgs)
 
 
@@ -6763,7 +6798,7 @@ if __name__ == "__main__":
     render_page(
         "accueil",
         "Opticien et audioprothésiste à Paris 13e | Maison Mikis",
-        "Opticien et audioprothésiste à Paris 13e, Maison Mikis vous accueille Galerie Oslo – Olympiades, 44 avenue d'Ivry : lunettes de vue, solaires, lentilles et audition.",
+        "Opticien et audioprothésiste à Paris 13e, Galerie Oslo – Olympiades, 44 avenue d'Ivry : lunettes de vue, solaires, lentilles et bilan auditif.",
         "index.html",
         render_accueil_body(),
         hero_img="/images/accueil/hero-boutique.jpg",
@@ -6827,7 +6862,7 @@ if __name__ == "__main__":
     render_page(
         "accueil",
         "Opticien à Paris 13e — Olympiades, 44 av. d'Ivry | Maison Mikis",
-        "Opticien et audioprothésiste à Paris 13e : Maison Mikis vous reçoit Galerie Oslo, 44 avenue d'Ivry, métro Olympiades. Lunettes, lentilles, audition, 100 % Santé.",
+        "Maison Mikis vous reçoit Galerie Oslo, 44 avenue d'Ivry, métro Olympiades : lunettes, lentilles, audition et 100 % Santé, à Paris 13e.",
         "opticien-paris-13.html",
         BODY_OPTICIEN_PARIS_13,
         hero_img="/images/accueil/hero-boutique.jpg",
