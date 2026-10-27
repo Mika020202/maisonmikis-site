@@ -241,6 +241,13 @@ jobs:
       #    modele unique. Un article ajoute par la veille passe donc par
       #    exactement le meme gabarit que les articles ecrits a la main.
       # -------------------------------------------------------------------
+      # Pillow sert a build.py pour creer les copies WebP des nouvelles
+      # images. Facultatif : si l'installation echoue, build.py s'en passe et
+      # les images sans WebP restent servies en JPG/PNG.
+      - name: Installer l'outil de conversion d'images
+        if: ${{ env.MODE != 'Tester la connexion IONOS' && env.MODE != 'Supprimer le fichier de test' }}
+        run: python3 -m pip install --quiet --disable-pip-version-check pillow || echo "::warning::Pillow non installe : conversion WebP ignoree."
+
       - name: Regenerer le site
         if: ${{ env.MODE != 'Tester la connexion IONOS' && env.MODE != 'Supprimer le fichier de test' }}
         run: |
