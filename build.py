@@ -1117,6 +1117,133 @@ FOOTER = """<footer>
 </footer>"""
 
 
+# ============================================================================
+# OPTIMISATION DES MEDIAS ET DES POLICES — lot 1 du 27/10/2026
+#
+# Mesure PageSpeed (mobile, accueil) avant ce lot : performance ~75, plus
+# grand element affiche en ~5 s. Trois causes, traitees ici sans changer le
+# rendu visuel :
+#   1. Polices : 9 familles Google chargees sur chaque page, en bloquant
+#      l'affichage. Seules Fraunces et Inter servent partout ; Space Grotesk
+#      ne sert qu'au bandeau de marques defilant. Les 6 autres (Poppins,
+#      Archivo Black, Playfair Display, Comfortaa, Marcellus, Anton) etaient
+#      prevues pour les classes .wm-* qu'aucune page n'utilise.
+#      -> FONTS_URL ne charge plus que Fraunces + Inter, sans bloquer
+#         l'affichage (media="print" puis bascule au chargement) ; Space
+#         Grotesk n'est ajoutee que sur les pages qui ont le bandeau.
+#   2. Images : JPG/PNG lourds (jusqu'a 500 Ko). ensure_webp() cree une copie
+#      WebP a cote de chaque image (si Pillow est installe : c'est le cas sur
+#      GitHub Actions, voir publication.yml) et optimize_html() fait pointer
+#      les pages vers la version WebP quand elle existe. Les originaux restent
+#      en place : og:image et les donnees structurees (URL absolues) les
+#      utilisent toujours, et une image sans WebP s'affiche comme avant.
+#   3. Image principale : preload avec fetchpriority="high" de l'image du
+#      bandeau, pour qu'elle parte avant la feuille de style.
+#
+# Pas d'attributs width/height ajoutes aux <img> : plusieurs regles CSS
+# (img{max-width:100%}) ne fixent pas la hauteur, l'attribut deformerait
+# l'image. Le decalage de mise en page mesure est deja de 0.
+# ============================================================================
+FONTS_CORE = ("family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;"
+              "0,9..144,500;0,9..144,600;1,9..144,400"
+              "&family=Inter:wght@300;400;500;600;700")
+FONTS_TICKER = "&family=Space+Grotesk:wght@600;700"
+
+
+def fonts_links(with_ticker=False):
+    url = ("https://fonts.googleapis.com/css2?" + FONTS_CORE
+           + (FONTS_TICKER if with_ticker else "") + "&display=swap")
+    return (f'<link rel="stylesheet" href="{url}" media="print" '
+            f'onload="this.media=\'all\'">\n'
+            f'<noscript><link rel="stylesheet" href="{url}"></noscript>')
+
+
+WEBP_MAX_WIDTH = 1600        # images de contenu (affichees < 800 px, x2 ecran)
+WEBP_MAX_WIDTH_HERO = 2000   # bandeaux pleine largeur
+_WEBP_DIRS = ("images", "logos")
+
+
+def ensure_webp():
+    """Cree les .webp manquants (ou plus anciens que l'original).
+
+    Sans Pillow, ne fait rien : les pages gardent alors les JPG/PNG
+    pour les images sans .webp. Un .webp n'est conserve que s'il est plus
+    leger que l'original.
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        print("Pillow absent : conversion WebP ignoree (les .webp deja presents restent utilises).")
+        return 0
+    made = 0
+    for d in _WEBP_DIRS:
+        root = os.path.join(OUT_DIR, d)
+        for dirpath, _dirs, files in os.walk(root):
+            for name in files:
+                base, ext = os.path.splitext(name)
+                if ext.lower() not in (".jpg", ".jpeg", ".png"):
+                    continue
+                src = os.path.join(dirpath, name)
+                dst = os.path.join(dirpath, base + ".webp")
+                if os.path.exists(dst) and os.path.getmtime(dst) >= os.path.getmtime(src):
+                    continue
+                try:
+                    im = Image.open(src)
+                    im.load()
+                    has_alpha = im.mode in ("RGBA", "LA") or (im.mode == "P" and "transparency" in im.info)
+                    im = im.convert("RGBA" if has_alpha else "RGB")
+                    limit = WEBP_MAX_WIDTH_HERO if "hero" in name.lower() else WEBP_MAX_WIDTH
+                    if im.width > limit:
+                        im = im.resize((limit, round(im.height * limit / im.width)), Image.LANCZOS)
+                    im.save(dst, "WEBP", quality=(90 if has_alpha else 80), method=6)
+                    if os.path.getsize(dst) >= os.path.getsize(src):
+                        os.remove(dst)      # aucun gain : on garde l'original seul
+                        continue
+                    made += 1
+                except Exception as e:      # une image illisible ne bloque jamais la publication
+                    print(f"WebP ignore pour {name} : {e}")
+    print(f"WebP : {made} image(s) convertie(s).")
+    return made
+
+
+_IMG_URL_RE = re.compile(
+    r"""(?P<pre>src="|url\(['"]?)(?P<url>/(?:images|logos)/[^'")\s]+?)\.(?:jpe?g|png)(?=['")])""",
+    re.IGNORECASE)
+
+
+def _to_webp(m):
+    url = m.group("url")
+    if os.path.exists(os.path.join(OUT_DIR, url.lstrip("/") + ".webp")):
+        return f'{m.group("pre")}{url}.webp'
+    return m.group(0)
+
+
+_HERO_RE = re.compile(
+    r"""--hero-img:url\('(?P<a>[^']+)'\)|class="edito-img" style="background-image:url\('(?P<b>[^']+)'\)""")
+
+
+def optimize_html(html):
+    """Passe finale sur chaque page avant ecriture (voir l'en-tete du bloc)."""
+    head_end = html.find("</head>")
+    head, rest = html[:head_end], html[head_end:]
+    # Images -> WebP dans le corps et dans les <style> de la page. Les meta
+    # (og:image) et le JSON-LD utilisent des URL absolues : non concernes.
+    head = _IMG_URL_RE.sub(_to_webp, head)
+    rest = _IMG_URL_RE.sub(_to_webp, rest)
+    # Polices : version allegee, Space Grotesk seulement avec le bandeau.
+    head = re.sub(r'<link href="https://fonts\.googleapis\.com/css2\?[^"]+" rel="stylesheet">',
+                  lambda _m: fonts_links('class="brand-ticker' in rest), head, count=1)
+    # Image principale chargee en priorite.
+    m = _HERO_RE.search(head + rest)
+    if m:
+        hero = m.group("a") or m.group("b")
+        if hero.startswith("/"):
+            tag = f'<link rel="preload" as="image" href="{hero}" fetchpriority="high">\n'
+            i = head.find('<link rel="preconnect"')
+            head = head[:i] + tag + head[i:] if i >= 0 else head + tag
+    return head + rest
+
+
 def render_page(active_key, title, description, path, body, hero_img=None, extra_jsonld=None, breadcrumb_override=None, hero_pos=None, hero_veil=None):
     # hero_veil : voile sombre pose sur la photo de bandeau, surchargeable page
     # par page. La regle est ecrite dans le <style> en ligne de la page (donc
@@ -1184,6 +1311,7 @@ def render_page(active_key, title, description, path, body, hero_img=None, extra
 """
     out_path = os.path.join(OUT_DIR, path)
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    html = optimize_html(html)
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"wrote {path} ({len(html)} bytes)")
@@ -6789,7 +6917,56 @@ BODY_AUDIOPROTHESISTE_PARIS_13 = """
 """
 
 
+TITLE_404 = "Page introuvable | Maison Mikis, Paris 13e"
+DESC_404 = "Cette page n'existe pas ou a été déplacée. Retrouvez Maison Mikis, opticien et audioprothésiste aux Olympiades, Paris 13e."
+HERO_404 = "/images/accueil/hero-boutique.jpg"
+BODY_404 = """
+<section class="page-hero">
+  <div class="container">
+    <h1>Page introuvable</h1>
+    <p>Le lien que vous avez suivi ne mène nulle part, mais la maison vous attend toujours&nbsp;: Galerie Oslo – Olympiades, 44 avenue d'Ivry, Paris 13e.</p>
+    <div class="hero-actions">
+      <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+      <a href="/contact.html" class="btn btn-ghost">Nous rendre visite</a>
+    </div>
+  </div>
+</section>
+
+<section class="story-block">
+  <div class="container-narrow">
+    <h2>Les pages les plus consultées</h2>
+    <ul class="check-list">
+      <li><span class="check">&#10003;</span> <a href="/examen-de-vue-paris-13.html">Examen de vue à Paris 13e</a></li>
+      <li><span class="check">&#10003;</span> <a href="/audioprothesiste-paris-13.html">Bilan auditif et audioprothésiste</a></li>
+      <li><span class="check">&#10003;</span> <a href="/marques.html">Nos marques</a></li>
+      <li><span class="check">&#10003;</span> <a href="/actualites.html">Nos actualités</a></li>
+    </ul>
+    <p>Besoin d'un renseignement&nbsp;? Appelez la boutique au <a href="tel:0182280018">01&nbsp;82&nbsp;28&nbsp;00&nbsp;18</a>.</p>
+  </div>
+</section>
+"""
+
+
+# ============================================================================
+# PAGE 404 (lot 1, 27/10/2026). Servie par Apache via « ErrorDocument 404 »
+# dans .htaccess : liens absolus uniquement, noindex, hors sitemap.
+# ============================================================================
+def render_404():
+    render_page("accueil", TITLE_404, DESC_404, "404.html", BODY_404,
+                hero_img=HERO_404, hero_pos="42%",
+                breadcrumb_override=[("La Boutique", f"{BASE_URL}/")])
+    p = os.path.join(OUT_DIR, "404.html")
+    with open(p, encoding="utf-8") as f:
+        html = f.read()
+    html = html.replace('<meta name="robots" content="index, follow">',
+                        '<meta name="robots" content="noindex, follow">')
+    html = re.sub(r'<link rel="canonical"[^>]*>\n?', '', html)
+    with open(p, "w", encoding="utf-8") as f:
+        f.write(html)
+
+
 if __name__ == "__main__":
+    ensure_webp()
     css_path = os.path.join(OUT_DIR, "site.css")
     with open(css_path, "w", encoding="utf-8") as f:
         f.write(SHARED_CSS)
@@ -6944,5 +7121,6 @@ if __name__ == "__main__":
     for _article in ARTICLES:
         render_article_page(_article)
     print(f"wrote actualites.html + {len(ARTICLES)} article pages")
+    render_404()
     sync_sitemap()
     print("Done.")
