@@ -83,6 +83,12 @@ SHARED_CSS = """
   .btn-ghost:hover{background:rgba(251,246,239,0.12);}
   .btn-outline{border-color:var(--wood-dark);color:var(--charcoal);}
   .btn-outline:hover{background:var(--wood-dark);color:var(--cream);}
+  /* Encart « Chez Maison Mikis » dans les articles (29/10/2026) */
+  .shop-callout{margin:40px 0;padding:28px 28px 24px;border-radius:18px;background:var(--cream-2);border-left:6px solid var(--terracotta);}
+  .shop-callout__label{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin:0 0 10px;color:var(--terracotta-dark);}
+  .shop-callout p{margin:0 0 18px;}
+  .shop-callout__actions{display:flex;flex-wrap:wrap;gap:12px;}
+  .shop-callout__actions .btn{margin:0;}
 
   /* HEADER */
   header{
@@ -5980,6 +5986,27 @@ def render_go_further(article):
 
 
 # --- Gabarit SEO : bloc reponse en tete + FAQ visible ----------------------
+MAPS_FICHE = "https://maps.google.com/?cid=6701951749895757703"
+TEL_LIEN = "tel:+33182280018"
+
+
+def render_shop_callout(article):
+    """Encart « Chez Maison Mikis » redige par la veille a partir des seuls
+    faits sur la boutique (ligne editoriale du 29/10/2026). Absent des anciens
+    articles : rien n'est affiche dans ce cas."""
+    texte = (article.get("encart") or "").strip()
+    if not texte:
+        return ""
+    return f"""<aside class="shop-callout">
+      <p class="shop-callout__label">Chez Maison Mikis</p>
+      <p>{texte}</p>
+      <div class="shop-callout__actions">
+        <a href="{TEL_LIEN}" class="btn btn-primary">Appeler le 01 82 28 00 18</a>
+        <a href="{MAPS_FICHE}" class="btn btn-outline" target="_blank" rel="noopener">Itinéraire</a>
+      </div>
+    </aside>"""
+
+
 def render_answer_lead(article):
     """Reponse directe de 40-60 mots, juste sous le titre.
 
@@ -6375,6 +6402,7 @@ def render_article_page(article):
     </div>
     {render_answer_lead(article)}
     {apply_inline_links(article["body"], INLINE_LINKS.get(article["slug"], []), article["slug"])}
+    {render_shop_callout(article)}
     {render_faq(article)}
     {render_go_further(article)}
     <div class="article-source-note">{source_note(article)}</div>
@@ -6395,9 +6423,10 @@ def render_article_page(article):
 
 <section class="cta-band">
   <div class="container">
-    <h2>Envie d'en discuter avec nous ?</h2>
-    <p>Maison Mikis est votre <a href="/opticien-paris-13.html">opticien et audioprothésiste à Paris 13e</a>, Galerie Oslo – Olympiades, 44 avenue d'Ivry. Prenez rendez-vous pour un conseil personnalisé.</p>
-    <a href="/contact.html" class="btn btn-primary">Prendre rendez-vous</a>
+    <h2>Passez nous voir aux Olympiades</h2>
+    <p>Maison Mikis est votre <a href="/opticien-paris-13.html">opticien et audioprothésiste à Paris 13e</a>, Galerie Oslo – Olympiades, 44 avenue d'Ivry (métro 14). Du mardi au samedi, 10h–19h30 : examen de vue gratuit sans rendez-vous, bilan auditif gratuit sur rendez-vous.</p>
+    <a href="{TEL_LIEN}" class="btn btn-primary">Appeler le 01 82 28 00 18</a>
+    <a href="{MAPS_FICHE}" class="btn btn-ghost" target="_blank" rel="noopener">Itinéraire</a>
   </div>
 </section>
 """
@@ -6426,6 +6455,24 @@ def sync_sitemap():
         return 0
     with open(path, encoding="utf-8") as f:
         content = f.read()
+
+    # 30/10/2026 : un article retire (redirige en 301 dans .htaccess) sort
+    # aussi du sitemap, sinon Google continue d'y voir une page a indexer.
+    import re as _re
+    actuels = {f"{BASE_URL}/{article_url(a)}" for a in ARTICLES}
+    retires = 0
+    def _filtre(m):
+        nonlocal retires
+        loc = m.group(1)
+        if "/actualites/" in loc and loc.endswith(".html") and loc not in actuels:
+            retires += 1
+            return ""
+        return m.group(0)
+    content = _re.sub(r"  <url>\n    <loc>([^<]+)</loc>.*?</url>\n", _filtre, content, flags=_re.S)
+    if retires:
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(content)
+        print(f"sitemap.xml : {retires} article(s) retire(s).")
 
     blocks = []
     for a in ARTICLES:

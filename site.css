@@ -64,6 +64,12 @@
   .btn-ghost:hover{background:rgba(251,246,239,0.12);}
   .btn-outline{border-color:var(--wood-dark);color:var(--charcoal);}
   .btn-outline:hover{background:var(--wood-dark);color:var(--cream);}
+  /* Encart « Chez Maison Mikis » dans les articles (29/10/2026) */
+  .shop-callout{margin:40px 0;padding:28px 28px 24px;border-radius:18px;background:var(--cream-2);border-left:6px solid var(--terracotta);}
+  .shop-callout__label{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin:0 0 10px;color:var(--terracotta-dark);}
+  .shop-callout p{margin:0 0 18px;}
+  .shop-callout__actions{display:flex;flex-wrap:wrap;gap:12px;}
+  .shop-callout__actions .btn{margin:0;}
 
   /* HEADER */
   header{

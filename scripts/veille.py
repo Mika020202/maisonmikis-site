@@ -47,6 +47,11 @@ SOURCES_PATH = os.path.join(SCRIPTS_DIR, "sources.json")
 AUTO_PATH = os.path.join(SCRIPTS_DIR, "articles_auto.json")
 LOCAUX_PATH = os.path.join(SCRIPTS_DIR, "sujets_locaux.json")
 
+# Ligne editoriale (themes, interdits, faits sur la boutique) : voir ligne.py.
+sys.path.insert(0, SCRIPTS_DIR)
+import ligne  # noqa: E402
+LIGNE = ligne.charger()
+
 API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 API_URL = "https://api.anthropic.com/v1/messages"
 MODEL = "claude-sonnet-5"
@@ -236,7 +241,11 @@ def flatten_sources(sources):
         if theme.startswith("_"):
             continue
         for s in block.get("sources", []):
-            out.append({"theme": theme, "name": s["name"], "url": s.get("url")})
+            entree = {"theme": theme, "name": s["name"], "url": s.get("url"),
+                      "role": s.get("role", block.get("role", "source"))}
+            if s.get("marques"):
+                entree["marques"] = s["marques"]
+            out.append(entree)
     return out
 
 
@@ -279,8 +288,8 @@ Qui parle. Les articles sont signés « l'équipe Maison Mikis ». Tu écris au 
 N'écris JAMAIS le nom d'une personne comme auteur, et ne mentionne JAMAIS un
 diplôme, un titre ou une qualification professionnelle d'un membre de l'équipe.
 
-Ton. Informatif, précis, utile. Jamais promotionnel à l'excès, jamais anxiogène,
-jamais racoleur. On explique un mécanisme avant de donner un conseil. On admet ce
+Ton. Utile d'abord, commercial ensuite : on donne envie de venir en boutique par
+des faits concrets, jamais par des superlatifs. Jamais anxiogène, jamais racoleur. On explique un mécanisme avant de donner un conseil. On admet ce
 qui n'est pas démontré plutôt que de le survendre (exemple : la lumière bleue).
 
 Sources. Tout fait chiffré vient d'une source réelle trouvée par la recherche web,
@@ -308,10 +317,10 @@ la mise en cause a une entreprise simplement parce qu'elle est partenaire de
 celle qui est visee.
 
 Ancrage local. Maison Mikis est Galerie Oslo, 44 avenue d'Ivry, Paris 13e, sur
-l'esplanade des Olympiades (métro 14). Le quartier peut apparaître UNE fois, dans
-le corps du texte, seulement si c'est naturel et justifié (par exemple dans un
-paragraphe final qui ramène au comptoir). Jamais dans le titre, jamais dans la
-meta description, jamais de façon répétée.
+l'esplanade des Olympiades (métro 14). Dans le corps, la boutique et son quartier
+apparaissent 2 ou 3 fois au maximum : dans le paragraphe qui présente ce que nous
+proposons sur le sujet et dans le paragraphe final qui invite à passer. Jamais
+dans le titre, jamais de façon répétée ou artificielle.
 
 Structure imposée.
 - « answer » : la réponse directe à la question du titre, en 40 à 60 mots, sans
@@ -319,7 +328,7 @@ Structure imposée.
 - « body_html » : 800 à 1400 mots, en HTML simple. 3 à 5 sections <h2>, des <h3>
   quand c'est utile, des <p>. Tu peux utiliser <ul>/<ol>/<li> et <strong>.
   Le premier <h2> ne répète pas le titre. Le dernier paragraphe ramène au
-  concret : quand consulter, quoi faire, ou ce que nous faisons en boutique.
+  concret et invite à passer en boutique (voir ORIENTATION BOUTIQUE).
 - N'écris AUCUNE balise <a> et AUCUN lien : le maillage interne est posé
   automatiquement par le générateur du site. Un lien que tu écrirais serait faux.
 - N'écris AUCUNE balise <h1>, <img>, <script>, <style> ni aucun attribut style.
@@ -337,7 +346,8 @@ FAQ. 3 ou 4 questions réellement posées par des clients, avec des réponses de
 4 phrases. Pas de question dont la réponse est dans le titre.
 
 Interdits absolus : promesse de résultat de santé, conseil qui remplace un avis
-médical, comparaison dénigrante d'un confrère, prix, promotion, urgence commerciale.
+médical, comparaison avec un confrère, prix chiffré, promotion datée, urgence
+commerciale, superlatif invérifiable.
 """
 
 
@@ -376,6 +386,7 @@ FORMAT DE RÉPONSE — du JSON pur, rien avant, rien après, aucune balise markd
   "excerpt": "...",
   "answer": "...",
   "faq": [["question", "réponse"], ["question", "réponse"], ["question", "réponse"]],
+  "encart_boutique": "35 à 70 mots, texte brut : ce que le lecteur trouve chez nous sur ce sujet + invitation à passer",
   "sources": [["nom", "https://..."], ["nom", "https://..."]],
   "body_html": "<h2>...</h2><p>...</p>..."
 }""" % (categories, known_slugs, images_dispo)
@@ -414,45 +425,7 @@ fois au maximum, là où c'est utile au lecteur : jamais de répétition artific
 de mots-clés, jamais de liste de quartiers ou de villes plaquée. L'essentiel du
 texte reste un vrai guide pratique, utile même hors du 13e.
 
-FAITS SUR LA BOUTIQUE — les SEULS que tu peux affirmer. N'invente aucun autre
-service, équipement, horaire, prix, délai, marque ou partenariat.
-- Maison Mikis, opticien et audioprothésiste indépendant, Galerie Oslo –
-  Olympiades, 44 avenue d'Ivry, 75013 Paris, au pied de la dalle des Olympiades.
-  Téléphone : 01 82 28 00 18. Boutique et galerie de plain-pied, accessibles en
-  fauteuil roulant et avec une poussette.
-- Accès : métro 14 Olympiades à environ 100 m ; métro 7 Tolbiac et Porte d'Ivry à
-  une dizaine de minutes à pied ; tramway T3a Porte d'Ivry et Porte de Choisy ;
-  bus 27, 62, 83 et 183 ; parkings souterrains autour de la dalle.
-- Ouvert du mardi au samedi, de 10h à 19h30, sans interruption ; fermé le
-  dimanche et le lundi. Le samedi après-midi est le moment le plus fréquenté.
-- Examen de vue gratuit, environ 20 minutes, en salle dédiée : à partir de 16 ans
-  et avec une ordonnance encore valable, il permet d'adapter la correction sans
-  repasser par le médecin ; ce n'est pas une consultation médicale. Il se fait
-  SANS rendez-vous ; le client qui préfère une heure précise peut aussi réserver
-  un créneau par téléphone.
-- Sans rendez-vous : examen de vue, essayer des montures, faire ajuster une paire, remplacer des
-  plaquettes, commander des lentilles, poser une question. Ajustage et
-  réparation (plaquettes, vis, charnières, réglages) généralement en quelques
-  minutes, y compris pour des lunettes achetées ailleurs.
-- Optique : lunettes de vue et solaires, verres unifocaux et progressifs,
-  traitements antireflet, photochromiques et polarisants.
-- Lentilles : journalières, bimensuelles, mensuelles, souples et rigides,
-  toriques et multifocales ; essais avant commande, apprentissage de la pose et
-  du retrait, renouvellement et produits d'entretien.
-- Tiers payant appliqué dès que la mutuelle le permet ; devis normalisé gratuit
-  avant tout engagement ; offre 100 % Santé présentée à côté des autres offres,
-  possibilité de combiner équipement libre et 100 % Santé.
-- Dix-neuf marques de montures : Andy Brook, Armani, CHIMI, Celine, Dior, Fendi,
-  Fred, Givenchy, Gucci, Guess, LOOL, Loewe, Longchamp, Marc Jacobs, Miu Miu,
-  Prada, Ralph Lauren, Ray-Ban, Saint Laurent.
-- Audition : audioprothésiste diplômé en cabine dédiée ; bilan auditif gratuit et
-  sans engagement, sur rendez-vous, environ 40 minutes ; essai d'au moins
-  30 jours avant décision ; réglages, entretien et suivi inclus pendant toute la
-  durée de vie de l'appareil ; une classe d'appareils prise en charge
-  intégralement au titre du 100 % Santé. N'affirme PAS que nous suivons des
-  appareils achetés ailleurs.
-- Rendez-vous par téléphone.
-
+(Les faits sur la boutique sont donnés plus bas, dans la ligne éditoriale.)
 """
 
 CHARTE_GUIDE = CHARTE.replace(ANCRAGE_VEILLE, ANCRAGE_GUIDE)
@@ -511,7 +484,8 @@ Il n'y a pas d'option « aucune nouveauté » : ne réponds JAMAIS
 {"no_novelty": true}, un guide est toujours attendu.
 
 """ % sujet["category"]
-    return system + CHARTE_GUIDE + contraintes_techniques(categories, known_slugs, images_dispo)
+    return (system + CHARTE_GUIDE + ligne.bloc_prompt(LIGNE, date.today(), "guide")
+            + contraintes_techniques(categories, known_slugs, images_dispo))
 
 
 def message_guide(sujet, titres_existants, today):
@@ -586,9 +560,8 @@ def run_creneau(sources, state, site):
 
     system = """Tu es l'équipe éditoriale du site maisonmikis.fr, opticien et
 audioprothésiste indépendant à Paris 13e. Tu tiens une veille suivie : tu
-vérifies des sources professionnelles, et tu ne rédiges un article QUE si un fait
-réellement notable mérite d'être porté à la connaissance des clients de la
-boutique.
+vérifies les sources ci-dessous et tu rédiges, pour les clients de la boutique,
+un article utile qui leur donne envie de venir nous voir.
 
 FENÊTRE DE RECHERCHE — soixante jours.
 Tu ne te limites pas à ce qui est apparu depuis la dernière vérification. Tu
@@ -599,26 +572,19 @@ l'écrire aujourd'hui, même s'il date de plusieurs semaines. Un décret publié
 y a un mois et jamais expliqué à nos clients reste une information neuve POUR EUX.
 À qualité égale, tu préfères le fait le plus récent.
 
-SEUIL D'IMPORTANCE — sois exigeant, c'est le cœur de ta mission.
-L'ancienneté n'est pas un critère de rejet ; la faiblesse du sujet en est un.
-Tu ne rédiges que si le fait relève d'au moins une de ces catégories :
-  - lancement d'un vrai produit ou d'une vraie technologie ;
-  - changement réglementaire ou de remboursement touchant l'optique ou l'audition ;
-  - étude, enquête ou statistique notable d'une autorité de santé ou d'un
-    organisme professionnel reconnu ;
-  - annonce stratégique lourde d'un acteur majeur du secteur ;
-  - évolution de fond de la profession (norme, recommandation, congrès majeur).
-Tu ignores explicitement : mise à jour cosmétique de site, republication, variation
-de prix, communiqué promotionnel sans substance, sponsoring mondain, nomination à
-un poste non stratégique, marronnier saisonnier.
-Un article creux abîme le site : mieux vaut ne rien publier que publier du vide.
-Mais avant de renoncer, tu dois avoir réellement balayé les soixante derniers
-jours et vérifié qu'aucun fait de ces catégories n'est resté non traité. Ne
-renonce que si ce balayage ne donne rien.
+CE QUI JUSTIFIE UN ARTICLE D'ACTUALITÉ — dans un thème autorisé de la ligne
+éditoriale, et seulement s'il passe le test du client :
+  - lancement d'un vrai produit (lunettes, verres, lentilles, aides auditives des
+    marques proposées chez nous) ou d'une nouvelle collection vendue chez nous ;
+  - changement de remboursement ou de droits qui touche directement le client
+    (100 % Santé optique et audition, Sécurité sociale, mutuelles) ;
+  - étude ou recommandation d'une autorité de santé utile au grand public.
+Tu ignores explicitement : la vie de la profession, des syndicats et des groupes,
+les mises à jour cosmétiques, les communiqués sans substance, les nominations.
+À défaut, tu rédiges un article de fond (voir la ligne éditoriale).
 
-Si rien ne franchit ce seuil, réponds EXACTEMENT : {"no_novelty": true}
-
-""" + CHARTE + contraintes_techniques(categories, known_slugs, images_dispo)
+""" + CHARTE + ligne.bloc_prompt(LIGNE, today, "veille") + contraintes_techniques(
+        categories, known_slugs, images_dispo)
 
     user = (
         "Sources à vérifier :\n"
@@ -849,6 +815,10 @@ def validate(r, site, known_slugs, today):
     if len(titre) < 30:
         raise ValueError("titre trop court : %d caractères" % len(titre))
 
+    # Ligne editoriale (29/10/2026) : sujet interdit -> refus et nouvelle redaction.
+    ligne.controle_interdits(LIGNE, titre, r.get("slug", ""), r.get("excerpt", ""), meta)
+    encart = ligne.nettoyer_encart(r.get("encart_boutique", ""))
+
     meta_title = titre_seo(r["meta_title"], "Maison Mikis")
 
     faq = [(str(q).strip(), str(a).strip()) for q, a in r["faq"]]
@@ -896,6 +866,7 @@ def validate(r, site, known_slugs, today):
         "date_display": date_fr(today),
         "date_iso": today.isoformat(),
         "body": body,
+        "encart": encart,
     }
 
 

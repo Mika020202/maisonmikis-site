@@ -59,6 +59,7 @@ jobs:
               "scripts/articles_auto.json",
               "scripts/sources.json",
               "scripts/state.json",
+              "scripts/ligne_editoriale.json",
           ]
           for chemin in fichiers:
               try:
