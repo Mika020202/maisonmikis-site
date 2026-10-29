@@ -47,7 +47,8 @@
     "plfss-2027-contrat-sante-plafonne-lunettes",
     "comment-marche-tiers-payant-opticien",
     "rapport-hubert-transfert-remboursement-mutuelles",
-    "reparer-ajuster-lunettes-sans-rendez-vous"
+    "reparer-ajuster-lunettes-sans-rendez-vous",
+    "lunettes-connectees-cepd-regles-vie-privee"
   ],
   "last_seen_by_source": {
     "Acuité": "PLFSS 2027 : quel impact sur le remboursement des lunettes ?",
@@ -215,9 +216,16 @@
       "date": "2026-10-26",
       "source": "guide local : reparer-ajuster-lunettes-paris-13",
       "type": "guide local"
+    },
+    {
+      "slug": "lunettes-connectees-cepd-regles-vie-privee",
+      "title": "Lunettes connectées : ce que change la position officielle de l'Europe",
+      "date": "2026-10-29",
+      "source": "CNIL (déclaration du CEPD / EDPB du 13 octobre 2026 sur les lunettes connectées)",
+      "type": "actualite"
     }
   ],
-  "dernier_passage": "2026-10-26",
+  "dernier_passage": "2026-10-29",
   "guides_traites": [
     "verres-progressifs-adaptation",
     "lunettes-enfant-premier-equipement"
