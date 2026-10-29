@@ -19,6 +19,21 @@ RewriteRule ^ https://www.maisonmikis.fr%{REQUEST_URI} [R=301,L]
 RewriteCond %{HTTP_HOST} ^maisonmikis\.fr$ [NC]
 RewriteRule ^ https://www.maisonmikis.fr%{REQUEST_URI} [R=301,L]
 
+
+# 3. Articles retirés le 30/10/2026 (hors ligne éditoriale) : redirection
+#    permanente vers l'article qui les remplace. Le serveur garde les anciens
+#    fichiers (mise en ligne sans --delete) : ces règles passent avant eux.
+RewriteRule ^actualites/fraude-audioprothese-rapport-igas-igf-100-sante\.html$ https://www.maisonmikis.fr/actualites/appareil-auditif-100-sante-sans-reste-a-charge.html [R=301,L]
+RewriteRule ^actualites/resound-sensia-aide-auditive-ia-france\.html$ https://www.maisonmikis.fr/actualites/essai-appareil-auditif-avant-achat-deroulement.html [R=301,L]
+RewriteRule ^actualites/nuance-audio-plus-lunettes-auditives-essilorluxottica\.html$ https://www.maisonmikis.fr/actualites/porter-lunettes-et-appareil-auditif-ensemble.html [R=301,L]
+RewriteRule ^actualites/meta-lunettes-connectees-fonction-aide-auditive-fda\.html$ https://www.maisonmikis.fr/actualites/bilan-auditif-quel-age-comment-ca-se-passe.html [R=301,L]
+RewriteRule ^actualites/teleexpertise-optique-alerte-snof-ophtalmologistes\.html$ https://www.maisonmikis.fr/actualites/dmla-premiers-signes-quand-consulter.html [R=301,L]
+RewriteRule ^actualites/opticiens-ehpad-decret-2026-examens-vue\.html$ https://www.maisonmikis.fr/actualites/lunettes-apres-operation-cataracte.html [R=301,L]
+RewriteRule ^actualites/projet-arrete-interdiction-publicite-optique-audition\.html$ https://www.maisonmikis.fr/actualites/progressifs-ou-lunettes-de-lecture-choisir.html [R=301,L]
+RewriteRule ^actualites/publicite-optique-audition-projet-retire\.html$ https://www.maisonmikis.fr/actualites/verres-travail-ecran-bureau-apres-40-ans.html [R=301,L]
+RewriteRule ^actualites/rapport-hubert-transfert-remboursement-mutuelles\.html$ https://www.maisonmikis.fr/actualites/choisir-monture-grande-maison-qui-dure.html [R=301,L]
+RewriteRule ^actualites/lunettes-connectees-cepd-regles-vie-privee\.html$ https://www.maisonmikis.fr/actualites/taille-monture-lire-chiffres-branche.html [R=301,L]
+
 </IfModule>
 
 # ---------------------------------------------------------------------------

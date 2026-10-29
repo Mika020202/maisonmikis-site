@@ -217,20 +217,8 @@
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://www.maisonmikis.fr/actualites/opticiens-ehpad-decret-2026-examens-vue.html</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://www.maisonmikis.fr/actualites/eclipse-solaire-2026-proteger-ses-yeux.html</loc>
     <lastmod>2026-08-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.maisonmikis.fr/actualites/fraude-audioprothese-rapport-igas-igf-100-sante.html</loc>
-    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -253,38 +241,8 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.maisonmikis.fr/actualites/resound-sensia-aide-auditive-ia-france.html</loc>
-    <lastmod>2026-08-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.maisonmikis.fr/actualites/teleexpertise-optique-alerte-snof-ophtalmologistes.html</loc>
-    <lastmod>2026-09-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.maisonmikis.fr/actualites/projet-arrete-interdiction-publicite-optique-audition.html</loc>
-    <lastmod>2026-09-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.maisonmikis.fr/actualites/nuance-audio-plus-lunettes-auditives-essilorluxottica.html</loc>
-    <lastmod>2026-09-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://www.maisonmikis.fr/actualites/teleconsultation-primo-prescription-aides-auditives.html</loc>
     <lastmod>2026-09-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.maisonmikis.fr/actualites/meta-lunettes-connectees-fonction-aide-auditive-fda.html</loc>
-    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -297,12 +255,6 @@
   <url>
     <loc>https://www.maisonmikis.fr/actualites/verres-progressifs-delai-adaptation-inconfort.html</loc>
     <lastmod>2026-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.maisonmikis.fr/actualites/publicite-optique-audition-projet-retire.html</loc>
-    <lastmod>2026-10-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -331,20 +283,68 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.maisonmikis.fr/actualites/rapport-hubert-transfert-remboursement-mutuelles.html</loc>
-    <lastmod>2026-10-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://www.maisonmikis.fr/actualites/reparer-ajuster-lunettes-sans-rendez-vous.html</loc>
     <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.maisonmikis.fr/actualites/lunettes-connectees-cepd-regles-vie-privee.html</loc>
-    <lastmod>2026-10-29</lastmod>
+    <loc>https://www.maisonmikis.fr/actualites/appareil-auditif-100-sante-sans-reste-a-charge.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.maisonmikis.fr/actualites/essai-appareil-auditif-avant-achat-deroulement.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.maisonmikis.fr/actualites/porter-lunettes-et-appareil-auditif-ensemble.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.maisonmikis.fr/actualites/bilan-auditif-quel-age-comment-ca-se-passe.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.maisonmikis.fr/actualites/dmla-premiers-signes-quand-consulter.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.maisonmikis.fr/actualites/lunettes-apres-operation-cataracte.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.maisonmikis.fr/actualites/progressifs-ou-lunettes-de-lecture-choisir.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.maisonmikis.fr/actualites/verres-travail-ecran-bureau-apres-40-ans.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.maisonmikis.fr/actualites/choisir-monture-grande-maison-qui-dure.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.maisonmikis.fr/actualites/taille-monture-lire-chiffres-branche.html</loc>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

@@ -6456,6 +6456,24 @@ def sync_sitemap():
     with open(path, encoding="utf-8") as f:
         content = f.read()
 
+    # 30/10/2026 : un article retire (redirige en 301 dans .htaccess) sort
+    # aussi du sitemap, sinon Google continue d'y voir une page a indexer.
+    import re as _re
+    actuels = {f"{BASE_URL}/{article_url(a)}" for a in ARTICLES}
+    retires = 0
+    def _filtre(m):
+        nonlocal retires
+        loc = m.group(1)
+        if "/actualites/" in loc and loc.endswith(".html") and loc not in actuels:
+            retires += 1
+            return ""
+        return m.group(0)
+    content = _re.sub(r"  <url>\n    <loc>([^<]+)</loc>.*?</url>\n", _filtre, content, flags=_re.S)
+    if retires:
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(content)
+        print(f"sitemap.xml : {retires} article(s) retire(s).")
+
     blocks = []
     for a in ARTICLES:
         loc = f"{BASE_URL}/{article_url(a)}"
