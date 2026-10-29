@@ -1,0 +1,174 @@
+{
+  "_note": "Ligne éditoriale validée par le propriétaire le 29/10/2026. Modifiable sans toucher au code : thèmes, sujets interdits, calendrier, faits sur la boutique. Les faits sont les SEULS que la veille peut affirmer : toute modification doit venir du propriétaire. Volontairement absents des faits : offre enfants dédiée, Complémentaire santé solidaire, suivi d'appareils auditifs achetés ailleurs.",
+  "boutique": "Maison Mikis",
+  "themes": [
+    {
+      "id": "audition",
+      "label": "Audition",
+      "priorite": "haute",
+      "category": "sante-auditive",
+      "perimetre": "Signes d'alerte, bilan auditif, appareils (nouveautés des marques proposées chez nous), remboursement et 100 % Santé audition, protections auditives. Jamais de diagnostic : le bilan est le passage à l'action.",
+      "exemples": [
+        "Faut-il faire un bilan auditif à 60 ans ?",
+        "Appareils auditifs 100 % Santé : ce qui est remboursé",
+        "Acouphènes : quand s'inquiéter ?",
+        "Essayer un appareil auditif avant d'acheter : comment ça marche ?"
+      ]
+    },
+    {
+      "id": "apres-40",
+      "label": "Vue après 40 ans",
+      "priorite": "haute",
+      "category": "tech-verres",
+      "perimetre": "Presbytie, verres progressifs, lunettes de lecture, adaptation, verres pour le travail sur écran.",
+      "exemples": [
+        "Progressifs ou lunettes de lecture : comment choisir ?",
+        "Progressifs : combien de temps pour s'adapter ?"
+      ]
+    },
+    {
+      "id": "choisir-lunettes",
+      "label": "Choisir et entretenir ses lunettes",
+      "priorite": "haute",
+      "category": "mode-lunettes",
+      "perimetre": "Angle grandes maisons et savoir-faire : choisir sa monture, matériaux, entretien, réparation, nouvelles collections des marques vendues chez nous (jamais une marque absente des faits).",
+      "exemples": [
+        "Comment choisir une monture de créateur qui dure ?",
+        "Nouvelle collection Dior : les modèles à essayer"
+      ]
+    },
+    {
+      "id": "maladies",
+      "label": "Maladies des yeux à connaître",
+      "priorite": "haute",
+      "category": "sante-visuelle",
+      "perimetre": "Glaucome, DMLA, cataracte, en vulgarisation. Message central : quand consulter l'ophtalmologiste. Jamais de diagnostic.",
+      "exemples": [
+        "DMLA : les premiers signes à ne pas négliger",
+        "Cataracte : que change l'opération pour vos lunettes ?"
+      ]
+    },
+    {
+      "id": "quotidien",
+      "label": "Bien voir au quotidien",
+      "priorite": "normale",
+      "category": "sante-visuelle",
+      "perimetre": "Écrans, fatigue visuelle, yeux secs, conduite de nuit, lumière bleue (sans survendre).",
+      "exemples": [
+        "Yeux secs en hiver : que faire ?"
+      ]
+    },
+    {
+      "id": "remboursements",
+      "label": "Remboursements et droits du patient",
+      "priorite": "normale",
+      "category": "remboursements",
+      "perimetre": "100 % Santé optique et audition, tiers payant, ordonnance, renouvellement : seulement ce qui change quelque chose pour le client, et comment en profiter chez nous.",
+      "exemples": [
+        "Lunettes et appareils auditifs : ce qui est remboursé en 2027"
+      ]
+    },
+    {
+      "id": "lentilles",
+      "label": "Lentilles de contact",
+      "priorite": "normale",
+      "category": "tech-lentilles",
+      "perimetre": "Débuter, lentilles multifocales après 40 ans, hygiène.",
+      "exemples": []
+    },
+    {
+      "id": "soleil",
+      "label": "Protéger ses yeux du soleil",
+      "priorite": "normale",
+      "category": "sante-visuelle",
+      "perimetre": "UV, catégories de filtres, solaires à la vue, solaires des grandes maisons.",
+      "exemples": []
+    },
+    {
+      "id": "enfants",
+      "label": "Les yeux des enfants",
+      "priorite": "normale",
+      "category": "enfant",
+      "perimetre": "Dépistage et signes d'alerte, en restant général : aucune offre enfants dédiée à affirmer.",
+      "exemples": []
+    }
+  ],
+  "calendrier": {
+    "1": "yeux secs et écrans ; bonnes résolutions : bilan auditif.",
+    "2": "yeux secs et écrans.",
+    "3": "Journée nationale de l'audition (mars) : bilan auditif, prévention.",
+    "4": "allergies oculaires ; premières solaires de la saison.",
+    "5": "soleil et UV, solaires à la vue.",
+    "6": "soleil, festivals et protection auditive.",
+    "7": "soleil et vacances.",
+    "8": "rentrée : renouvellement des lunettes, progressifs.",
+    "9": "rentrée : vue au travail, écrans.",
+    "10": "Journée mondiale de la vue ; conduite de nuit au changement d'heure.",
+    "11": "conduite de nuit, DMLA et glaucome (dépistage).",
+    "12": "droits de la mutuelle à utiliser avant la fin d'année ; idées cadeaux (solaires et montures des grandes maisons)."
+  },
+  "sujets_interdits": [
+    "fraude, escroquerie, contrôles, sanctions, procès, plaintes, tribunaux, condamnations",
+    "conflits entre professions ou syndicats (ophtalmologistes, opticiens, orthoptistes)",
+    "résultats financiers, rachats, fusions, Bourse, dirigeants et nominations des groupes",
+    "réseaux de soins ou mutuelles qui excluent des opticiens",
+    "réglementation interne au métier sans effet direct pour le client (facturation électronique, publicité des opticiens, formation, conventions)",
+    "enseignes concurrentes, quelles qu'elles soient",
+    "tout sujet qui donne une mauvaise image de la profession ou inquiète sans rien proposer"
+  ],
+  "motifs_interdits": [
+    "fraud",
+    "escroqu",
+    "\\bproc[eè]s\\b",
+    "plainte",
+    "tribunal",
+    "condamn",
+    "\\bsanction",
+    "syndicat",
+    "\\bsnof\\b",
+    "\\bfnof\\b",
+    "gr[eè]ve",
+    "rachat",
+    "racheté",
+    "\\bfusion\\b",
+    "\\bacquisition\\b",
+    "\\bbourse\\b",
+    "chiffre d.affaires",
+    "résultats financiers",
+    "\\bpdg\\b",
+    "dirigeant",
+    "démission",
+    "r[ée]seau .{0,20}ferm[ée]",
+    "réseau de soins",
+    "facturation électronique",
+    "publicité en optique",
+    "interdiction de la publicité",
+    "optical center",
+    "afflelou",
+    "\\bkrys\\b",
+    "\\batol\\b",
+    "grand optical",
+    "générale d.optique",
+    "lissac",
+    "optic 2000",
+    "gouvernance",
+    "succession",
+    "audika",
+    "amplifon",
+    "fraude aux audioproth"
+  ],
+  "faits_boutique": [
+    "Maison Mikis, opticien et audioprothésiste indépendant, Galerie Oslo – Olympiades, 44 avenue d'Ivry, 75013 Paris, au pied de la dalle des Olympiades. Téléphone : 01 82 28 00 18. Boutique et galerie de plain-pied, accessibles en fauteuil roulant et avec une poussette.",
+    "Accès : métro 14 Olympiades à environ 100 m ; métro 7 Tolbiac et Porte d'Ivry à une dizaine de minutes à pied ; tramway T3a Porte d'Ivry et Porte de Choisy ; bus 27, 62, 83 et 183 ; parkings souterrains autour de la dalle.",
+    "Ouvert du mardi au samedi, de 10h à 19h30, sans interruption ; fermé le dimanche et le lundi. Le samedi après-midi est le moment le plus fréquenté.",
+    "Examen de vue gratuit, environ 20 minutes, en salle dédiée : à partir de 16 ans et avec une ordonnance encore valable, il permet d'adapter la correction sans repasser par le médecin ; ce n'est pas une consultation médicale. Il se fait SANS rendez-vous ; le client qui préfère une heure précise peut aussi réserver un créneau par téléphone.",
+    "Sans rendez-vous : examen de vue, essayer des montures, faire ajuster une paire, remplacer des plaquettes, commander des lentilles, poser une question. Ajustage et réparation (plaquettes, vis, charnières, réglages) généralement en quelques minutes, y compris pour des lunettes achetées ailleurs.",
+    "Optique : lunettes de vue et solaires, verres unifocaux et progressifs, traitements antireflet, photochromiques et polarisants.",
+    "Lentilles : journalières, bimensuelles, mensuelles, souples et rigides, toriques et multifocales ; essais avant commande, apprentissage de la pose et du retrait, renouvellement et produits d'entretien.",
+    "Tiers payant appliqué dès que la mutuelle le permet ; devis normalisé gratuit avant tout engagement ; offre 100 % Santé présentée à côté des autres offres, possibilité de combiner équipement libre et 100 % Santé.",
+    "Dix-neuf marques de montures : Andy Brook, Armani, CHIMI, Celine, Dior, Fendi, Fred, Givenchy, Gucci, Guess, LOOL, Loewe, Longchamp, Marc Jacobs, Miu Miu, Prada, Ralph Lauren, Ray-Ban, Saint Laurent.",
+    "Audition : audioprothésiste diplômé en cabine dédiée ; bilan auditif gratuit et sans engagement, sur rendez-vous, environ 40 minutes ; essai d'au moins 30 jours avant décision ; réglages, entretien et suivi inclus pendant toute la durée de vie de l'appareil ; une classe d'appareils prise en charge intégralement au titre du 100 % Santé. N'affirme PAS que nous suivons des appareils achetés ailleurs.",
+    "Marques d'aides auditives proposées : Bernafon, Phonak, Signia, Sona, Starkey.",
+    "Rendez-vous par téléphone."
+  ]
+}

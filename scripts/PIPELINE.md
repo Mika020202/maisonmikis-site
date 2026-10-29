@@ -252,3 +252,13 @@ répondre à une recherche locale. Même correctif que sur ACTU EYES (commit 86f
   pour toutes les pages. Le suffixe « | Maison Mikis » saute en premier.
 - Le depot est desormais pilote avec celui d'ACTU EYES depuis le projet Claude
   « REFERENCEMENT BOUTIQUES » : toute evolution du moteur est appliquee aux deux.
+
+## Ligne éditoriale (29/10/2026)
+
+Constat : la veille publiait aussi des sujets de métier (fraude, syndicats, publicité des opticiens) qui n'intéressent pas les clients et n'amènent personne en boutique.
+
+- `scripts/ligne_editoriale.json` : thèmes autorisés (audition, vue après 40 ans, grandes maisons, maladies des yeux en tête), calendrier de saison, sujets interdits, motifs interdits (filet de sécurité sur titre / slug / résumé), et **faits sur la boutique** (les seuls que la veille peut affirmer ; ajout des marques d'aides auditives : Bernafon, Phonak, Signia, Sona, Starkey). Modifiable sans toucher au code ; les faits ne changent que sur instruction du propriétaire.
+- `scripts/ligne.py` : même fichier que dans le dépôt Actueyes ; construit le bloc ajouté aux deux prompts et fait les contrôles après rédaction.
+- `scripts/sources.json` : chaque source a un rôle — `source` (officiel), `fabricant` / `marque` (nouveaux produits et collections vendus en boutique, dont les 5 fabricants d'aides auditives), `radar` (presse pro : repérer, jamais citer). Noms des sources inchangés (clefs de `last_seen_by_source`).
+- Sans nouveauté utile au client, la veille écrit un **article de fond** dans un thème autorisé (plafonds inchangés).
+- Chaque nouvel article porte un **encart « Chez Maison Mikis »** (35-70 mots, faits uniquement, sans superlatif) avec boutons Appeler / Itinéraire ; la bande finale invite à passer aux Olympiades.
