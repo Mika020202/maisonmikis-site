@@ -7,8 +7,9 @@
       "label": "Audition",
       "priorite": "haute",
       "category": "sante-auditive",
-      "perimetre": "Signes d'alerte, bilan auditif, appareils (nouveautés des marques proposées chez nous), remboursement et 100 % Santé audition, protections auditives. Jamais de diagnostic : le bilan est le passage à l'action.",
+      "perimetre": "Signes d'alerte, bilan auditif, appareils (nouveautés des marques proposées chez nous), remboursement et 100 % Santé audition, protections auditives. Jamais de diagnostic : le bilan est le passage à l'action. Pour le 100 % Santé audition : angle bénéfice (bien entendre sans reste à charge, essai, suivi inclus), jamais un article de loi.",
       "exemples": [
+        "Appareils auditifs 100 % Santé : bien entendre sans reste à charge",
         "Faut-il faire un bilan auditif à 60 ans ?",
         "Appareils auditifs 100 % Santé : ce qui est remboursé",
         "Acouphènes : quand s'inquiéter ?",
@@ -63,7 +64,7 @@
       "label": "Remboursements et droits du patient",
       "priorite": "normale",
       "category": "remboursements",
-      "perimetre": "100 % Santé optique et audition, tiers payant, ordonnance, renouvellement : seulement ce qui change quelque chose pour le client, et comment en profiter chez nous.",
+      "perimetre": "Angle bénéfice, jamais un article de loi : ce que le client gagne avec le 100 % Santé optique et audition, le tiers payant, le renouvellement, et comment en profiter chez nous. Règles en 20 % du texte maximum, langage simple, sans numéro de décret.",
       "exemples": [
         "Lunettes et appareils auditifs : ce qui est remboursé en 2027"
       ]

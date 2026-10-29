@@ -122,6 +122,9 @@ thème « phare » ou « haute », non encore traitée sur le site. Dans ce cas,
     txt += """
 ORIENTATION BOUTIQUE — l'article doit faire venir des clients, pas seulement
 informer.
+- Jamais un article « de loi » : pas de numéro de décret ou d'article, pas
+  d'historique de réforme, pas de débat politique. Une règle n'est citée que si
+  le client en a besoin pour en profiter, en une phrase simple.
 - Environ 70 %% du texte est une vraie réponse utile : c'est ce qui permet d'être
   bien classé par Google. Le reste relie le sujet à ce que %(nom)s propose.
 - Dans le corps, UN paragraphe (pas le dernier) explique concrètement ce que le
