@@ -58,7 +58,8 @@
     "progressifs-ou-lunettes-de-lecture-choisir",
     "verres-travail-ecran-bureau-apres-40-ans",
     "choisir-monture-grande-maison-qui-dure",
-    "taille-monture-lire-chiffres-branche"
+    "taille-monture-lire-chiffres-branche",
+    "lunettes-marque-paris-13-choisir-monture"
   ],
   "last_seen_by_source": {
     "Acuité": "PLFSS 2027 : quel impact sur le remboursement des lunettes ?",
@@ -233,15 +234,23 @@
       "date": "2026-10-29",
       "source": "CNIL (déclaration du CEPD / EDPB du 13 octobre 2026 sur les lunettes connectées)",
       "type": "actualite"
+    },
+    {
+      "slug": "lunettes-marque-paris-13-choisir-monture",
+      "title": "Lunettes de marque à Paris 13e : comment bien choisir sa monture ?",
+      "date": "2026-11-02",
+      "source": "guide local : lunettes-de-marque-paris-13",
+      "type": "guide local"
     }
   ],
-  "dernier_passage": "2026-10-29",
+  "dernier_passage": "2026-11-02",
   "guides_traites": [
     "verres-progressifs-adaptation",
     "lunettes-enfant-premier-equipement"
   ],
   "sujets_locaux_faits": [
     "tiers-payant-opticien-paris-13",
-    "reparer-ajuster-lunettes-paris-13"
+    "reparer-ajuster-lunettes-paris-13",
+    "lunettes-de-marque-paris-13"
   ]
 }
