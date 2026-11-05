@@ -59,7 +59,8 @@
     "verres-travail-ecran-bureau-apres-40-ans",
     "choisir-monture-grande-maison-qui-dure",
     "taille-monture-lire-chiffres-branche",
-    "lunettes-marque-paris-13-choisir-monture"
+    "lunettes-marque-paris-13-choisir-monture",
+    "glaucome-pourquoi-se-faire-depister"
   ],
   "last_seen_by_source": {
     "Acuité": "PLFSS 2027 : quel impact sur le remboursement des lunettes ?",
@@ -241,9 +242,16 @@
       "date": "2026-11-02",
       "source": "guide local : lunettes-de-marque-paris-13",
       "type": "guide local"
+    },
+    {
+      "slug": "glaucome-pourquoi-se-faire-depister",
+      "title": "Glaucome : pourquoi se faire dépister après 40 ans ?",
+      "date": "2026-11-05",
+      "source": "article de fond",
+      "type": "actualite"
     }
   ],
-  "dernier_passage": "2026-11-02",
+  "dernier_passage": "2026-11-05",
   "guides_traites": [
     "verres-progressifs-adaptation",
     "lunettes-enfant-premier-equipement"
