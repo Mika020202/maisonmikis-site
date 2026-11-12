@@ -61,7 +61,8 @@
     "taille-monture-lire-chiffres-branche",
     "lunettes-marque-paris-13-choisir-monture",
     "glaucome-pourquoi-se-faire-depister",
-    "choisir-ses-premiers-verres-progressifs"
+    "choisir-ses-premiers-verres-progressifs",
+    "conduite-nuit-vision-eblouissement-lunettes"
   ],
   "last_seen_by_source": {
     "Acuité": "PLFSS 2027 : quel impact sur le remboursement des lunettes ?",
@@ -257,9 +258,16 @@
       "date": "2026-11-09",
       "source": "guide local : verres-progressifs-paris-13",
       "type": "guide local"
+    },
+    {
+      "slug": "conduite-nuit-vision-eblouissement-lunettes",
+      "title": "Conduite de nuit : pourquoi la vision baisse et comment l'améliorer",
+      "date": "2026-11-12",
+      "source": "article de fond",
+      "type": "actualite"
     }
   ],
-  "dernier_passage": "2026-11-09",
+  "dernier_passage": "2026-11-12",
   "guides_traites": [
     "verres-progressifs-adaptation",
     "lunettes-enfant-premier-equipement"
