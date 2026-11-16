@@ -34,6 +34,11 @@ RewriteRule ^actualites/publicite-optique-audition-projet-retire\.html$ https://
 RewriteRule ^actualites/rapport-hubert-transfert-remboursement-mutuelles\.html$ https://www.maisonmikis.fr/actualites/choisir-monture-grande-maison-qui-dure.html [R=301,L]
 RewriteRule ^actualites/lunettes-connectees-cepd-regles-vie-privee\.html$ https://www.maisonmikis.fr/actualites/taille-monture-lire-chiffres-branche.html [R=301,L]
 
+# 4. Page retiree qui renvoyait vers les actualites par un rafraichissement
+#    differe de 5 s (meta refresh) : remplacee le 16/11/2026 par une vraie 301,
+#    comme les autres, vers l'article le plus proche sur le meme sujet.
+RewriteRule ^actualites/lunettes-connectees-plainte-allemagne-vie-privee\.html$ https://www.maisonmikis.fr/actualites/lunettes-connectees-ray-ban-meta-mode-tech.html [R=301,L]
+
 </IfModule>
 
 # ---------------------------------------------------------------------------
