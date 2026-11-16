@@ -62,7 +62,8 @@
     "lunettes-marque-paris-13-choisir-monture",
     "glaucome-pourquoi-se-faire-depister",
     "choisir-ses-premiers-verres-progressifs",
-    "conduite-nuit-vision-eblouissement-lunettes"
+    "conduite-nuit-vision-eblouissement-lunettes",
+    "lentilles-contact-paris-13-guide-debuter"
   ],
   "last_seen_by_source": {
     "Acuité": "PLFSS 2027 : quel impact sur le remboursement des lunettes ?",
@@ -265,9 +266,16 @@
       "date": "2026-11-12",
       "source": "article de fond",
       "type": "actualite"
+    },
+    {
+      "slug": "lentilles-contact-paris-13-guide-debuter",
+      "title": "Lentilles de contact : comment débuter ou en changer à Paris 13e ?",
+      "date": "2026-11-16",
+      "source": "guide local : lentilles-de-contact-paris-13",
+      "type": "guide local"
     }
   ],
-  "dernier_passage": "2026-11-12",
+  "dernier_passage": "2026-11-16",
   "guides_traites": [
     "verres-progressifs-adaptation",
     "lunettes-enfant-premier-equipement"
@@ -276,6 +284,7 @@
     "tiers-payant-opticien-paris-13",
     "reparer-ajuster-lunettes-paris-13",
     "lunettes-de-marque-paris-13",
-    "verres-progressifs-paris-13"
+    "verres-progressifs-paris-13",
+    "lentilles-de-contact-paris-13"
   ]
 }
