@@ -63,7 +63,8 @@
     "glaucome-pourquoi-se-faire-depister",
     "choisir-ses-premiers-verres-progressifs",
     "conduite-nuit-vision-eblouissement-lunettes",
-    "lentilles-contact-paris-13-guide-debuter"
+    "lentilles-contact-paris-13-guide-debuter",
+    "signia-max-aide-auditive-intelligence-artificielle"
   ],
   "last_seen_by_source": {
     "Acuité": "PLFSS 2027 : quel impact sur le remboursement des lunettes ?",
@@ -93,7 +94,8 @@
     "Johnson & Johnson Vision": "Vision Care Q2 : +5,6% à 1,45 Md$ ; invest. 1 Md$ à Jacksonville",
     "Menicon": "Célébration 75e anniversaire ; lancement projet \"Winds of Progress\" (fév. 2026)",
     "Laboratoire LCS": "Lancement AKS Freeform, lentille sclérale personnalisée nouvelle génération (16/01/2026)",
-    "CRAMIF": "Congé supplémentaire de naissance (CSN) effectif au 1er juillet 2026"
+    "CRAMIF": "Congé supplémentaire de naissance (CSN) effectif au 1er juillet 2026",
+    "Signia": "Signia MaX : une nouvelle aide auditive à intelligence artificielle"
   },
   "max_publications_per_slot": 1,
   "publication_log": [
@@ -273,9 +275,16 @@
       "date": "2026-11-16",
       "source": "guide local : lentilles-de-contact-paris-13",
       "type": "guide local"
+    },
+    {
+      "slug": "signia-max-aide-auditive-intelligence-artificielle",
+      "title": "Signia MaX : une nouvelle aide auditive à intelligence artificielle",
+      "date": "2026-11-19",
+      "source": "Signia / WS Audiology — communiqué de lancement de la plateforme MaX",
+      "type": "actualite"
     }
   ],
-  "dernier_passage": "2026-11-16",
+  "dernier_passage": "2026-11-19",
   "guides_traites": [
     "verres-progressifs-adaptation",
     "lunettes-enfant-premier-equipement"
